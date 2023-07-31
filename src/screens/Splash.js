@@ -1,10 +1,11 @@
 import React from "react";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, StatusBar, View } from "react-native"
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Onboarding from "react-native-onboarding-swiper";
-import * as colors from "../../utilities/colors.js"
-import * as fonts from "../../utilities/fonts"
+import * as colors from "../utilities/colors.js"
+import * as fonts from "../utilities/fonts"
 
-const OnBoard = ({ navigation }) => {
+const Splash = ({ navigation }) => {
     const Done = () => (
         <TouchableOpacity
             onPress={() => navigation.navigate("Signup")}>
@@ -29,7 +30,7 @@ const OnBoard = ({ navigation }) => {
                         backgroundColor:
                             "#f7f7f7",
                         image:
-                            <Image style={styles.img} source={require("../../assets/images/img2.png")} />,
+                            <Image style={styles.img} source={require("../assets/images/img2.png")} />,
                         title:
                             "Work with top influencers",
                         subtitle:
@@ -39,7 +40,7 @@ const OnBoard = ({ navigation }) => {
                         backgroundColor:
                             "#f7f7f7",
                         image:
-                            <Image style={styles.img} source={require("../../assets/images/img3.png")} />,
+                            <Image style={styles.img} source={require("../assets/images/img3.png")} />,
                         title:
                             "Get paid for your content",
                         subtitle:
@@ -49,7 +50,7 @@ const OnBoard = ({ navigation }) => {
                         backgroundColor:
                             "#f7f7f7",
                         image:
-                            <Image style={styles.img} source={require("../../assets/images/img1.png")} />,
+                            <Image style={styles.img} source={require("../assets/images/img1.png")} />,
                         title:
                             "Zero hassle payments",
                         subtitle:
@@ -82,4 +83,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default OnBoard
+export default Splash

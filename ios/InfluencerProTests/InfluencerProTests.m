@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface ShopyTests : XCTestCase
+@interface InfluencerProTests : XCTestCase
 
 @end
 
-@implementation ShopyTests
+@implementation InfluencerProTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

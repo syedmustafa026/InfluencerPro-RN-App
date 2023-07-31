@@ -5,12 +5,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-nat
 
 import Toast from "../components/Toast"
 
-import { validations } from '../utilities'
+import {  validateEmail, validatePassword  } from '../utilities/validations'
 
 import * as fonts from '../utilities/fonts'
 import * as colors from '../utilities/colors'
 
-const { validateEmail, validatePassword } = validations
 
 const Signup = ({ navigation }) => {
     const emailRef = useRef()

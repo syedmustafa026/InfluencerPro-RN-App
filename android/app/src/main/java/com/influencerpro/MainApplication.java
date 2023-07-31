@@ -1,4 +1,4 @@
-package com.shopy;
+package com.influencerpro;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
