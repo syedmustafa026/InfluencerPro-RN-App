@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView ,TouchableOpacity,Image} from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 
 import Toast from "../components/Toast"
 
-import {  validateEmail, validatePassword  } from '../utilities/validations'
+import { validateEmail, validatePassword } from '../utilities/validations'
 
 import * as fonts from '../utilities/fonts'
 import * as colors from '../utilities/colors'
@@ -13,8 +13,9 @@ import * as colors from '../utilities/colors'
 
 const Signup = ({ navigation }) => {
     const emailRef = useRef()
+    const locationRef = useRef()
     const mobileRef = useRef()
-    const usernameRef = useRef()
+    const BrandNameRef = useRef()
     const passwordRef = useRef()
     const confirmPasswordRef = useRef()
 
@@ -25,7 +26,8 @@ const Signup = ({ navigation }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
-    const [username, setUsername] = useState('')
+    const [location, setLocation] = useState('')
+    const [BrandName, setBrandName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -33,16 +35,16 @@ const Signup = ({ navigation }) => {
     const handleSignup = async () => {
         try {
             setLoading(true)
-            if (!name && !email && !username) throw new Error('Enter the required feilds')
-            if (!name) throw new Error('Enter name')
-            if (!email) throw new Error('Enter email')
-            if (!validateEmail(email)) throw new Error('Enter valid email')
-            if (!mobile) throw new Error('Enter mobile')
-            if (!username) throw new Error('Enter username')
-            if (!password) throw new Error('Enter password')
-            if (!validatePassword(password)) throw new Error('Enter minimum 6 digits password')
-            if (!confirmPassword) throw new Error('Confirm your password')
-            if (password !== confirmPassword) throw new Error('Password not matched')
+            // if (!name && !email && !BrandName) throw new Error('Enter the required feilds')
+            // if (!name) throw new Error('Enter name')
+            // if (!email) throw new Error('Enter email')
+            // if (!validateEmail(email)) throw new Error('Enter valid email')
+            // if (!mobile) throw new Error('Enter mobile')
+            // if (!BrandName) throw new Error('Enter BrandName')
+            // if (!password) throw new Error('Enter password')
+            // if (!validatePassword(password)) throw new Error('Enter minimum 6 digits password')
+            // if (!confirmPassword) throw new Error('Confirm your password')
+            // if (password !== confirmPassword) throw new Error('Password not matched')
 
             navigation.replace('BottomNavigator')
         } catch (error) {
@@ -60,9 +62,21 @@ const Signup = ({ navigation }) => {
         <View style={styles.container}>
             <ScrollView keyboardShouldPersistTaps={'always'} style={styles.section}>
                 <View style={styles.header}>
-                    <Text style={styles.h1}>Getting started</Text>
-                    <Text style={styles.h4}>Create an account to continue!</Text>
+                    <Text style={styles.h1}>Welcome</Text>
+                    <Text style={styles.h4}>Collab with influencers.Get exclusive deals.Earn cash!</Text>
                 </View>
+                <TextInput
+                    theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
+                    outlineColor={colors.primaryLight}
+                    activeOutlineColor={colors.primaryLight}
+                    ref={BrandNameRef}
+                    mode="outlined"
+                    label="BrandName"
+                    returnKeyType="next"
+                    style={styles.input}
+                    onChangeText={(value) => setBrandName(value)}
+                    onSubmitEditing={() => passwordRef.current.focus()}
+                />
 
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
@@ -72,12 +86,6 @@ const Signup = ({ navigation }) => {
                     label="Full Name"
                     returnKeyType="next"
                     style={styles.input}
-                    left={<TextInput.Icon
-                        name="account-outline"
-                        color={colors.primaryLight}
-                        size={20}
-                        forceTextInputFocus={false}
-                    />}
                     maxLength={50}
                     onChangeText={(value) => setName(value)}
                     onSubmitEditing={() => emailRef.current.focus()}
@@ -93,12 +101,6 @@ const Signup = ({ navigation }) => {
                     keyboardType="email-address"
                     returnKeyType="next"
                     style={styles.input}
-                    left={<TextInput.Icon
-                        name="email-outline"
-                        color={colors.primaryLight}
-                        size={20}
-                        forceTextInputFocus={false}
-                    />}
                     maxLength={100}
                     onChangeText={(value) => setEmail(value)}
                     onSubmitEditing={() => mobileRef.current.focus()}
@@ -114,36 +116,24 @@ const Signup = ({ navigation }) => {
                     keyboardType="number-pad"
                     returnKeyType="next"
                     style={styles.input}
-                    left={<TextInput.Icon
-                        name="cellphone"
-                        color={colors.primaryLight}
-                        size={20}
-                        forceTextInputFocus={false}
-                    />}
                     maxLength={11}
                     onChangeText={(value) => setMobile(value)}
-                    onSubmitEditing={() => usernameRef.current.focus()}
+                    onSubmitEditing={() => locationRef.current.focus()}
                 />
-
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
                     activeOutlineColor={colors.primaryLight}
-                    ref={usernameRef}
+                    ref={locationRef}
                     mode="outlined"
-                    label="Username"
+                    label="Location"
+                    keyboardType="number-pad"
                     returnKeyType="next"
                     style={styles.input}
-                    left={<TextInput.Icon
-                        name="account-outline"
-                        color={colors.primaryLight}
-                        size={20}
-                        forceTextInputFocus={false}
-                    />}
-                    onChangeText={(value) => setUsername(value)}
+                    maxLength={11}
+                    onChangeText={(value) => setLocation(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
                 />
-
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
@@ -154,14 +144,8 @@ const Signup = ({ navigation }) => {
                     returnKeyType="next"
                     secureTextEntry={togglePassword}
                     style={styles.input}
-                    left={<TextInput.Icon
-                        name="lock-outline"
-                        color={colors.primaryLight}
-                        size={20}
-                        forceTextInputFocus={false}
-                    />}
                     right={<TextInput.Icon
-                        name={togglePassword ? "eye-off-outline" : "eye-outline"}
+                        icon={togglePassword ? "eye-off-outline" : "eye-outline"}
                         size={20}
                         color={colors.primaryLight}
                         forceTextInputFocus={false}
@@ -180,14 +164,8 @@ const Signup = ({ navigation }) => {
                     label="Confirm Password"
                     secureTextEntry={toggleConfirmPassword}
                     style={styles.input}
-                    left={<TextInput.Icon
-                        name="lock-outline"
-                        color={colors.primaryLight}
-                        size={20}
-                        forceTextInputFocus={false}
-                    />}
                     right={<TextInput.Icon
-                        name={toggleConfirmPassword ? "eye-off-outline" : "eye-outline"}
+                        icon={toggleConfirmPassword ? "eye-off-outline" : "eye-outline"}
                         size={20}
                         color={colors.primaryLight}
                         forceTextInputFocus={false}
@@ -195,7 +173,15 @@ const Signup = ({ navigation }) => {
                     />}
                     onChangeText={(value) => setConfirmPassword(value)}
                 />
-
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.button}>
+                    <Image
+                        style={{ width: 30, height: 30 }}
+                        source={require("../assets/images/google.png")}
+                    />
+                    <Text style={{ color: 'gray', paddingHorizontal: 15, textAlign: 'center', fontSize: 16, fontFamily: fonts.REGULAR }}>Sign in with Google</Text>
+                </TouchableOpacity>
                 <View style={styles.terms}>
                     <Text style={styles.termsText}>By Signing up you agree to our {<Text style={styles.bold} onPress={handleTerms}>Terms &amp; Conditions</Text>} and {<Text style={styles.bold} onPress={handlePrivacy}>Privacy Policy</Text>}.</Text>
                 </View>
@@ -203,12 +189,11 @@ const Signup = ({ navigation }) => {
                     loading={laoding ? true : false}
                     mode="contained"
                     color={colors.primary}
-                    onPress={handleSignup}
+                    onPress={handleSignin}
                     style={styles.footerButton}
                     contentStyle={styles.footerButtonContent}
                     labelStyle={styles.ButtonLabel}
                 >SIGN UP</Button>
-
                 <View style={styles.signin}>
                     <Text
                         onPress={handleSignin}
@@ -242,7 +227,7 @@ const styles = StyleSheet.create({
     },
     h4: {
         fontSize: hp("2"),
-        marginVertical: hp("0.4"),
+        marginHorizontal: 8,
         fontFamily: fonts.REGULAR,
         color: colors.primaryLight,
     },
@@ -272,7 +257,7 @@ const styles = StyleSheet.create({
     },
     footerButton: {
         width: '100%',
-        marginVertical: hp("1"),
+        backgroundColor: colors.secondaryLight
     },
     footerButtonContent: {
         paddingVertical: hp("1"),
@@ -281,7 +266,20 @@ const styles = StyleSheet.create({
         fontSize: hp("2.2"),
         color: colors.white,
         fontFamily: fonts.SEMIBOLD
-    }
+    },
+    button: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        alignSelf:'center',
+        borderRadius: 10,
+        width: wp('78'),
+        marginTop: 16,
+        height: 40,
+        borderColor: colors.black,
+        borderWidth: .6,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 })
 
 export default Signup

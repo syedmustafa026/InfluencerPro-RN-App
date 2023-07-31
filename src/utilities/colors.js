@@ -52,10 +52,10 @@ export const dangerLight = "#f8d4d5"
 
 export const successDark = "#28986d"
 
-export const primary = "#1a2129"
+export const primary = "#0404f7"
 export const primaryLight = "#647bbc"
 
-export const secondary = "#ffc059"
+export const secondary = "#845c36"
 export const secondaryLight = "#a68052"
 
 

@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react'
-import { StatusBar, StyleSheet, Text, View } from 'react-native'
+import { StatusBar, StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
-import { Header } from '../components/Header'
-import { useDispatch } from 'react-redux'
 
 import Toast from "../components/Toast"
 
@@ -22,17 +20,21 @@ const Signin = ({ navigation }) => {
 
 
     const handleSignin = async () => {
+        try {
+            // if (!username && !password) throw new Error('Enter the required feilds')
+            // if (!username) throw new Error('Enter username')
+            // if (!password) throw new Error('Enter password')
 
-        if (!username && !password) throw new Error('Enter the required feilds')
-        if (!username) throw new Error('Enter username')
-        if (!password) throw new Error('Enter password')
+            const payload = {
+                username,
+                password,
+            }
 
-        const payload = {
-            username,
-            password,
+            navigation.replace('BottomNavigator')
+        } catch (error) {
+            Toast(error.message)
         }
 
-        navigation.replace('BottomNavigator')
     }
 
     return (
@@ -44,7 +46,7 @@ const Signin = ({ navigation }) => {
             <View style={styles.section}>
                 <View style={styles.header}>
                     <Text style={styles.h1}>Let's Sign you in</Text>
-                    <Text style={styles.h4}>Welcome to Company</Text>
+                    <Text style={styles.h4}>Welcome to InfluencerPro</Text>
                 </View>
 
                 <TextInput
@@ -57,7 +59,7 @@ const Signin = ({ navigation }) => {
                     returnKeyType="next"
                     style={styles.input}
                     left={<TextInput.Icon
-                        name="account-outline"
+                        icon="account-outline"
                         color={colors.primaryLight}
                         size={20}
                         forceTextInputFocus={false}
@@ -75,7 +77,7 @@ const Signin = ({ navigation }) => {
                     secureTextEntry={togglePassword}
                     style={styles.input}
                     left={<TextInput.Icon
-                        name="lock-outline"
+                        icon="lock-outline"
                         color={colors.primaryLight}
                         size={20}
                         forceTextInputFocus={false}
@@ -94,7 +96,6 @@ const Signin = ({ navigation }) => {
                 <View style={styles.forgotPassword}>
                     <Text style={styles.forgotPasswordText} onPress={handleForgotPassword}>Forgot Password?</Text>
                 </View>
-
                 <Button
                     loading={laoding ? true : false}
                     mode="contained"
@@ -104,6 +105,15 @@ const Signin = ({ navigation }) => {
                     contentStyle={styles.footerButtonContent}
                     labelStyle={styles.ButtonLabel}
                 >SIGN IN</Button>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.button}>
+                    <Image
+                        style={{ width: 30, height: 30 }}
+                        source={require("../assets/images/google.png")}
+                    />
+                    <Text style={{ color: 'gray', paddingHorizontal: 15, textAlign: 'center', fontSize: 16, fontFamily: fonts.REGULAR }}>Sign in with Google</Text>
+                </TouchableOpacity>
 
                 <View style={styles.signup}>
                     <Text
@@ -165,9 +175,25 @@ const styles = StyleSheet.create({
         fontFamily: fonts.BOLD,
         color: colors.primaryLight
     },
-    footerButton: {
-        width: '100%',
+    button: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        width: wp('78'),
         marginVertical: 8,
+        height: 40,
+        borderColor: colors.black,
+        borderWidth: .6,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    footerButton: {
+        alignSelf: 'center',
+        width: wp('80'),
+        marginVertical: 8,
+        backgroundColor: colors.secondaryLight,
+        borderRadius: 10,
     },
     footerButtonContent: {
         paddingVertical: 8,
