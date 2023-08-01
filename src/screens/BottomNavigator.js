@@ -35,8 +35,8 @@ const BottomNavigator = () => {
       }}>
       <Tab.Screen
         options={{
-          title: 'Home',
-          headerShown: false,
+          title: 'My Influencers',
+          headerShown: true,
           tabBarIcon: ({ focused }) => (
             <Icon name='home-outline'
               size={26}

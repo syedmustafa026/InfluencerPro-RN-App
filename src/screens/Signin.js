@@ -45,8 +45,8 @@ const Signin = ({ navigation }) => {
             />
             <View style={styles.section}>
                 <View style={styles.header}>
-                    <Text style={styles.h1}>Let's Sign you in</Text>
-                    <Text style={styles.h4}>Welcome to InfluencerPro</Text>
+                    <Text style={styles.h1}>Welcome Back</Text>
+                    <Text style={styles.h4}>Don't miss your next opportunity. Sign in to stay updated on your professional world.</Text>
                 </View>
 
                 <TextInput

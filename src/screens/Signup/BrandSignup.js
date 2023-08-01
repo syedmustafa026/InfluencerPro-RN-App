@@ -3,15 +3,15 @@ import { StyleSheet, Text, View, ScrollView ,TouchableOpacity,Image} from 'react
 import { TextInput, Button } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 
-import Toast from "../components/Toast"
+import Toast from "../../components/Toast"
 
-import { validateEmail, validatePassword } from '../utilities/validations'
+import { validateEmail, validatePassword } from '../../utilities/validations'
 
-import * as fonts from '../utilities/fonts'
-import * as colors from '../utilities/colors'
+import * as fonts from '../../utilities/fonts'
+import * as colors from '../../utilities/colors'
 
 
-const Signup = ({ navigation }) => {
+const BrandSignup = ({ navigation }) => {
     const emailRef = useRef()
     const locationRef = useRef()
     const mobileRef = useRef()
@@ -61,10 +61,6 @@ const Signup = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView keyboardShouldPersistTaps={'always'} style={styles.section}>
-                <View style={styles.header}>
-                    <Text style={styles.h1}>Welcome</Text>
-                    <Text style={styles.h4}>Collab with influencers.Get exclusive deals.Earn cash!</Text>
-                </View>
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
@@ -126,7 +122,21 @@ const Signup = ({ navigation }) => {
                     activeOutlineColor={colors.primaryLight}
                     ref={locationRef}
                     mode="outlined"
-                    label="Location"
+                    label="Location City"
+                    keyboardType="number-pad"
+                    returnKeyType="next"
+                    style={styles.input}
+                    maxLength={11}
+                    onChangeText={(value) => setLocation(value)}
+                    onSubmitEditing={() => passwordRef.current.focus()}
+                />
+                 <TextInput
+                    theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
+                    outlineColor={colors.primaryLight}
+                    activeOutlineColor={colors.primaryLight}
+                    ref={locationRef}
+                    mode="outlined"
+                    label="Location Country"
                     keyboardType="number-pad"
                     returnKeyType="next"
                     style={styles.input}
@@ -154,7 +164,6 @@ const Signup = ({ navigation }) => {
                     onChangeText={(value) => setPassword(value)}
                     onSubmitEditing={() => confirmPasswordRef.current.focus()}
                 />
-
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
@@ -178,7 +187,7 @@ const Signup = ({ navigation }) => {
                     style={styles.button}>
                     <Image
                         style={{ width: 30, height: 30 }}
-                        source={require("../assets/images/google.png")}
+                        source={require("../../assets/images/google.png")}
                     />
                     <Text style={{ color: 'gray', paddingHorizontal: 15, textAlign: 'center', fontSize: 16, fontFamily: fonts.REGULAR }}>Sign in with Google</Text>
                 </TouchableOpacity>
@@ -214,6 +223,7 @@ const styles = StyleSheet.create({
     },
     section: {
         paddingHorizontal: wp("6"),
+        paddingVertical:20
     },
     header: {
         justifyContent: 'flex-end',
@@ -236,9 +246,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white
     },
     signin: {
-        marginVertical: hp("1"),
-        paddingHorizontal: wp("2"),
-    },
+      marginVertical: hp("1"),
+      marginBottom:26,
+      paddingHorizontal: wp("2"),
+  },
     signinText: {
         fontSize: hp("1.8"),
         textAlign: 'center',
@@ -282,4 +293,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Signup
+export default BrandSignup

@@ -52,7 +52,7 @@ export const dangerLight = "#f8d4d5"
 
 export const successDark = "#28986d"
 
-export const primary = "#0404f7"
+export const primary = "#1004AA"
 export const primaryLight = "#647bbc"
 
 export const secondary = "#845c36"
