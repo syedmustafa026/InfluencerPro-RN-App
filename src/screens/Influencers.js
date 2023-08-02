@@ -2,11 +2,9 @@ import React, { useEffect } from "react";
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import { Searchbar, Badge } from 'react-native-paper';
 
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import Card from "../components/Card";
 
 
@@ -17,14 +15,13 @@ const Influencers = ({ navigation, route }) => {
             title: route.params.title,
             headerRight: (props) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate("Filters")} activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate("InfluencerFilter")} activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Icon
                             style={{ marginHorizontal: 2, marginVertical: 10 }}
                             name='sliders-h'
                             size={14}
                             color={colors.primary} />
                         <Text style={{ fontSize: 16, margin: 4, color: colors.black, fontFamily: fonts.SEMIBOLD }}>Filters</Text>
-
                     </TouchableOpacity >)
             }
 

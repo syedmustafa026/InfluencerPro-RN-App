@@ -8,11 +8,11 @@ import { Button } from "react-native-paper";
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 import Separator from '../components/Separator'
+import ChipComponent from "../components/ChipComponent";
 
 const InfluencerDetails = ({ navigation }) => {
   const [makeOfferModal, setMakeOfferModal] = useState(false)
   const [confirmPhoneModal, setConfirmPhoneModal] = useState(false)
-  const [makeOfferValue, setMakeOfferValue] = useState('')
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,22 +57,34 @@ const InfluencerDetails = ({ navigation }) => {
         }}>
           <Text style={{ color: colors.primary, fontFamily: fonts.SEMIBOLD, fontSize: 20 }} >Christopher Nolan <Icon name='check-decagram' size={22} color={colors.blue} /></Text>
           <Text style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 24, marginVertical: 8, marginBottom: 20 }} >Categories: <Text style={{ fontSize: 22 }}>Travel , Fashion , Blog.</Text></Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 18 }}>
+            <Icon
+              name='map-marker-outline'
+              size={18}
+              color={colors.orange} />
+            <Text style={styles.h4}>Based in: Georgia</Text>
+            <Icon
+              name='map-marker-outline'
+              size={18}
+              color={colors.orange} />
+            <Text style={styles.h4}>Nationality: Yogunda</Text>
+          </View>
           <Separator />
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 18 }}>
             <Icon
               name='facebook'
               size={22}
-              color={colors.black} />
+              color={colors.blue} />
             <Text style={styles.h4}>3M  </Text>
             <Icon
               name='instagram'
               size={22}
-              color={colors.black} />
+              color={colors.pink} />
             <Text style={styles.h4}>1.2M  </Text>
             <FontAwesome5
               name='tiktok'
               size={22}
-              color={colors.black} />
+              color={colors.pink} />
             <Text style={styles.h4}> 102k likes</Text>
           </View>
         </View>
@@ -100,6 +112,21 @@ const InfluencerDetails = ({ navigation }) => {
             <View style={styles.row}>
               <Text style={styles.boldText}>English dialects</Text>
               <Text style={styles.regularText}>American/canadian</Text>
+            </View>
+            <Separator />
+            <View style={styles.row}>
+              <Text style={styles.boldText}>Ethnicity</Text>
+              <Text style={styles.regularText}>Look Arab</Text>
+            </View>
+            <Separator />
+            <View style={styles.row}>
+              <Text style={styles.boldText}>Hair Type</Text>
+              <Text style={styles.regularText}>Short</Text>
+            </View>
+            <Separator />
+            <View style={styles.row}>
+              <Text style={styles.boldText}>Hair color</Text>
+              <Text style={styles.regularText}>Brown</Text>
             </View>
             <Separator />
             <View style={styles.row}>
@@ -145,14 +172,20 @@ const InfluencerDetails = ({ navigation }) => {
         {/* details finished */}
         {/* description start */}
         <View style={styles.box}>
-          <Text style={styles.h2}>About</Text>
-          <Text style={[styles.h4, { marginTop: 4 }]}>Also Works in Youtube </Text>
-          <Text style={styles.h4}>He has silver play button </Text>
-          <Text style={styles.h4}>Lives with family </Text>
-          <Text style={styles.h4}>25 positive reviews </Text>
+          <Text style={styles.h2}>Art</Text>
+          <Text style={[styles.h4, { marginTop: 4 }]}>club/freestyle/contemporary, desco, modern</Text>
         </View>
         {/* description finished */}
+        <View style={styles.box}>
+          <Text style={styles.h2}>I have the following</Text>
+          <Text style={styles.h4}>Features</Text>
+          <ChipComponent name={"Foot, Model,Saloon"} />
+          <Text style={styles.h4}>Valid License:</Text>
+          <ChipComponent name={" Car"} />
+          <Text style={styles.h4}>Tattoes</Text>
+          <ChipComponent name={" none"} />
 
+        </View>
       </ScrollView>
       {/* Chat now start */}
       <View style={styles.box}>
@@ -231,7 +264,8 @@ const styles = StyleSheet.create({
   h4: {
     fontSize: 14,
     color: colors.black,
-    marginHorizontal: 16,
+    marginHorizontal: 14,
+    marginTop: 6,
     fontFamily: fonts.REGULAR,
   },
   h2: {

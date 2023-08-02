@@ -16,6 +16,7 @@ import Earnings from '../screens/Earnings'
 import Categories from '../screens/Categories'
 import Influencers from '../screens/Influencers'
 import InfluencerDetails from '../screens/InfluencerDetails'
+import InfluencerFilter from '../screens/InfluencerFilter'
 
 const Stack = createNativeStackNavigator()
 
@@ -30,6 +31,7 @@ const StackNavigator = () => {
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Categories" component={Categories} />
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Influencers" component={Influencers} />
+                <Stack.Screen options={{ headerShown: true, title:'Filters', headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="InfluencerFilter" component={InfluencerFilter} />
                 <Stack.Screen name="InfluencerDetails" component={InfluencerDetails} />
 
 
