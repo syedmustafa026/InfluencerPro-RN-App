@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import { View, Image, Text, SafeAreaView, StyleSheet, Linking, ScrollView, Alert } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
+import React from "react";
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import { Button, TouchableRipple } from "react-native-paper";
-import * as colors from "../utilities/colors"
-import * as fonts from "../utilities/fonts"
+import { TouchableRipple } from "react-native-paper";
+import * as colors from "../../utilities/colors"
+import * as fonts from "../../utilities/fonts"
+import Separator from "../../components/Separator";
 
 
-const Menu = ({ navigation }) => {
-  const [loginModal, setLoginModal] = useState(false)
-  const [callUsModal, setCallUsModal] = useState(false)
-  const [verifiedModal, setVerifiedModal] = useState(false)
+const Profile = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,60 +15,65 @@ const Menu = ({ navigation }) => {
         <View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Profile</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Text style={styles.selectText}>About you</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
             </TouchableRipple>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <Separator />
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("Address")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Text style={styles.selectText}>Address</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
             </TouchableRipple>
+            <Separator />
             <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Text style={styles.selectText}>Social Channels</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
             </TouchableRipple>
+
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Payout Settings</Text>
             <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Text style={styles.selectText}>Payment Details</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
             </TouchableRipple>
+            <Separator />
             <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Text style={styles.selectText}>Payment History</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
             </TouchableRipple>
+
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Contact us</Text>
             <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Icon
                     name='whatsapp'
                     size={24}
@@ -83,9 +84,10 @@ const Menu = ({ navigation }) => {
                 </View>
               </View>
             </TouchableRipple>
+            <Separator />
             <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Icon
                     name='email-outline'
                     size={24}
@@ -96,41 +98,44 @@ const Menu = ({ navigation }) => {
                 </View>
               </View>
             </TouchableRipple>
+
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Settings</Text>
             <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.row}>
                   <Text style={styles.selectText}>Settings</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
             </TouchableRipple>
+            <Separator />
             <TouchableRipple rippleColor={colors.gray200}
               onPress={() => {
                 Alert.alert("Sure", "Are you sure you want to Logout?", [{
                   text: "Yes",
                   onPress: () => navigation.navigate("BottomNavigator")
                 }, {
-                text: "Cancel",
+                  text: "Cancel",
                 }], {
-              cancelable: true
+                  cancelable: true
                 })
               }}
-            style={styles.selectRow}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon
-                name='power'
-                size={24}
-                color={colors.black} />
-              <Text style={styles.selectText}>Logout</Text>
-            </View>
-          </TouchableRipple>
+              style={styles.selectRow}>
+              <View style={styles.row}>
+                <Icon
+                  name='power'
+                  size={24}
+                  color={colors.black} />
+                <Text style={styles.selectText}>Logout</Text>
+              </View>
+            </TouchableRipple>
+
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </SafeAreaView >
 
   )
@@ -148,6 +153,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   selectText: {
     fontSize: 16,
     color: colors.black,
@@ -162,4 +171,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white
   },
 })
-export default Menu
+export default Profile

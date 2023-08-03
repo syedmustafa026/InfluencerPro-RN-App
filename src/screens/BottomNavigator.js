@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Home from '../screens/Home.js'
 import Favorites from '../screens/Chats.js'
 import Messages from '../screens/Earnings.js'
-import Profile from '../screens/Profile.js'
+import Profile from './Profile/Profile.js'
 
 import * as colors from "../utilities/colors"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'

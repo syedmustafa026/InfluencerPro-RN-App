@@ -44,7 +44,6 @@ const PaymentMethod = ({ navigation }) => {
           <Text style={styles.h2}>You dont have any transactions yet. Your earnings and payouts will be reflected here</Text>
         </View>
       </View>
-      <Text style={{ fontFamily: fonts.SEMIBOLD, fontSize: 14, marginHorizontal: 12 }}>All prices listed above are exclusive of 5% VAT.</Text>
     </SafeAreaView>
   );
 };
