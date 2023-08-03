@@ -6,11 +6,11 @@ import * as fonts from "../utilities/fonts"
 
 const DropdownRow = (props) => {
   return (
-    <View style={{justifyContent:'space-between' ,flexDirection:'row'}}>
-      <TouchableOpacity onPress={props.handlePress} activeOpacity={0.5} style={styles.row}>
+    <TouchableOpacity onPress={props.handlePress} style={{justifyContent:'space-between' ,flexDirection:'row'}}>
+      <TouchableOpacity  activeOpacity={0.5} style={styles.row}>
         <Text style={[styles.h2, props.style]}>{props.name}</Text>
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   )
 }
 

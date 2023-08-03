@@ -92,7 +92,19 @@ const BottomNavigator = () => {
         component={Messages} />
       <Tab.Screen
         options={{
-          headerShown: false,
+          title: 'Profile',
+          headerTitle: 'Profile',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.23,
+            shadowRadius: 2.62,
+            elevation: 4,
+          },
           tabBarIcon: ({ focused }) => (
             <Icon name='account-outline'
               size={26}

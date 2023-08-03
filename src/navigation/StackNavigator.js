@@ -35,9 +35,9 @@ const StackNavigator = () => {
                 <Stack.Screen name="InfluencerDetails" component={InfluencerDetails} />
 
 
-                <Stack.Screen name="Chats" component={Chats} />
-                <Stack.Screen name="Earnings" component={Earnings} />
-                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Chats" component={Chats} />
+                <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Earnings" component={Earnings} />
+                <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Profile" component={Profile} />
 
                 <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Signup" component={Signup} />
                 <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Signin" component={Signin} />
