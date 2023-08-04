@@ -3,12 +3,13 @@ import { StatusBar, StyleSheet, Image, Text, View, TouchableOpacity } from 'reac
 import { TextInput, Button } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 
-import Toast from "../components/Toast"
+import Toast from "../../components/Toast"
 
-import * as fonts from '../utilities/fonts'
-import * as colors from "../utilities/colors"
+import * as fonts from '../../utilities/fonts'
+import * as colors from "../../utilities/colors"
 
-const Signin = ({ navigation }) => {
+const BrandSignin = ({ navigation }) => {
+    
     const handleSignup = () => navigation.navigate('Signup')
     const handleForgotPassword = () => { }
 
@@ -44,15 +45,10 @@ const Signin = ({ navigation }) => {
                 backgroundColor={colors.white}
             />
             <View style={styles.section}>
-                <View style={styles.header}>
-                    <Text style={styles.h1}>Welcome Back</Text>
-                    <Text style={styles.h4}>Don't miss your next opportunity. Sign in to stay updated on your professional world.</Text>
-                </View>
-
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     mode="outlined"
-                    label="Username or Email"
+                    label="Brand Email"
                     activeOutlineColor={colors.primaryLight}
                     outlineColor={colors.primaryLight}
                     keyboardType="email-address"
@@ -110,7 +106,7 @@ const Signin = ({ navigation }) => {
                     style={styles.button}>
                     <Image
                         style={{ width: 30, height: 30 }}
-                        source={require("../assets/images/google.png")}
+                        source={require("../../assets/images/google.png")}
                     />
                     <Text style={{ color: 'gray', paddingHorizontal: 15, textAlign: 'center', fontSize: 16, fontFamily: fonts.REGULAR }}>Sign in with Google</Text>
                 </TouchableOpacity>
@@ -205,4 +201,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Signin
+export default BrandSignin

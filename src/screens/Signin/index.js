@@ -3,22 +3,20 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'rea
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import InfluencerSignup from './InfluencerSignup'
-import BrandSignup from './BrandSignup'
 
 import * as fonts from '../../utilities/fonts'
 import * as colors from '../../utilities/colors'
+import InfluencerSignin from './InfluencerSignin';
+import BrandSignin from './BrandSignin';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Signup = () => {
     return (
         <View style={styles.container}>
-            <View style={styles.section}>
-                <View style={styles.header}>
-                    <Text style={styles.h1}>Welcome</Text>
-                    <Text style={styles.h4}>Collab with influencers.Get exclusive deals.Earn cash!</Text>
-                </View>
+            <View style={styles.header}>
+                <Text style={styles.h1}>Welcome Back</Text>
+                <Text style={styles.h4}>Don't miss your next opportunity. Sign in to stay updated on your professional world.</Text>
             </View>
             <Tab.Navigator screenOptions={{
                 swipeEnabled: false,
@@ -27,8 +25,8 @@ const Signup = () => {
                 tabBarIndicatorStyle: { backgroundColor: colors.primary },
                 tabBarStyle: { backgroundColor: colors.white },
             }}>
-                <Tab.Screen name="As a Influencer" component={InfluencerSignup} />
-                <Tab.Screen name="As a Brand" component={BrandSignup} />
+                <Tab.Screen name="As a Influencer" component={InfluencerSignin} />
+                <Tab.Screen name="As a Brand" component={BrandSignin} />
             </Tab.Navigator>
         </View>
     )
@@ -45,19 +43,19 @@ const styles = StyleSheet.create({
     header: {
         justifyContent: 'flex-end',
         marginVertical: hp("2"),
+        padding:20
     },
     h1: {
-        fontSize: hp("4"),
+        fontSize: hp("3"),
         color: colors.primary,
-        marginVertical: hp("0.4"),
-        marginHorizontal: 8,
+        marginVertical: 4,
         fontFamily: fonts.BOLD
     },
     h4: {
         fontSize: hp("2"),
-        marginHorizontal: 8,
-        fontFamily: fonts.REGULAR,
-        color: colors.primaryLight,
+        marginVertical: 4,
+        fontFamily: fonts.SEMIBOLD,
+        color: colors.primaryLight
     },
     input: {
         width: '100%',
