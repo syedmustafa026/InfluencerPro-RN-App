@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     section: {
         flex: 1,
         paddingHorizontal: wp("8"),
+        marginTop: 36,
         justifyContent: 'center',
     },
     header: {

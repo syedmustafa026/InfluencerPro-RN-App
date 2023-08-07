@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 import Card from "../components/Card";
+import InfluencerCard from "../components/InfluencerCard";
+import { categories } from "../utilities/categories";
 
 
 const Influencers = ({ navigation, route }) => {
@@ -31,8 +33,24 @@ const Influencers = ({ navigation, route }) => {
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 <View style={styles.cards}>
-                    <Card />
-                    <Card />
+                    {/* <FlatList
+                    data={categories}
+                    renderItem={({ item }) => (<InfluencerCard />)}
+                    keyExtractor={(item, index) => index.toString()}
+                /> */}
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+                    <InfluencerCard />
+
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -61,6 +79,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 12,
         marginBottom: 8,
+    },
+    cards: {
+        alignItems: 'center',
+        paddingVertical: hp('3'),
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     }
 })
 export default Influencers

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { TouchableRipple } from "react-native-paper";
 import * as colors from "../../utilities/colors"
@@ -35,7 +35,7 @@ const Profile = ({ navigation }) => {
               </View>
             </TouchableRipple>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("Socials")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Social Channels</Text>
@@ -48,7 +48,7 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Payout Settings</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("PaymentDetails")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Payment Details</Text>
@@ -58,7 +58,7 @@ const Profile = ({ navigation }) => {
               </View>
             </TouchableRipple>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("PaymentHistory")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Payment History</Text>
@@ -71,7 +71,7 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Contact us</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL('https://wa.me/923330269569')} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Icon
@@ -85,7 +85,7 @@ const Profile = ({ navigation }) => {
               </View>
             </TouchableRipple>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL('mailto:syedmustafaahmed026@gmail.com?subject=SendMail&body=Description')} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Icon
@@ -102,10 +102,19 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Settings</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("clicked")} style={styles.selectRow}>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
-                  <Text style={styles.selectText}>Settings</Text>
+                  <Text style={styles.selectText}>Privacy Policy</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                </View>
+              </View>
+            </TouchableRipple>
+            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")} style={styles.selectRow}>
+              <View>
+                <View style={styles.row}>
+                  <Text style={styles.selectText}>Terms and Condition</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                 </View>

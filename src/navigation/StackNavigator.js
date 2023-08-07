@@ -19,6 +19,9 @@ import InfluencerDetails from '../screens/InfluencerDetails'
 import InfluencerFilter from '../screens/InfluencerFilter'
 import About from '../screens/Profile/About'
 import Address from '../screens/Profile/Address'
+import Socials from '../screens/Profile/Socials'
+import PaymentHistory from '../screens/Profile/PaymentHistory'
+import PaymentDetails from '../screens/Profile/PaymentDetails'
 
 const Stack = createNativeStackNavigator()
 
@@ -46,6 +49,9 @@ const StackNavigator = () => {
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Profile" component={Profile} />
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="About" component={About} />
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Address" component={Address} />
+                <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Socials" component={Socials} />
+                <Stack.Screen options={{ title:'Payment Details', headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="PaymentDetails" component={PaymentDetails} />
+                <Stack.Screen options={{ title:'Payment History' ,headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="PaymentHistory" component={PaymentHistory} />
 
 
 

@@ -8,7 +8,7 @@ const ThinNameRow = (props) => {
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={props.handlePress} style={{ justifyContent: 'space-between', flexDirection: 'row', }}>
       <TouchableOpacity style={styles.row}>
-        <Text style={[styles.h2, props.style]}>{props.name}</Text>
+        <Text onPress={props.handlePress} style={[styles.h2, props.style]}>{props.name}</Text>
       </TouchableOpacity>
       <Badge size={24} style={{
         alignSelf: 'center',

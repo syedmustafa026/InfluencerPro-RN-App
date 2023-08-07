@@ -8,7 +8,7 @@ const DropdownRow = (props) => {
   return (
     <TouchableOpacity onPress={props.handlePress} style={{justifyContent:'space-between' ,flexDirection:'row'}}>
       <TouchableOpacity  activeOpacity={0.5} style={styles.row}>
-        <Text style={[styles.h2, props.style]}>{props.name}</Text>
+        <Text onPress={props.handlePress} style={[styles.h2, props.style]}>{props.name}</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   )

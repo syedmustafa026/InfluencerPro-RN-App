@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { StyleSheet, Text, View, ScrollView ,TouchableOpacity,Image} from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Linking } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 
@@ -109,12 +109,14 @@ const BrandSignup = ({ navigation }) => {
                     ref={mobileRef}
                     mode="outlined"
                     label="Mobile"
+                    value={mobile}
                     keyboardType="number-pad"
                     returnKeyType="next"
                     style={styles.input}
                     maxLength={11}
                     onChangeText={(value) => setMobile(value)}
                     onSubmitEditing={() => locationRef.current.focus()}
+                    left={<TextInput.Affix text="+971" />}
                 />
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
@@ -122,22 +124,20 @@ const BrandSignup = ({ navigation }) => {
                     activeOutlineColor={colors.primaryLight}
                     ref={locationRef}
                     mode="outlined"
-                    label="Location City"
-                    keyboardType="number-pad"
+                    label="City"
                     returnKeyType="next"
                     style={styles.input}
                     maxLength={11}
                     onChangeText={(value) => setLocation(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
                 />
-                 <TextInput
+                <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
                     activeOutlineColor={colors.primaryLight}
                     ref={locationRef}
                     mode="outlined"
-                    label="Location Country"
-                    keyboardType="number-pad"
+                    label="Country"
                     returnKeyType="next"
                     style={styles.input}
                     maxLength={11}
@@ -192,7 +192,7 @@ const BrandSignup = ({ navigation }) => {
                     <Text style={{ color: 'gray', paddingHorizontal: 15, textAlign: 'center', fontSize: 16, fontFamily: fonts.REGULAR }}>Sign in with Google</Text>
                 </TouchableOpacity>
                 <View style={styles.terms}>
-                    <Text style={styles.termsText}>By Signing up you agree to our {<Text style={styles.bold} onPress={handleTerms}>Terms &amp; Conditions</Text>} and {<Text style={styles.bold} onPress={handlePrivacy}>Privacy Policy</Text>}.</Text>
+                    <Text style={styles.termsText}>By signing up you agree to our {<Text style={styles.bold} onPress={handleTerms}>terms &amp; conditions</Text>} and {<Text style={styles.bold} onPress={handlePrivacy}>privacy policy</Text>}.</Text>
                 </View>
                 <Button
                     loading={laoding ? true : false}
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     },
     section: {
         paddingHorizontal: wp("6"),
-        paddingVertical:20
+        paddingVertical: 20
     },
     header: {
         justifyContent: 'flex-end',
@@ -246,10 +246,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white
     },
     signin: {
-      marginVertical: hp("1"),
-      marginBottom:26,
-      paddingHorizontal: wp("2"),
-  },
+        marginVertical: hp("1"),
+        marginBottom: 26,
+        paddingHorizontal: wp("2"),
+    },
     signinText: {
         fontSize: hp("1.8"),
         textAlign: 'center',
@@ -263,6 +263,8 @@ const styles = StyleSheet.create({
         marginVertical: hp("2"),
     },
     termsText: {
+        fontSize: 12,
+        marginHorizontal: 12,
         fontFamily: fonts.MEDIUM,
         color: colors.primaryLight
     },
@@ -281,7 +283,7 @@ const styles = StyleSheet.create({
     button: {
         flexDirection: 'row',
         backgroundColor: 'white',
-        alignSelf:'center',
+        alignSelf: 'center',
         borderRadius: 10,
         width: wp('78'),
         marginTop: 16,

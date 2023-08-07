@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -14,21 +14,21 @@ const Tab = createMaterialTopTabNavigator();
 const Signup = () => {
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.h1}>Welcome Back</Text>
-                <Text style={styles.h4}>Don't miss your next opportunity. Sign in to stay updated on your professional world.</Text>
+                <View style={styles.header}>
+                    <Text style={styles.h1}>Welcome Back</Text>
+                    <Text style={styles.h4}>Don't miss your next opportunity. Sign in to stay updated on your professional world.</Text>
+                </View>
+                <Tab.Navigator screenOptions={{
+                    swipeEnabled: false,
+                    tabBarActiveTintColor: colors.primary,
+                    tabBarAndroidRipple: true,
+                    tabBarIndicatorStyle: { backgroundColor: colors.primary },
+                    tabBarStyle: { backgroundColor: colors.white },
+                }}>
+                    <Tab.Screen name="As a Influencer" component={InfluencerSignin} />
+                    <Tab.Screen name="As a Brand" component={BrandSignin} />
+                </Tab.Navigator>
             </View>
-            <Tab.Navigator screenOptions={{
-                swipeEnabled: false,
-                tabBarActiveTintColor: colors.primary,
-                tabBarAndroidRipple: true,
-                tabBarIndicatorStyle: { backgroundColor: colors.primary },
-                tabBarStyle: { backgroundColor: colors.white },
-            }}>
-                <Tab.Screen name="As a Influencer" component={InfluencerSignin} />
-                <Tab.Screen name="As a Brand" component={BrandSignin} />
-            </Tab.Navigator>
-        </View>
     )
 }
 
@@ -42,8 +42,7 @@ const styles = StyleSheet.create({
     },
     header: {
         justifyContent: 'flex-end',
-        marginVertical: hp("2"),
-        padding:20
+        padding: 20
     },
     h1: {
         fontSize: hp("3"),
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
     },
     h4: {
         fontSize: hp("2"),
-        marginVertical: 4,
         fontFamily: fonts.SEMIBOLD,
         color: colors.primaryLight
     },
