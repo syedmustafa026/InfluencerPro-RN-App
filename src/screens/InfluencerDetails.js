@@ -161,7 +161,7 @@ const InfluencerDetails = ({ navigation }) => {
             </View>
           </View>
           <Button
-            onPress={() => { setMakeOfferModal(true) }}
+            onPress={() => navigation.navigate("Message")}
             icon={'message-outline'}
             mode="contained"
             color={colors.white}
@@ -190,7 +190,7 @@ const InfluencerDetails = ({ navigation }) => {
       {/* Chat now start */}
       <View style={styles.box}>
         <Button
-          onPress={() => { setConfirmPhoneModal(true) }}
+          onPress={() => navigation.navigate("Message")}
           mode="contained"
           style={styles.button}
           labelStyle={styles.ButtonLabel}

@@ -8,7 +8,7 @@ import * as fonts from "../utilities/fonts"
 import { TouchableRipple } from 'react-native-paper';
 import Separator from '../components/Separator';
 
-const PaymentMethod = ({ navigation }) => {
+const Earnings = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
@@ -16,7 +16,6 @@ const PaymentMethod = ({ navigation }) => {
       </View>
       <TouchableRipple
         rippleColor={colors.gray300}
-        onPress={() => navigation.navigate('Checkout')}
         style={styles.card}>
         <View>
           <View style={{ margin: 5, paddingTop: 14, marginHorizontal: 14 }}>
@@ -134,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PaymentMethod;
+export default Earnings;
