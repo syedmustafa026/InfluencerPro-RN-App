@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: wp('78'),
         marginVertical: 8,
-        height: 40,
         borderColor: colors.black,
         borderWidth: .6,
         borderRadius: 10,

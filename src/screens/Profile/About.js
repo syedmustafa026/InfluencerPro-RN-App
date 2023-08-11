@@ -3,7 +3,6 @@ import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollVi
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import { TouchableRipple } from "react-native-paper"
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
@@ -17,31 +16,31 @@ const About = ({ navigation }) => {
         <Text style={styles.h1}>Mustafa ahmed </Text>
       </View>
       <Text style={styles.topicHeading}>Bio</Text>
-      <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
         <View>
           <Text style={styles.selectText}>Write something about yourself</Text>
           <View style={{ flexDirection: 'row' }}>
           </View>
         </View>
-      </TouchableRipple>
+      </TouchableOpacity>
       <Separator />
       <Text style={styles.topicHeading}>Date of Birth</Text>
-      <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
         <View>
           <Text style={styles.selectText}>19 March 1998</Text>
           <View style={{ flexDirection: 'row' }}>
           </View>
         </View>
-      </TouchableRipple>
+      </TouchableOpacity>
       <Separator />
       <Text style={styles.topicHeading}>Gender</Text>
-      <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
         <View>
           <Text style={styles.selectText}>Male</Text>
           <View style={{ flexDirection: 'row' }}>
           </View>
         </View>
-      </TouchableRipple>
+      </TouchableOpacity>
       <Separator />
 
     </SafeAreaView>

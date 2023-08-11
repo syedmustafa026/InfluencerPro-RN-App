@@ -3,7 +3,7 @@ import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollVi
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Button, RadioButton, TextInput, TouchableRipple } from "react-native-paper";
+import { Button, RadioButton, TextInput } from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 

@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
-import { TouchableRipple } from 'react-native-paper';
 import Separator from '../components/Separator';
 
 const Earnings = ({ navigation }) => {
@@ -14,8 +13,8 @@ const Earnings = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={{ justifyContent: 'center', marginVertical: 16 }}>
       </View>
-      <TouchableRipple
-        rippleColor={colors.gray300}
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={styles.card}>
         <View>
           <View style={{ margin: 5, paddingTop: 14, marginHorizontal: 14 }}>
@@ -30,7 +29,7 @@ const Earnings = ({ navigation }) => {
             <Text style={styles.h2}>All pending Dues are paid out in first week of every month</Text>
           </View>
         </View>
-      </TouchableRipple>
+      </TouchableOpacity>
       <View>
         <View style={{ margin: 5, paddingTop: 14, marginHorizontal: 14 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

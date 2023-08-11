@@ -8,7 +8,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 
-import { TouchableRipple } from 'react-native-paper'
 import { useNavigation } from "@react-navigation/native"
 import Separator from "./Separator"
 
@@ -16,8 +15,8 @@ import Separator from "./Separator"
 const Card = () => {
   const navigation = useNavigation()
   return (
-    <TouchableRipple
-      rippleColor={colors.gray300}
+    <TouchableOpacity
+      activeOpacity={0.7}
       onPress={() => navigation.navigate('InfluencerDetails')}
       style={styles.card}>
       <View>
@@ -89,7 +88,7 @@ const Card = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </TouchableRipple>
+    </TouchableOpacity>
   )
 }
 const styles = StyleSheet.create({

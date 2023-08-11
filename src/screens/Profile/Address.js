@@ -3,7 +3,7 @@ import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollVi
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Button, Switch, TextInput, TouchableRipple } from "react-native-paper";
+import { Button, Switch, TextInput } from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 
@@ -31,12 +31,12 @@ const Address = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <TouchableRipple rippleColor={colors.gray200} onPress={() => console.log("sss")} >
+        <TouchableOpacity activeOpacity={0.7} onPress={() => console.log("sss")} >
           <View style={styles.row}>
             <Text style={styles.h1}>Country</Text>
             <Text style={styles.h1}>India</Text>
           </View>
-        </TouchableRipple>
+        </TouchableOpacity>
         <View>
           <TextInput
             label="Flat. House No. Building"

@@ -3,7 +3,7 @@ import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollVi
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Button, Switch, TextInput, TouchableRipple } from "react-native-paper";
+import { Button, Switch, TextInput} from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 
@@ -40,7 +40,6 @@ const Socials = ({ navigation }) => {
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'whatsapp'} size={20} color={colors.primaryLight}/>}
             onChangeText={text => setArea(text)}
           />
           <TextInput

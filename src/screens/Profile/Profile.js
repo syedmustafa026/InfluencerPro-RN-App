@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { TouchableRipple } from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
@@ -15,7 +14,7 @@ const Profile = ({ navigation }) => {
         <View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Profile</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>About you</Text>
@@ -23,9 +22,9 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("Address")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Address</Text>
@@ -33,9 +32,9 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("Socials")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Social Channels</Text>
@@ -43,12 +42,12 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
 
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Payout Settings</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("PaymentDetails")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("PaymentDetails")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Payment Details</Text>
@@ -56,9 +55,9 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => navigation.navigate("PaymentHistory")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("PaymentHistory")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Payment History</Text>
@@ -66,12 +65,12 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
 
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Contact us</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL('https://wa.me/923330269569')} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => Linking.openURL('https://wa.me/923330269569')} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Icon
@@ -83,9 +82,9 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL('mailto:syedmustafaahmed026@gmail.com?subject=SendMail&body=Description')} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => Linking.openURL('mailto:syedmustafaahmed026@gmail.com?subject=SendMail&body=Description')} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Icon
@@ -97,12 +96,12 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
 
           </View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Settings</Text>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Privacy Policy</Text>
@@ -110,8 +109,8 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
-            <TouchableRipple rippleColor={colors.gray200} onPress={() => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")} style={styles.selectRow}>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Terms and Condition</Text>
@@ -119,9 +118,9 @@ const Profile = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                 </View>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
             <Separator />
-            <TouchableRipple rippleColor={colors.gray200}
+            <TouchableOpacity activeOpacity={0.7}
               onPress={() => {
                 Alert.alert("Sure", "Are you sure you want to Logout?", [{
                   text: "Yes",
@@ -140,7 +139,7 @@ const Profile = ({ navigation }) => {
                   color={colors.black} />
                 <Text style={styles.selectText}>Logout</Text>
               </View>
-            </TouchableRipple>
+            </TouchableOpacity>
 
           </View>
         </View>
