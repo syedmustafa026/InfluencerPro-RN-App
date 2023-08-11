@@ -20,11 +20,11 @@ const InfluencerCard = () => {
       style={styles.card}>
       <View >
         <Image style={styles.cardImg} source={require('../assets/images/avatar.jpeg')} />
-        <View style={{ margin: 5 }}>
-          <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 16 }} >Noraiz  <Icon name='check-decagram' size={14} color={colors.blue} /> </Text>
-          <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.REGULAR, marginRight: 8, fontSize: 10 }} >Travel,Fashion,Blog </Text>
+        <View style={{ marginHorizontal: 5 }}>
+          <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 15 }} >Noraiz  <Icon name='check-decagram' size={14} color={colors.blue} /> </Text>
+          <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.REGULAR, fontSize: 9 }} >Travel,Fashion,Blog </Text>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
             <MaterialIcon
               name='star'
               size={14}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   cardImg: {
     width: wp('30'),
-    height: hp('9'),
+    height: hp('10.7'),
     borderRadius: 10,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
