@@ -9,6 +9,7 @@ import { validateEmail, validatePassword } from '../../utilities/validations'
 
 import * as fonts from '../../utilities/fonts'
 import * as colors from '../../utilities/colors'
+import * as functions from '../../utilities/functions'
 
 
 const BrandSignup = ({ navigation }) => {
@@ -26,7 +27,8 @@ const BrandSignup = ({ navigation }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
-    const [location, setLocation] = useState('')
+    const [city, setCity] = useState('')
+    const [country, setCountry] = useState('')
     const [BrandName, setBrandName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -35,18 +37,35 @@ const BrandSignup = ({ navigation }) => {
     const handleSignup = async () => {
         try {
             setLoading(true)
-            // if (!name && !email && !BrandName) throw new Error('Enter the required feilds')
-            // if (!name) throw new Error('Enter name')
-            // if (!email) throw new Error('Enter email')
-            // if (!validateEmail(email)) throw new Error('Enter valid email')
-            // if (!mobile) throw new Error('Enter mobile')
-            // if (!BrandName) throw new Error('Enter BrandName')
-            // if (!password) throw new Error('Enter password')
-            // if (!validatePassword(password)) throw new Error('Enter minimum 6 digits password')
-            // if (!confirmPassword) throw new Error('Confirm your password')
-            // if (password !== confirmPassword) throw new Error('Password not matched')
-
-            navigation.replace('BottomNavigator')
+            if (!name && !email && !BrandName && !password) throw new Error('Enter the required feilds')
+            if (!name) throw new Error('Enter name')
+            if (!email) throw new Error('Enter email')
+            if (!validateEmail(email)) throw new Error('Enter valid email')
+            if (!mobile) throw new Error('Enter mobile')
+            if (!BrandName) throw new Error('Enter BrandName')
+            if (!password) throw new Error('Enter password')
+            if (!validatePassword(password)) throw new Error('Enter minimum 6 digits password')
+            if (!confirmPassword) throw new Error('Confirm your password')
+            if (password !== confirmPassword) throw new Error('Password not matched')
+            else if (name && validateEmail(email) && validatePassword(password)) {
+                const payload = {
+                    role: 'vendor',
+                    name: name,
+                    brand_name: BrandName,
+                    phone: mobile,
+                    email: email,
+                    country: country,
+                    city: city,
+                    password: password,
+                    confirm_password: confirmPassword,
+                    agreed_to_terms: "on",
+                }
+                const response = await functions.register(payload)
+                console.log(response);
+                if (!response.status) throw new Error(response.message)
+                Toast("Register Successfully")
+                navigation.replace("Signin")
+            }
         } catch (error) {
             Toast(error.message)
         }
@@ -128,7 +147,7 @@ const BrandSignup = ({ navigation }) => {
                     returnKeyType="next"
                     style={styles.input}
                     maxLength={11}
-                    onChangeText={(value) => setLocation(value)}
+                    onChangeText={(value) => setCity(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
                 />
                 <TextInput
@@ -141,7 +160,7 @@ const BrandSignup = ({ navigation }) => {
                     returnKeyType="next"
                     style={styles.input}
                     maxLength={11}
-                    onChangeText={(value) => setLocation(value)}
+                    onChangeText={(value) => setCountry(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
                 />
                 <TextInput
@@ -198,7 +217,7 @@ const BrandSignup = ({ navigation }) => {
                     loading={laoding ? true : false}
                     mode="contained"
                     color={colors.primary}
-                    onPress={handleSignin}
+                    onPress={handleSignup}
                     style={styles.footerButton}
                     contentStyle={styles.footerButtonContent}
                     labelStyle={styles.ButtonLabel}

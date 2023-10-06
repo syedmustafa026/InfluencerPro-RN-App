@@ -9,25 +9,25 @@ import * as fonts from '../../utilities/fonts'
 import * as colors from "../../utilities/colors"
 
 const InfluencerSignin = ({ navigation }) => {
-    
+
     const handleSignup = () => navigation.navigate('Signup')
     const handleForgotPassword = () => { }
 
     const passwordRef = useRef()
     const [togglePassword, setTogglePassword] = useState(true)
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [laoding, setLoading] = useState(false)
 
 
     const handleSignin = async () => {
         try {
-            // if (!username && !password) throw new Error('Enter the required feilds')
-            // if (!username) throw new Error('Enter username')
+            // if (!email && !password) throw new Error('Enter the required feilds')
+            // if (!email) throw new Error('Enter email')
             // if (!password) throw new Error('Enter password')
 
             const payload = {
-                username,
+                email,
                 password,
             }
 
@@ -48,7 +48,7 @@ const InfluencerSignin = ({ navigation }) => {
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     mode="outlined"
-                    label="Username or Email"
+                    label="Email"
                     activeOutlineColor={colors.primaryLight}
                     outlineColor={colors.primaryLight}
                     keyboardType="email-address"
@@ -60,7 +60,7 @@ const InfluencerSignin = ({ navigation }) => {
                         size={20}
                         forceTextInputFocus={false}
                     />}
-                    onChangeText={(value) => setUsername(value)}
+                    onChangeText={(value) => setEmail(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
                 />
                 <TextInput
