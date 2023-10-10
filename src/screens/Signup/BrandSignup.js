@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Linking } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
@@ -10,9 +10,11 @@ import { validateEmail, validatePassword } from '../../utilities/validations'
 import * as fonts from '../../utilities/fonts'
 import * as colors from '../../utilities/colors'
 import * as functions from '../../utilities/functions'
+import CountryListModal from '../List/CountryListModal'
+import CityListModal from '../List/CityListModal'
 
 
-const BrandSignup = ({ navigation }) => {
+const BrandSignup = ({ navigation, route }) => {
     const emailRef = useRef()
     const locationRef = useRef()
     const mobileRef = useRef()
@@ -27,12 +29,14 @@ const BrandSignup = ({ navigation }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
-    const [city, setCity] = useState('')
-    const [country, setCountry] = useState('')
+    const [city, setCity] = useState('City')
+    const [country, setCountry] = useState('Country')
+    const [countryId, setCountryId] = useState(null)
+    const [countryListModal, setCountryListModal] = useState(false)
+    const [cityListModal, setCityListModal] = useState(false)
     const [BrandName, setBrandName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-
 
     const handleSignup = async () => {
         try {
@@ -61,7 +65,6 @@ const BrandSignup = ({ navigation }) => {
                     agreed_to_terms: "on",
                 }
                 const response = await functions.register(payload)
-                console.log(response);
                 if (!response.status) throw new Error(response.message)
                 Toast("Register Successfully")
                 navigation.replace("Signin")
@@ -79,6 +82,18 @@ const BrandSignup = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <CountryListModal
+                modalVisible={countryListModal}
+                setModalVisible={setCountryListModal}
+                setCountry={setCountry}
+                setCountryId={setCountryId}
+            />
+            <CityListModal
+                modalVisible={cityListModal}
+                setModalVisible={setCityListModal}
+                setCountry={setCity}
+                countryId={countryId}
+            />
             <ScrollView keyboardShouldPersistTaps={'always'} style={styles.section}>
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
@@ -120,7 +135,6 @@ const BrandSignup = ({ navigation }) => {
                     onChangeText={(value) => setEmail(value)}
                     onSubmitEditing={() => mobileRef.current.focus()}
                 />
-
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
@@ -137,7 +151,19 @@ const BrandSignup = ({ navigation }) => {
                     onSubmitEditing={() => locationRef.current.focus()}
                     left={<TextInput.Affix text="+971" />}
                 />
-                <TextInput
+                <TouchableOpacity
+                    onPress={() => setCountryListModal(true)}
+                    activeOpacity={0.6}
+                    style={styles.selectButton}>
+                    <Text style={styles.selectLabel}>{country}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => { countryId != null ? setCityListModal(true) : Toast("Please Select Country first") }}
+                    activeOpacity={0.6}
+                    style={styles.selectButton}>
+                    <Text style={styles.selectLabel}>{city}</Text>
+                </TouchableOpacity>
+                {/* <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
                     activeOutlineColor={colors.primaryLight}
@@ -162,7 +188,7 @@ const BrandSignup = ({ navigation }) => {
                     maxLength={11}
                     onChangeText={(value) => setCountry(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
-                />
+                /> */}
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
@@ -231,6 +257,7 @@ const BrandSignup = ({ navigation }) => {
                     </Text>
                 </View>
             </ScrollView>
+
         </View>
     )
 }
@@ -311,6 +338,26 @@ const styles = StyleSheet.create({
         borderWidth: .6,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    selectButton: {
+        width: '100%',
+        borderRadius: 4,
+        height: 45,
+        paddingHorizontal: 4,
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: colors.white,
+        borderColor: colors.primaryLight,
+        borderWidth: 1,
+        marginTop: 8,
+    },
+    selectLabel: {
+        fontSize: hp("2.2"),
+        color: colors.black,
+        textAlign: 'justify',
+        alignSelf: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
     },
 })
 

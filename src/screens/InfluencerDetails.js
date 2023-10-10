@@ -10,7 +10,7 @@ import * as fonts from "../utilities/fonts"
 import Separator from '../components/Separator'
 import ChipComponent from "../components/ChipComponent";
 
-const InfluencerDetails = ({ navigation }) => {
+const InfluencerDetails = ({ navigation, route }) => {
   const [makeOfferModal, setMakeOfferModal] = useState(false)
   const [confirmPhoneModal, setConfirmPhoneModal] = useState(false)
 

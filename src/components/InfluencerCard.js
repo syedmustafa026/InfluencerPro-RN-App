@@ -10,7 +10,8 @@ import * as fonts from "../utilities/fonts"
 import { useNavigation } from "@react-navigation/native";
 
 
-const InfluencerCard = () => {
+const InfluencerCard = ({ item }) => {
+  console.log("sssss", item);
   const navigation = useNavigation()
   return (
     <TouchableOpacity
@@ -18,11 +19,10 @@ const InfluencerCard = () => {
       onPress={() => navigation.navigate('InfluencerDetails')}
       style={styles.card}>
       <View >
-        <Image style={styles.cardImg} source={require('../assets/images/avatar.jpeg')} />
+        <Image style={styles.cardImg} source={{ uri: item.image_url } || require('../assets/images/avatar.jpeg')} />
         <View style={{ marginHorizontal: 5 }}>
-          <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 15 }} >Noraiz  <Icon name='check-decagram' size={14} color={colors.blue} /> </Text>
+          <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 15 }} >{item.name || "Noraiz"} <Icon name='check-decagram' size={14} color={colors.blue} /> </Text>
           <Text numberOfLines={1} style={{ color: colors.black, fontFamily: fonts.REGULAR, fontSize: 9 }} >Travel,Fashion,Blog </Text>
-
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
             <MaterialIcon
               name='star'

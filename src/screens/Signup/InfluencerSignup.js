@@ -9,6 +9,7 @@ import { validateEmail, validatePassword } from '../../utilities/validations'
 
 import * as fonts from '../../utilities/fonts'
 import * as colors from '../../utilities/colors'
+import * as functions from '../../utilities/functions'
 
 
 const InfluencerSignup = ({ navigation }) => {
@@ -26,8 +27,6 @@ const InfluencerSignup = ({ navigation }) => {
     const [firstName, setFirstName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
-    const [city, setCity] = useState('')
-    const [country, setCountry] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -36,8 +35,9 @@ const InfluencerSignup = ({ navigation }) => {
     const handleSignup = async () => {
         try {
             setLoading(true)
-            if (!name && !email && !password) throw new Error('Enter the required feilds')
-            if (!name) throw new Error('Enter name')
+            if (!firstName && !lastName && !email && !password) throw new Error('Enter the required feilds')
+            if (!firstName) throw new Error('Enter First name')
+            if (!lastName) throw new Error('Enter Last name')
             if (!email) throw new Error('Enter email')
             if (!validateEmail(email)) throw new Error('Enter valid email')
             if (!mobile) throw new Error('Enter mobile')
@@ -45,14 +45,13 @@ const InfluencerSignup = ({ navigation }) => {
             if (!validatePassword(password)) throw new Error('Enter minimum 6 digits password')
             if (!confirmPassword) throw new Error('Confirm your password')
             if (password !== confirmPassword) throw new Error('Password not matched')
-            else if (name && validateEmail(email) && validatePassword(password)) {
+            else if (mobile && validateEmail(email) && validatePassword(password)) {
                 const payload = {
                     role: 'influencer',
-                    name: name,
+                    name: firstName,
+                    last_name: lastName,
                     phone: mobile,
                     email: email,
-                    country: country,
-                    city: city,
                     password: password,
                     confirm_password: confirmPassword,
                     agreed_to_terms: "on",
@@ -61,7 +60,7 @@ const InfluencerSignup = ({ navigation }) => {
                 console.log(response);
                 if (!response.status) throw new Error(response.message)
                 Toast("Register Successfully")
-                navigation.replace("Signin")
+                navigation.navigate("Signin")
             }
         } catch (error) {
             Toast(error.message)
@@ -117,8 +116,6 @@ const InfluencerSignup = ({ navigation }) => {
                     onChangeText={(value) => setEmail(value)}
                     onSubmitEditing={() => mobileRef.current.focus()}
                 />
-
-
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
                     outlineColor={colors.primaryLight}
@@ -134,34 +131,6 @@ const InfluencerSignup = ({ navigation }) => {
                     onChangeText={(value) => setMobile(value)}
                     onSubmitEditing={() => locationRef.current.focus()}
                     left={<TextInput.Affix text="+971" />}
-                />
-                <TextInput
-                    theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
-                    outlineColor={colors.primaryLight}
-                    activeOutlineColor={colors.primaryLight}
-                    ref={locationRef}
-                    mode="outlined"
-                    label="City"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    style={styles.input}
-                    maxLength={11}
-                    onChangeText={(value) => setCity(value)}
-                    onSubmitEditing={() => passwordRef.current.focus()}
-                />
-                <TextInput
-                    theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
-                    outlineColor={colors.primaryLight}
-                    activeOutlineColor={colors.primaryLight}
-                    ref={locationRef}
-                    mode="outlined"
-                    label="Country"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    style={styles.input}
-                    maxLength={11}
-                    onChangeText={(value) => setCountry(value)}
-                    onSubmitEditing={() => passwordRef.current.focus()}
                 />
                 <TextInput
                     theme={{ colors: { text: colors.primary, placeholder: colors.primaryLight, } }}
@@ -217,7 +186,7 @@ const InfluencerSignup = ({ navigation }) => {
                     loading={laoding ? true : false}
                     mode="contained"
                     color={colors.primary}
-                    onPress={handleSignin}
+                    onPress={handleSignup}
                     style={styles.footerButton}
                     contentStyle={styles.footerButtonContent}
                     labelStyle={styles.ButtonLabel}

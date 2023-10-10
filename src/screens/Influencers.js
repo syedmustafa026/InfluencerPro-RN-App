@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
-import Card from "../components/Card";
+import * as functions from "../utilities/functions"
 import InfluencerCard from "../components/InfluencerCard";
 import { categories } from "../utilities/categories";
 
 
 const Influencers = ({ navigation, route }) => {
+    const [influencers, setInfluencers] = useState([])
 
     useEffect(() => {
         navigation.setOptions({
@@ -29,15 +30,36 @@ const Influencers = ({ navigation, route }) => {
 
         })
     }, [])
+    const getInfluencers = async () => {
+        try {
+            const response = await functions.getInfluencerByCategories({
+                category_id: 1
+            })
+            if (!response) throw new Error(response.message)
+            if (response) {
+                console.log(response.influences);
+                setInfluencers(response.influences)
+            }
+        } catch (error) {
+            Toast(error.message || "Server Error")
+        }
+    }
+
+    useEffect(() => {
+        getInfluencers()
+    }, [])
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 <View style={styles.cards}>
-                    {/* <FlatList
-                    data={categories}
-                    renderItem={({ item }) => (<InfluencerCard />)}
-                    keyExtractor={(item, index) => index.toString()}
-                /> */}
+                    <FlatList
+                        contentContainerStyle={styles.cards}
+                        data={influencers}
+                        renderItem={({ item }) => (<InfluencerCard item={item} />)}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                    {/* <InfluencerCard />
                     <InfluencerCard />
                     <InfluencerCard />
                     <InfluencerCard />
@@ -48,8 +70,7 @@ const Influencers = ({ navigation, route }) => {
                     <InfluencerCard />
                     <InfluencerCard />
                     <InfluencerCard />
-                    <InfluencerCard />
-                    <InfluencerCard />
+                    <InfluencerCard /> */}
 
                 </View>
             </ScrollView>
@@ -82,7 +103,7 @@ const styles = StyleSheet.create({
     },
     cards: {
         alignItems: 'center',
-        paddingVertical: hp('3'),
+        paddingVertical: hp('2.5'),
         flexDirection: 'row',
         flexWrap: 'wrap'
     }

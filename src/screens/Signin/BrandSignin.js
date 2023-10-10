@@ -7,35 +7,45 @@ import Toast from "../../components/Toast"
 
 import * as fonts from '../../utilities/fonts'
 import * as colors from "../../utilities/colors"
+import * as functions from "../../utilities/functions"
 
 const BrandSignin = ({ navigation }) => {
-    
+
     const handleSignup = () => navigation.navigate('Signup')
     const handleForgotPassword = () => { }
 
     const passwordRef = useRef()
     const [togglePassword, setTogglePassword] = useState(true)
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [laoding, setLoading] = useState(false)
 
 
     const handleSignin = async () => {
         try {
-            // if (!username && !password) throw new Error('Enter the required feilds')
-            // if (!username) throw new Error('Enter username')
-            // if (!password) throw new Error('Enter password')
+            setLoading(true)
+            if (!email && !password) throw new Error('Enter the required feilds')
+            if (!email) throw new Error('Enter email')
+            if (!password) throw new Error('Enter password')
 
             const payload = {
-                username,
-                password,
+                email: email,
+                password: password,
             }
-
-            navigation.replace('BottomNavigator')
+            const response = await functions.login(payload)
+            console.log(response);
+            if (!response.status) throw new Error(response.message)
+            if (response.status) {
+                await functions.setItem("user", response.user)
+                await functions.setItem("token", response.token.token)
+                navigation.replace("BottomNavigator")
+            }
         } catch (error) {
             Toast(error.message)
         }
-
+        finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -60,7 +70,7 @@ const BrandSignin = ({ navigation }) => {
                         size={20}
                         forceTextInputFocus={false}
                     />}
-                    onChangeText={(value) => setUsername(value)}
+                    onChangeText={(value) => setEmail(value)}
                     onSubmitEditing={() => passwordRef.current.focus()}
                 />
                 <TextInput

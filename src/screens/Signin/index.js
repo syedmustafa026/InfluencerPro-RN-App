@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     header: {
         justifyContent: 'flex-end',
-        padding: 20
+        padding: 14
     },
     h1: {
         fontSize: hp("3"),

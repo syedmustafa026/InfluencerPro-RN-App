@@ -1,13 +1,34 @@
-import React, { useEffect } from "react"
-import { Image, SafeAreaView,StatusBar, StyleSheet, Text, View } from "react-native"
+import React, { useState, useEffect } from "react"
+import { Image, SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native"
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import * as colors from "../utilities/colors"
+import * as functions from "../utilities/functions"
 
 const Splash = ({ navigation }) => {
+    let screen = "Splash"
 
+    const controlStorage = async () => {
+        const check = await functions.getItem("FIRST_LAUNCH")
+        if (check === null) {
+            screen = "Onboard"
+            functions.setItem('FIRST_LAUNCH', "yes")
+            handleLoad()
+        }
+        if (check === 'yes') {
+            const response = await functions.getItem("user")
+            if (response != null) {
+                screen = "BottomNavigator"
+                handleLoad()
+            }
+            else {
+                screen = "Signin"
+                handleLoad()
+            }
+        }
+    }
     const handleLoad = async () => {
         const timeout = setTimeout(() => {
-            navigation.replace('Onboard')
+            navigation.replace(screen)
         }, 2000)
 
         return () => {
@@ -15,7 +36,7 @@ const Splash = ({ navigation }) => {
         }
     }
     useEffect(() => {
-        handleLoad()
+        controlStorage()
     }, [])
 
     return (
@@ -40,7 +61,7 @@ const styles = StyleSheet.create({
     brand: {
         width: wp("50"),
         height: wp("25"),
-        resizeMode:'contain'
+        resizeMode: 'contain'
     },
     h1: {
 

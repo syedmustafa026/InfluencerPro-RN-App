@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Image, FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
+import { Modal, FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
-import Separator from '../../components/Extras/Separator'
-import Toast from '../../components/Extras/Toast';
+import Separator from '../../components/Separator'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as functions from '../../utilities/functions'
 
 const Item = ({ item, handlePress }) => {
@@ -18,54 +18,65 @@ const Item = ({ item, handlePress }) => {
   )
 }
 
-const PlaceAdCity = ({ navigation, route }) => {
+const CityListModal = (props) => {
 
   const [cities, setCities] = useState([])
   const [loading, setLoading] = useState(true)
 
   const getCities = async () => {
-    const response = await functions.getCities({ country: route.params.country })
+    const response = await functions.getcitiesByCountry({
+      nationality_id: props.countryId
+    })
+    console.log(response);
     if (response.status) {
       setLoading(false)
       setCities(response.data)
     }
   }
-
+  const selectItem = (item) => {
+    props.setCity(item.name)
+    props.setModalVisible(false)
+  }
   useEffect(() => {
     getCities()
   }, [])
-  const selectCity = (item) => {
-    if (route.params.path === 'signup') {
-      navigation.navigate("Signup", { data: { country: route.params.countryName, city: item.name, countryId: route.params.country, cityId: item.id } })
-    }
-    else {
-      navigation.navigate("PlaceAdListing", { country: route.params.country, city: item.id })
-    }
-  }
-  if (loading) {
-    return (
-      <View style={styles.errorContainer}>
-        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
-      </View>
-    )
-  }
-  return (
-    <SafeAreaView style={styles.container} >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View style={{ justifyContent: 'center', marginVertical: 8 }}>
-            <Text style={styles.h1}>{"Select your city"}</Text>
-            <Text style={styles.h4}>{"Where should we place your ad?"}</Text>
-          </View>
-          <FlatList
-            data={cities}
-            renderItem={({ item }) => (<Item item={item} handlePress={() => selectCity(item)} />)}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </View>
-    </SafeAreaView >
 
+  return (
+    <Modal
+      animationType="slide"
+      visible={props.modalVisible}
+      onDismiss={() => props.setModalVisible(false)}
+    >
+      {loading ?
+        <View style={styles.errorContainer}>
+          <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
+        </View>
+        : <SafeAreaView style={styles.container} >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TouchableOpacity onPress={() => props.setModalVisible(false)}>
+                <Icon
+                  onPress={() => props.setModalVisible(false)}
+                  style={{
+                    position: 'absolute',
+                  }}
+                  name='close'
+                  size={26}
+                  color={colors.black} />
+              </TouchableOpacity>
+              <View style={{ justifyContent: 'center', marginVertical: 8 }}>
+                <Text style={styles.h1}>{"Select your City"}</Text>
+                <Text style={styles.h4}>{"In which you're currently living in."}</Text>
+              </View>
+              <FlatList
+                data={cities}
+                renderItem={({ item }) => (<Item item={item} handlePress={() => selectItem(item)} />)}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
+          </View>
+        </SafeAreaView >}
+    </Modal>
   );
 };
 
@@ -156,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaceAdCity;
+export default CityListModal;

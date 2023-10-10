@@ -3,11 +3,26 @@ import { FlatList, StyleSheet, View, SafeAreaView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
+import * as functions from "../utilities/functions"
 import ThinNameRow from '../components/ThinNameRow'
 import { categories } from '../utilities/categories'
 import Separator from '../components/Separator'
 
 const Categories = ({ route, navigation }) => {
+  const getCategories = async () => {
+    try {
+      const response = await functions.getCategories()
+      if (!response) throw new Error(response.message)
+      if (response) {
+        console.log(response);
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  useEffect(() => {
+    getCategories()
+  }, [])
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.centeredView}>
@@ -15,10 +30,10 @@ const Categories = ({ route, navigation }) => {
           <View style={{ justifyContent: 'center', marginBottom: 1 }}>
             <FlatList
               data={categories}
-              renderItem={({ item }) => (<ThinNameRow name={item.name} handlePress={() => navigation.navigate('Influencers',{title: item.name})} />)}
+              renderItem={({ item }) => (<ThinNameRow name={item.name} handlePress={() => navigation.navigate('Influencers', { title: item.name })} />)}
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={<Separator />}
-              ListFooterComponent={<Separator/>}
+              ListFooterComponent={<Separator />}
             />
           </View>
         </View>

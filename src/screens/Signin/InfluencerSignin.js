@@ -7,6 +7,7 @@ import Toast from "../../components/Toast"
 
 import * as fonts from '../../utilities/fonts'
 import * as colors from "../../utilities/colors"
+import * as functions from "../../utilities/functions"
 
 const InfluencerSignin = ({ navigation }) => {
 
@@ -22,20 +23,29 @@ const InfluencerSignin = ({ navigation }) => {
 
     const handleSignin = async () => {
         try {
-            // if (!email && !password) throw new Error('Enter the required feilds')
-            // if (!email) throw new Error('Enter email')
-            // if (!password) throw new Error('Enter password')
+            setLoading(true)
+            if (!email && !password) throw new Error('Enter the required feilds')
+            if (!email) throw new Error('Enter email')
+            if (!password) throw new Error('Enter password')
 
             const payload = {
-                email,
-                password,
+                email: email,
+                password: password,
             }
-
-            navigation.replace('BottomNavigator')
+            const response = await functions.login(payload)
+            console.log(response);
+            if (!response.status) throw new Error(response.message)
+            if (response.status) {
+                await functions.setItem("user", response.user)
+                await functions.setItem("token", response.token.token)
+                navigation.replace("BottomNavigator")
+            }
         } catch (error) {
             Toast(error.message)
         }
-
+        finally {
+            setLoading(false)
+        }
     }
 
     return (

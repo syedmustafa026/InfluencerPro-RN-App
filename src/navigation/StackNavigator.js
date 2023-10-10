@@ -29,12 +29,13 @@ const Stack = createNativeStackNavigator()
 const StackNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Signup' >
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Splash' >
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="Onboard" component={Onboard} />
 
                 <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Signup" component={Signup} />
                 <Stack.Screen options={{ headerShown: true, headerTitleAlizgn: 'center', headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Signin" component={Signin} />
+
 
                 <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
                 <Stack.Screen name="Home" component={Home} />

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { Button } from 'react-native-paper'
 
 import * as fonts from '../utilities/fonts'
 import * as colors from "../utilities/colors"
+import { getHeader } from '../utilities/functions'
 
 const Home = ({ navigation }) => {
   return (

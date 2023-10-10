@@ -99,9 +99,9 @@ export const getCountries = async () => {
   }
 }
 
-export const getCities = async () => {
+export const getCitiesByState = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/categories`, null, {
+    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-state`, null, {
       headers: await getHeader()
     })
     const json = response
@@ -110,7 +110,20 @@ export const getCities = async () => {
     return error.message
   }
 }
-export const getBrandsByCategories = async (payload) => {
+
+export const getcitiesByCountry = async () => {
+  try {
+    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, null, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+
+export const getInfluencerByCategories = async (payload) => {
   try {
     const { data: response } = await axios.post(`${apiUrl}/categories/influencers`, payload, {
       headers: await getHeader()
@@ -121,7 +134,28 @@ export const getBrandsByCategories = async (payload) => {
     return error.message
   }
 }
-
+export const filterInfluencer = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/influencers/filter`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const getInfluencerDetail = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/influencers/detail`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
 export const setItem = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
