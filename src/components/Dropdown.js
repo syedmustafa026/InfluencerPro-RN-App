@@ -22,7 +22,7 @@ const Dropdown = (props) => {
                 <FlatList
                     showsVerticalScrollIndicator={true}
                     data={props.data}
-                    renderItem={({ item }) => (<DropdownRow handlePress={() => {props.setValue(item),props.setModal(false)}} name={item} />)}
+                    renderItem={({ item }) => (<DropdownRow handlePress={() => { props.setValue(item), props.setModal(false) }} name={item} />)}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={<Separator />}
                 />
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
-        elevation: 4,
+        elevation: 9,
 
     }
 })

@@ -3,9 +3,10 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider"
 import { Platform } from "react-native";
 import * as colors from "../utilities/colors"
 
-const Slider = () => {
+const Slider = (props) => {
     return (
         <MultiSlider
+        onValuesChangeFinish={(value) => { props.setAgeFrom(JSON.stringify(value[0])), props.setAgeTo(JSON.stringify(value[1])) }}
             markerStyle={{
                 ...Platform.select({
                     ios: {

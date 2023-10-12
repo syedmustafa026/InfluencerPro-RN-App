@@ -7,13 +7,16 @@ import Slider from '../components/MultiSliders'
 import { Button, Switch, TextInput } from "react-native-paper";
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
+import * as functions from "../utilities/functions"
 import Dropdown from "../components/Dropdown";
+import Toast from "../components/Toast";
 
 const InfluencerFilter = ({ navigation }) => {
   const [category, setcategory] = useState('Model')
   const [language, setlanguage] = useState('British')
   const [Ethnicity, setEthnicity] = useState('Asian')
   const [Nationality, setNationality] = useState('Arabic')
+  const [gender, setGender] = useState('Male')
 
   const [modal1, setModal1] = useState(false)
   const [modal2, setModal2] = useState(false)
@@ -21,14 +24,21 @@ const InfluencerFilter = ({ navigation }) => {
   const [modal4, setModal4] = useState(false)
   const [modal5, setModal5] = useState(false)
   const [modal6, setModal6] = useState(false)
+  const [modal7, setModal7] = useState(false)
 
   const [Facebook, setFacebook] = useState(false);
   const [Instagram, setInstagram] = useState(false);
   const [Youtube, setYoutube] = useState(false);
   const [Tiktok, setTiktok] = useState(false);
+  const [nano, setNano] = useState(false);
+  const [micro, setMicro] = useState(false);
+  const [macro, setMacro] = useState(false);
+  const [mega, setMega] = useState(false);
   const [text, setText] = useState("")
-  const [BasedIn, setBasedIn] = useState("UK")
-  const [region, setregion] = useState("london")
+  const [BasedIn, setBasedIn] = useState("Ex: UK")
+  const [region, setregion] = useState("Ex: london")
+  const [ageFrom, setAgeFrom] = useState(1)
+  const [ageTo, setAgeTo] = useState(40)
 
   useEffect(() => {
     navigation.setOptions({
@@ -40,9 +50,56 @@ const InfluencerFilter = ({ navigation }) => {
       }
     })
   }, [])
+
+  const filterChanges = async () => {
+    try {
+      const payload = {
+        country_id: 1,
+        state_id: 2,
+        city_id: 2,
+        category_id: 1,
+        instagram: Instagram,
+        facebook: Facebook,
+        tiktok: Tiktok,
+        Youtube: Youtube,
+        nano: nano,
+        micro: micro,
+        macro: macro,
+        mega: mega,
+        gender: gender,
+        min_value: ageFrom,
+        max_value: ageTo,
+        ethnicity_id: 1,
+        influencer_name: text,
+        spoken_language_id: 2
+
+      }
+      console.log(payload);
+      const response = await functions.filterInfluencer(payload)
+      if (!response) throw new Error(response.message)
+      if (response.status) {
+        console.log(response)
+        navigation.goBack()
+      }
+      else {
+        Toast("No Influencer Found")
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <Text style={styles.h1}>Gender</Text>
+        <Dropdown
+          data={['Male', 'Female', 'Binary']}
+          style={styles.input}
+          value={gender}
+          toggleModal={() => setModal7(!modal7)}
+          modal={modal7}
+          setModal={setModal7}
+          setValue={setGender} />
         <Text style={styles.h1}>Influencer Category</Text>
         <Dropdown
           data={['Beauty', 'Fashion', 'Fitness', 'Foodie', 'Lifestyle', 'Music']}
@@ -52,6 +109,96 @@ const InfluencerFilter = ({ navigation }) => {
           modal={modal1}
           setModal={setModal1}
           setValue={setcategory} />
+
+        <Text style={styles.h1}>Spoken Languages</Text>
+        <Dropdown
+          data={['French', 'English', 'British']}
+          style={styles.input}
+          value={language}
+          toggleModal={() => setModal2(!modal2)}
+          modal={modal2}
+          setModal={setModal2}
+          setValue={setlanguage} />
+        <Text style={styles.h1}>Search By Following</Text>
+        <View style={styles.row}>
+          <View style={styles.row}>
+            <Text style={styles.h4}>Nano(1-10k)  </Text>
+          </View>
+          <Switch value={nano} color={colors.primary} onValueChange={() => setNano(!nano)} />
+        </View>
+        <View style={styles.row}>
+          <View style={styles.row}>
+            <Text style={styles.h4}>Micro(10-100k)  </Text>
+          </View>
+          <Switch value={micro} color={colors.primary} onValueChange={() => setMicro(!micro)} />
+        </View>
+        <View style={styles.row}>
+          <View style={styles.row}>
+            <Text style={styles.h4}>Macro(100-1M)  </Text>
+          </View>
+          <Switch value={macro} color={colors.primary} onValueChange={() => setMacro(!macro)} />
+        </View>
+        <View style={styles.row}>
+          <View style={styles.row}>
+            <Text style={styles.h4}>Mega(1M-10M)  </Text>
+          </View>
+          <Switch value={mega} color={colors.primary} onValueChange={() => setMega(!mega)} />
+        </View>
+        <Text style={styles.h1}>Nationality</Text>
+        <Dropdown
+          data={['Arabic', 'French', 'Asian']}
+          style={styles.input}
+          value={Nationality}
+          toggleModal={() => setModal3(!modal3)}
+          modal={modal3}
+          setModal={setModal3}
+          setValue={setNationality} />
+
+        <Text style={styles.h1}>Ethnicity Look</Text>
+        <Dropdown
+          data={['Asian', 'European', 'African']}
+          style={styles.input}
+          value={Ethnicity}
+          toggleModal={() => setModal4(!modal4)}
+          modal={modal4}
+          setModal={setModal4}
+          setValue={setEthnicity} />
+        <View>
+          <Text style={styles.h1}>Search By name</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <TextInput
+              placeholder="Enter Model Name"
+              label=""
+              value={text}
+              mode='outlined'
+              activeOutlineColor={colors.gray}
+              style={styles.input}
+              onChangeText={text => setText(text)}
+            />
+          </View>
+          <Text style={styles.h1}>Age ({ageFrom} - {ageTo})</Text>
+          <View style={{ alignItems: 'center' }}>
+            <Slider setAgeFrom={setAgeFrom} setAgeTo={setAgeTo} />
+          </View>
+        </View>
+        <Text style={styles.h1}>Based In</Text>
+        <Dropdown
+          data={['London', 'Dubai']}
+          style={styles.input}
+          value={BasedIn}
+          toggleModal={() => setModal5(!modal5)}
+          modal={modal5}
+          setModal={setModal5}
+          setValue={setBasedIn} />
+        <Text style={styles.h1}>Region</Text>
+        <Dropdown
+          data={['Uk', 'London']}
+          style={styles.input}
+          value={region}
+          toggleModal={() => setModal6(!modal6)}
+          modal={modal6}
+          setModal={setModal6}
+          setValue={setregion} />
         <Text style={styles.h1}>Search By Platform</Text>
         <View style={styles.row}>
           <View style={styles.row}>
@@ -93,116 +240,8 @@ const InfluencerFilter = ({ navigation }) => {
           </View>
           <Switch value={Tiktok} color={colors.pink} onValueChange={() => setTiktok(!Tiktok)} />
         </View>
-        <Text style={styles.h1}>Spoken Languages</Text>
-        <Dropdown
-          data={['French', 'English', 'British']}
-          style={styles.input}
-          value={language}
-          toggleModal={() => setModal2(!modal2)}
-          modal={modal2}
-          setModal={setModal2}
-          setValue={setlanguage} />
-        <Text style={styles.h1}>Search By Following</Text>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Nano(1-10k)  </Text>
-          </View>
-          <Switch value={Facebook} color={colors.primary} onValueChange={() => setFacebook(!Facebook)} />
-        </View>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Micro(10-100k)  </Text>
-          </View>
-          <Switch value={Instagram} color={colors.primary} onValueChange={() => setInstagram(!Instagram)} />
-        </View>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Macro(100-1M)  </Text>
-          </View>
-          <Switch value={Youtube} color={colors.primary} onValueChange={() => setYoutube(!Youtube)} />
-        </View>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Mega(1M-10M)  </Text>
-          </View>
-          <Switch value={Tiktok} color={colors.primary} onValueChange={() => setTiktok(!Tiktok)} />
-        </View>
-        <Text style={styles.h1}>Nationality</Text>
-        <Dropdown
-          data={['Arabic', 'French', 'Asian']}
-          style={styles.input}
-          value={Nationality}
-          toggleModal={() => setModal3(!modal3)}
-          modal={modal3}
-          setModal={setModal3}
-          setValue={setNationality} />
-
-        <Text style={styles.h1}>Ethnicity Look</Text>
-        <Dropdown
-          data={['Angora', 'UK', 'London']}
-          style={styles.input}
-          value={Ethnicity}
-          toggleModal={() => setModal4(!modal4)}
-          modal={modal4}
-          setModal={setModal4}
-          setValue={setEthnicity} />
-        <View>
-          <Text style={styles.h1}>Search By name</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <TextInput
-              placeholder="Enter Model Name"
-              label=""
-              value={text}
-              mode='outlined'
-              activeOutlineColor={colors.gray}
-              style={styles.input}
-              onChangeText={text => setText(text)}
-            />
-          </View>
-          <Text style={styles.h1}>Age</Text>
-          <View style={{ alignItems: 'center' }}>
-            <Slider />
-          </View>
-        </View>
-        <Text style={styles.h1}>Based In</Text>
-        <Dropdown
-          data={['London', 'Dubai']}
-          style={styles.input}
-          value={BasedIn}
-          toggleModal={() => setModal5(!modal5)}
-          modal={modal5}
-          setModal={setModal5}
-          setValue={setBasedIn} />
-        <Text style={styles.h1}>Region</Text>
-        <Dropdown
-          data={['Uk', 'London']}
-          style={styles.input}
-          value={region}
-          toggleModal={() => setModal6(!modal6)}
-          modal={modal6}
-          setModal={setModal6}
-          setValue={setregion} />
-        <Text style={styles.h1}>Gender</Text>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Male  </Text>
-          </View>
-          <Switch value={Facebook} color={colors.primary} onValueChange={() => setFacebook(!Facebook)} />
-        </View>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Female  </Text>
-          </View>
-          <Switch value={Instagram} color={colors.primary} onValueChange={() => setInstagram(!Instagram)} />
-        </View>
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.h4}>Binary  </Text>
-          </View>
-          <Switch value={Tiktok} color={colors.primary} onValueChange={() => setTiktok(!Tiktok)} />
-        </View>
         <Button
-          onPress={() => { navigation.goBack() }}
+          onPress={filterChanges}
           mode="contained"
           color={colors.white}
           style={[styles.button, { marginTop: 16, backgroundColor: colors.primary }]}
