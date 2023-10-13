@@ -1,19 +1,50 @@
-import React, { useState } from "react";
-import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
-import Separator from "../../components/Separator";
+import * as functions from "../../utilities/functions"
+import Separator from "../../components/Separator"
+
 const About = ({ navigation }) => {
+  const [influencer, setInfluencer] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const getInfluencers = async () => {
+    try {
+
+      const response = await functions.getItem("user")
+      if (!response) throw new Error(response.message)
+      if (response) {
+        setInfluencer(response)
+        setLoading(false)
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  console.log(loading);
+
+  useEffect(() => {
+    setLoading(true)
+    getInfluencers()
+  }, [])
+  if (loading) {
+    return (
+      <View style={styles.errorContainer}>
+        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ backgroundColor: colors.white }}>
         <View style={styles.gapRow}>
         </View>
-        <Image style={styles.image} source={require("../../assets/images/avatar.jpeg")} />
-        <Text style={styles.h1}>Mustafa ahmed </Text>
+        <Image style={styles.image} source={{ uri: influencer?.image_url } || require('../../assets/images/avatar.jpeg')} />
+        <Text style={styles.h1}>{influencer?.name} {influencer?.last_name} </Text>
       </View>
       <Text style={styles.topicHeading}>Bio</Text>
       <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
@@ -100,9 +131,9 @@ const styles = StyleSheet.create({
     color: colors.black,
     textAlign: 'center',
     fontFamily: fonts.SEMIBOLD,
-    marginBottom:24,
-    marginTop:12
-    
+    marginBottom: 24,
+    marginTop: 12
+
   },
   button: {
     width: '20%',
@@ -118,6 +149,10 @@ const styles = StyleSheet.create({
     color: colors.primaryLight,
     fontSize: 12,
     fontFamily: fonts.SEMIBOLD
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
 })
 export default About

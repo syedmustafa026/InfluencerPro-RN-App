@@ -22,6 +22,7 @@ const CityListModal = (props) => {
 
   const [cities, setCities] = useState([])
   const [loading, setLoading] = useState(true)
+  console.log(props.countryId);
 
   const getCities = async () => {
     const response = await functions.getcitiesByCountry({
@@ -54,16 +55,16 @@ const CityListModal = (props) => {
         : <SafeAreaView style={styles.container} >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <TouchableOpacity onPress={() => props.setModalVisible(false)}>
-                <Icon
-                  onPress={() => props.setModalVisible(false)}
-                  style={{
-                    position: 'absolute',
-                  }}
-                  name='close'
-                  size={26}
-                  color={colors.black} />
-              </TouchableOpacity>
+              <Icon
+                onPress={() => props.setModalVisible(false)}
+                style={{
+                  position: 'absolute',
+                  left: 20,
+                  top: 20
+                }}
+                name='close'
+                size={26}
+                color={colors.black} />
               <View style={{ justifyContent: 'center', marginVertical: 8 }}>
                 <Text style={styles.h1}>{"Select your City"}</Text>
                 <Text style={styles.h4}>{"In which you're currently living in."}</Text>

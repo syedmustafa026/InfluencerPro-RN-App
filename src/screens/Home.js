@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.h4}>Lorem ipsum dolor sit amet consectetur.
             Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer
             integer at. Nunc nunc eu arcu amet faucibus. Lorem ipsum dolor sit amet consectetur. Nunc</Text>
-          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/assets/img/dash-1.PNG' }} />
+          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/public/assets/img/dash-1.PNG' }} />
         </View>
         <View>
           <Text style={styles.h1}>Influencer Analyze Info</Text>
@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.h4}>Lorem ipsum dolor sit amet consectetur.
             Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer
             integer at. Nunc nunc eu arcu amet faucibus. Lorem ipsum dolor sit amet consectetur. Nunc</Text>
-          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/assets/img/dash-1.PNG' }} />
+          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/public/assets/img/dash-1.PNG' }} />
         </View>
         <View>
           <Text style={styles.h1}>Influencer Marketing Boost Info</Text>
@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.h4}>Lorem ipsum dolor sit amet consectetur.
             Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer
             integer at. Nunc nunc eu arcu amet faucibus. Lorem ipsum dolor sit amet consectetur. Nunc</Text>
-          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/assets/img/dash-1.PNG' }} />
+          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/public/assets/img/dash-1.PNG' }} />
         </View>
         <View>
           <Text style={styles.h1}>Nationality Info</Text>
@@ -48,7 +48,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.h4}>Lorem ipsum dolor sit amet consectetur.
             Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer
             integer at. Nunc nunc eu arcu amet faucibus. Lorem ipsum dolor sit amet consectetur. Nunc</Text>
-          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/assets/img/dash-1.PNG' }} />
+          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/public/assets/img/dash-1.PNG' }} />
         </View>
         <View>
           <Text style={styles.h1}>Demographic Info</Text>
@@ -56,7 +56,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.h4}>Lorem ipsum dolor sit amet consectetur.
             Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer
             integer at. Nunc nunc eu arcu amet faucibus. Lorem ipsum dolor sit amet consectetur. Nunc</Text>
-          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/assets/img/dash-1.PNG' }} />
+          <Image style={styles.image} source={{ uri: 'https://influencerspro.jdesigntechnologies.com/public/assets/img/dash-1.PNG' }} />
         </View>
       </ScrollView>
     </View>

@@ -7,9 +7,7 @@ export const getHeader = async () => {
   const USER_TOKEN = await getItem('token')
   if (USER_TOKEN != null) {
     const AuthStr = {
-      Authorization: `Bearer ${USER_TOKEN}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${USER_TOKEN}`
     }
     return AuthStr
   }
@@ -78,7 +76,7 @@ export const getBrands = async () => {
 
 export const getCategories = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/categories`, null, {
+    const { data: response } = await axios.get(`${apiUrl}/categories`, {
       headers: await getHeader()
     })
     const json = response
@@ -89,7 +87,7 @@ export const getCategories = async () => {
 }
 export const getCountries = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-countries`, null, {
+    const { data: response } = await axios.get(`${apiUrl}/get-countries`, {
       headers: await getHeader()
     })
     const json = response
@@ -101,7 +99,7 @@ export const getCountries = async () => {
 
 export const getCitiesByState = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-state`, null, {
+    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-state`, {
       headers: await getHeader()
     })
     const json = response
@@ -111,9 +109,10 @@ export const getCitiesByState = async () => {
   }
 }
 
-export const getcitiesByCountry = async () => {
+export const getcitiesByCountry = async (payload) => {
+  console.log(payload);
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, null, {
+    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, payload, {
       headers: await getHeader()
     })
     const json = response
@@ -148,6 +147,17 @@ export const filterInfluencer = async (payload) => {
 export const getInfluencerDetail = async (payload) => {
   try {
     const { data: response } = await axios.post(`${apiUrl}/influencers/detail`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const logout = async () => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/auth/logout`, null, {
       headers: await getHeader()
     })
     const json = response

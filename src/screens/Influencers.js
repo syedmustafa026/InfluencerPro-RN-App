@@ -33,11 +33,10 @@ const Influencers = ({ navigation, route }) => {
     const getInfluencers = async () => {
         try {
             const response = await functions.getInfluencerByCategories({
-                category_id: 1
+                category_id: route.params.id
             })
             if (!response) throw new Error(response.message)
             if (response) {
-                console.log(response.influences);
                 setInfluencers(response.influences)
             }
         } catch (error) {
@@ -58,6 +57,7 @@ const Influencers = ({ navigation, route }) => {
                         data={influencers}
                         renderItem={({ item }) => (<InfluencerCard item={item} />)}
                         keyExtractor={(item, index) => index.toString()}
+                        ListEmptyComponent={<Text style={{textAlign:'center',marginLeft:130}}>No Influencer Found</Text>}
                     />
                     {/* <InfluencerCard />
                     <InfluencerCard />

@@ -2,12 +2,26 @@ import React from "react";
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as colors from "../../utilities/colors"
+import * as functions from "../../utilities/functions"
 import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
 
 
 const Profile = ({ navigation }) => {
-
+  const logoutUser = async () => {
+    try {
+      const response = await functions.logout()
+      if (!response.status) throw new Error(response.message)
+      if (response.status) {
+        console.log(response)
+        navigation.replace("Signin")
+        await functions.removeItem("user")
+        await functions.removeItem("token")
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -124,7 +138,7 @@ const Profile = ({ navigation }) => {
               onPress={() => {
                 Alert.alert("Sure", "Are you sure you want to Logout?", [{
                   text: "Yes",
-                  onPress: () => navigation.navigate("BottomNavigator")
+                  onPress: () => logoutUser()
                 }, {
                   text: "Cancel",
                 }], {

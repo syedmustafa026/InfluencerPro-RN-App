@@ -74,15 +74,15 @@ const InfluencerFilter = ({ navigation }) => {
         spoken_language_id: 2
 
       }
-      console.log(payload);
       const response = await functions.filterInfluencer(payload)
       if (!response) throw new Error(response.message)
+      console.log(response)
       if (response.status) {
-        console.log(response)
         navigation.goBack()
       }
       else {
         Toast("No Influencer Found")
+        navigation.goBack()
       }
     } catch (error) {
       Toast(error.message || "Server Error")
