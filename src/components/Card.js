@@ -11,7 +11,6 @@ import * as fonts from "../utilities/fonts"
 import { useNavigation } from "@react-navigation/native"
 import Separator from "./Separator"
 
-
 const Card = () => {
   const navigation = useNavigation()
   return (
