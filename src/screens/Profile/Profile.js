@@ -6,7 +6,6 @@ import * as functions from "../../utilities/functions"
 import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
 
-
 const Profile = ({ navigation }) => {
   const logoutUser = async () => {
     try {
