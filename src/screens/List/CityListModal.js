@@ -22,7 +22,6 @@ const CityListModal = (props) => {
 
   const [cities, setCities] = useState([])
   const [loading, setLoading] = useState(true)
-  console.log(props.countryId);
 
   const getCities = async () => {
     const response = await functions.getcitiesByCountry({

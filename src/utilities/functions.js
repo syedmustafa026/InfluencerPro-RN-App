@@ -110,12 +110,10 @@ export const getCitiesByState = async () => {
 }
 
 export const getcitiesByCountry = async (payload) => {
-  console.log(payload);
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, payload, {
-      headers: await getHeader()
-    })
+    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, payload)
     const json = response
+    console.log("jsonn", json);
     return json
   } catch (error) {
     return error.message
@@ -155,6 +153,29 @@ export const getInfluencerDetail = async (payload) => {
     return error.message
   }
 }
+export const updateInfluencerAddress = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/influencers/update-address`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const updateInfluencerSocialMedia = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/influencers/update-social-media-accounts`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+
 export const logout = async () => {
   try {
     const { data: response } = await axios.post(`${apiUrl}/auth/logout`, null, {

@@ -8,25 +8,16 @@ import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 
 const Address = ({ navigation }) => {
-  const [category, setcategory] = useState('Model')
-  const [language, setlanguage] = useState('British')
-  const [Ethnicity, setEthnicity] = useState('Asian')
-  const [Nationality, setNationality] = useState('Arabic')
 
-  const [modal1, setModal1] = useState(false)
-  const [modal2, setModal2] = useState(false)
-  const [modal3, setModal3] = useState(false)
-  const [modal4, setModal4] = useState(false)
-  const [modal5, setModal5] = useState(false)
-  const [modal6, setModal6] = useState(false)
-
-  const [Flat, setFlat] = useState(false);
-  const [Area, setArea] = useState(false);
-  const [city, setcity] = useState(false);
-  const [state, setstate] = useState(false);
+  const [Flat, setFlat] = useState('');
+  const [Area, setArea] = useState('');
+  const [city, setcity] = useState('');
+  const [cityId, setcityId] = useState('');
+  const [country, setCountry] = useState('India');
+  const [countryId, setCountryId] = useState('');
+  const [state, setstate] = useState('');
   const [postalCode, setpostalCode] = useState("")
-  const [BasedIn, setBasedIn] = useState("UK")
-  const [region, setregion] = useState("london")
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,7 +25,7 @@ const Address = ({ navigation }) => {
         <TouchableOpacity activeOpacity={0.7} onPress={() => console.log("sss")} >
           <View style={styles.row}>
             <Text style={styles.h1}>Country</Text>
-            <Text style={styles.h1}>India</Text>
+            <Text style={styles.h1}>{country}</Text>
           </View>
         </TouchableOpacity>
         <View>

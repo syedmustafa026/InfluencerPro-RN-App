@@ -3,23 +3,19 @@ import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollVi
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Button, Switch, TextInput} from "react-native-paper";
+import { Button, Switch, TextInput } from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 
 const Socials = ({ navigation }) => {
-  const [category, setcategory] = useState('Model')
-  const [language, setlanguage] = useState('British')
-  const [Ethnicity, setEthnicity] = useState('Asian')
-  const [Nationality, setNationality] = useState('Arabic')
 
-  const [Flat, setFlat] = useState(false);
-  const [Area, setArea] = useState(false);
-  const [city, setcity] = useState(false);
-  const [state, setstate] = useState(false);
-  const [postalCode, setpostalCode] = useState("")
-  const [BasedIn, setBasedIn] = useState("UK")
-  const [region, setregion] = useState("london")
+  const [Flat, setInstagram] = useState('');
+  const [Area, setTiktok] = useState('');
+  const [city, setYoutube] = useState('');
+  const [state, setTwitter] = useState('');
+  const [postalCode, setLinkedIn] = useState("")
+  const [pinterest, setPinterest] = useState("")
+  const [website, setWebsite] = useState("")
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,8 +27,8 @@ const Socials = ({ navigation }) => {
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'instagram'} size={20} color={colors.primaryLight}/>}
-            onChangeText={text => setFlat(text)}
+            right={<TextInput.Icon icon={'instagram'} size={20} color={colors.primaryLight} />}
+            onChangeText={text => setInstagram(text)}
           />
           <TextInput
             label="TikTok Handle"
@@ -40,7 +36,7 @@ const Socials = ({ navigation }) => {
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            onChangeText={text => setArea(text)}
+            onChangeText={text => setTiktok(text)}
           />
           <TextInput
             label="Youtube Channel "
@@ -48,8 +44,8 @@ const Socials = ({ navigation }) => {
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'youtube'} size={20} color={colors.primaryLight}/>}
-            onChangeText={text => setcity(text)}
+            right={<TextInput.Icon icon={'youtube'} size={20} color={colors.primaryLight} />}
+            onChangeText={text => setYoutube(text)}
           />
           <TextInput
             label="Twitter Handle"
@@ -57,8 +53,8 @@ const Socials = ({ navigation }) => {
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'twitter'} size={20} color={colors.primaryLight}/>}
-            onChangeText={text => setstate(text)}
+            right={<TextInput.Icon icon={'twitter'} size={20} color={colors.primaryLight} />}
+            onChangeText={text => setTwitter(text)}
           />
           <TextInput
             label="LinkedIn Page"
@@ -66,26 +62,26 @@ const Socials = ({ navigation }) => {
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'linkedin'} size={20} color={colors.primaryLight}/>}
-            onChangeText={text => setpostalCode(text)}
+            right={<TextInput.Icon icon={'linkedin'} size={20} color={colors.primaryLight} />}
+            onChangeText={text => setLinkedIn(text)}
           />
-           <TextInput
+          <TextInput
             label="Pinterest username"
-            value={postalCode}
+            value={pinterest}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'pinterest'} size={20} color={colors.primaryLight}/>}
-            onChangeText={text => setpostalCode(text)}
+            right={<TextInput.Icon icon={'pinterest'} size={20} color={colors.primaryLight} />}
+            onChangeText={text => setPinterest(text)}
           />
-           <TextInput
+          <TextInput
             label="Website/Blog"
-            value={postalCode}
+            value={website}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
-            right={<TextInput.Icon icon={'web'} size={20} color={colors.primaryLight}/>}
-            onChangeText={text => setpostalCode(text)}
+            right={<TextInput.Icon icon={'web'} size={20} color={colors.primaryLight} />}
+            onChangeText={text => setWebsite(text)}
           />
         </View>
 
