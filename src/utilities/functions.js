@@ -99,7 +99,7 @@ export const getCountries = async () => {
 
 export const getCitiesByState = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-state`, {
+    const { data: response } = await axios.post(`${apiUrl}/get-cities-by-state`, {
       headers: await getHeader()
     })
     const json = response
@@ -109,11 +109,21 @@ export const getCitiesByState = async () => {
   }
 }
 
+export const getStateByCountry = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/get-states-by-nationality`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
 export const getcitiesByCountry = async (payload) => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, payload)
+    const { data: response } = await axios.post(`${apiUrl}/get-cities-by-country`, payload)
     const json = response
-    console.log("jsonn", json);
     return json
   } catch (error) {
     return error.message

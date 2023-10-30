@@ -1,43 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
 import * as functions from "../../utilities/functions"
 import Separator from "../../components/Separator"
 
-const About = ({ navigation }) => {
-  const [influencer, setInfluencer] = useState(null)
-  const [loading, setLoading] = useState(true)
+const About = ({ navigation, route }) => {
+  const influencer = route.params
 
-  const getInfluencers = async () => {
-    try {
-
-      const response = await functions.getItem("user")
-      if (!response) throw new Error(response.message)
-      if (response) {
-        setInfluencer(response)
-        setLoading(false)
-      }
-    } catch (error) {
-      Toast(error.message || "Server Error")
-    }
-  }
-  console.log(loading);
-
-  useEffect(() => {
-    setLoading(true)
-    getInfluencers()
-  }, [])
-  if (loading) {
-    return (
-      <View style={styles.errorContainer}>
-        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
-      </View>
-    )
-  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ backgroundColor: colors.white }}>
@@ -47,7 +17,7 @@ const About = ({ navigation }) => {
         <Text style={styles.h1}>{influencer?.name} {influencer?.last_name} </Text>
       </View>
       <Text style={styles.topicHeading}>Bio</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+      <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
         <View>
           <Text style={styles.selectText}>Write something about yourself</Text>
           <View style={{ flexDirection: 'row' }}>
@@ -56,7 +26,7 @@ const About = ({ navigation }) => {
       </TouchableOpacity>
       <Separator />
       <Text style={styles.topicHeading}>Date of Birth</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+      <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
         <View>
           <Text style={styles.selectText}>19 March 1998</Text>
           <View style={{ flexDirection: 'row' }}>
@@ -65,7 +35,7 @@ const About = ({ navigation }) => {
       </TouchableOpacity>
       <Separator />
       <Text style={styles.topicHeading}>Gender</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+      <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
         <View>
           <Text style={styles.selectText}>Male</Text>
           <View style={{ flexDirection: 'row' }}>

@@ -6,24 +6,48 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Button, Switch, TextInput } from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
+import * as functions from "../../utilities/functions"
+
+import Toast from "../../components/Toast"
 
 const Socials = ({ navigation }) => {
 
-  const [Flat, setInstagram] = useState('');
-  const [Area, setTiktok] = useState('');
-  const [city, setYoutube] = useState('');
-  const [state, setTwitter] = useState('');
-  const [postalCode, setLinkedIn] = useState("")
+  const [instagram, setInstagram] = useState('');
+  const [tiktok, setTiktok] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [linkedIn, setLinkedIn] = useState("")
   const [pinterest, setPinterest] = useState("")
   const [website, setWebsite] = useState("")
 
+  const saveSocials = async () => {
+    try {
+      const payload = {
+        instagram: instagram,
+        twitter: twitter,
+        tiktok: tiktok,
+        youtube: youtube,
+        linkedin: linkedIn,
+        pinterest: pinterest,
+        blog: website
+      }
+      const response = await functions.updateInfluencerSocialMedia(payload)
+      console.log(response);
+      if (!response.status) throw new Error(response.message)
+      Toast(response);
+      console.log(response);
+      // navigation.goBack()    
+    } catch (error) {
+      Toast(error.message)
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
           <TextInput
             label="Instagram Handle"
-            value={Flat}
+            value={instagram}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
@@ -32,7 +56,7 @@ const Socials = ({ navigation }) => {
           />
           <TextInput
             label="TikTok Handle"
-            value={Area}
+            value={tiktok}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
@@ -40,7 +64,7 @@ const Socials = ({ navigation }) => {
           />
           <TextInput
             label="Youtube Channel "
-            value={city}
+            value={youtube}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
@@ -49,7 +73,7 @@ const Socials = ({ navigation }) => {
           />
           <TextInput
             label="Twitter Handle"
-            value={state}
+            value={twitter}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
@@ -58,7 +82,7 @@ const Socials = ({ navigation }) => {
           />
           <TextInput
             label="LinkedIn Page"
-            value={postalCode}
+            value={linkedIn}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
@@ -86,7 +110,7 @@ const Socials = ({ navigation }) => {
         </View>
 
         <Button
-          onPress={() => { navigation.goBack() }}
+          onPress={saveSocials}
           mode="contained"
           color={colors.white}
           style={[styles.button, { marginTop: 16, backgroundColor: colors.primary }]}
