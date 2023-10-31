@@ -14,22 +14,30 @@ const Socials = ({ navigation }) => {
 
   const [instagram, setInstagram] = useState('');
   const [tiktok, setTiktok] = useState('');
-  const [youtube, setYoutube] = useState('');
+  const [facebook, setFacebook] = useState('');
   const [twitter, setTwitter] = useState('');
   const [linkedIn, setLinkedIn] = useState("")
   const [pinterest, setPinterest] = useState("")
   const [website, setWebsite] = useState("")
+  const [youtube, setYoutube] = useState("")
 
+  const [instagramFollowers, setInstagramFollowers] = useState('')
+  const [tiktokFollowers, setTiktokFollowers] = useState('')
+  const [facebookFollowers, setFacebookFollowers] = useState('')
+  const [twitterFollowers, setTwitterFollowers] = useState('')
+  const [linkedInFollowers, setLinkedInFollowers] = useState('')
+  const [pinterestFollowers, setPinterestFollowers] = useState('')
+  const [youtubeFollowers, setYoutubeFollowers] = useState('')
   const saveSocials = async () => {
     try {
       const payload = {
         instagram: instagram,
         twitter: twitter,
         tiktok: tiktok,
-        youtube: youtube,
+        facebook: facebook,
         linkedin: linkedIn,
         pinterest: pinterest,
-        blog: website
+        blog: websitex
       }
       const response = await functions.updateInfluencerSocialMedia(payload)
       console.log(response);
@@ -45,65 +53,151 @@ const Socials = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
-          <TextInput
-            label="Instagram Handle"
-            value={instagram}
-            mode='outlined'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            right={<TextInput.Icon icon={'instagram'} size={20} color={colors.primaryLight} />}
-            onChangeText={text => setInstagram(text)}
-          />
-          <TextInput
-            label="TikTok Handle"
-            value={tiktok}
-            mode='outlined'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            onChangeText={text => setTiktok(text)}
-          />
-          <TextInput
-            label="Youtube Channel "
-            value={youtube}
-            mode='outlined'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            right={<TextInput.Icon icon={'youtube'} size={20} color={colors.primaryLight} />}
-            onChangeText={text => setYoutube(text)}
-          />
-          <TextInput
-            label="Twitter Handle"
-            value={twitter}
-            mode='outlined'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            right={<TextInput.Icon icon={'twitter'} size={20} color={colors.primaryLight} />}
-            onChangeText={text => setTwitter(text)}
-          />
-          <TextInput
-            label="LinkedIn Page"
-            value={linkedIn}
-            mode='outlined'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            right={<TextInput.Icon icon={'linkedin'} size={20} color={colors.primaryLight} />}
-            onChangeText={text => setLinkedIn(text)}
-          />
-          <TextInput
-            label="Pinterest username"
-            value={pinterest}
-            mode='outlined'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            right={<TextInput.Icon icon={'pinterest'} size={20} color={colors.primaryLight} />}
-            onChangeText={text => setPinterest(text)}
-          />
+          <View style={styles.row}>
+            <TextInput
+              label="Facebook "
+              value={facebook}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              right={<TextInput.Icon icon={'facebook'} size={20} color={colors.primaryLight} />}
+              onChangeText={text => setFacebook(text)}
+            />
+            <TextInput
+              label="Followers"
+              value={facebookFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setFacebookFollowers(text)}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              label="TikTok"
+              value={tiktok}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setTiktok(text)}
+            />
+            <TextInput
+              label="Followers"
+              value={tiktokFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setTiktokFollowers(text)}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              label="Instagram"
+              value={instagram}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              right={<TextInput.Icon icon={'instagram'} size={20} color={colors.primaryLight} />}
+              onChangeText={text => setInstagram(text)}
+            />
+            <TextInput
+              label="Followers"
+              value={instagramFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setInstagramFollowers(text)}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              label="Youtube"
+              value={youtube}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              right={<TextInput.Icon icon={'youtube'} size={20} color={colors.primaryLight} />}
+              onChangeText={text => setYoutube(text)}
+            />
+            <TextInput
+              label="Subscribers"
+              value={youtubeFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setYoutubeFollowers(text)}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              label="Twitter"
+              value={twitter}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              right={<TextInput.Icon icon={'twitter'} size={20} color={colors.primaryLight} />}
+              onChangeText={text => setTwitter(text)}
+            />
+            <TextInput
+              label="Followers"
+              value={twitterFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setTwitterFollowers(text)}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              label="LinkedIn"
+              value={linkedIn}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              right={<TextInput.Icon icon={'linkedin'} size={20} color={colors.primaryLight} />}
+              onChangeText={text => setLinkedIn(text)}
+            />
+            <TextInput
+              label="Connects"
+              value={linkedInFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setLinkedInFollowers(text)}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              label="Pinterest username"
+              value={pinterest}
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              right={<TextInput.Icon icon={'pinterest'} size={20} color={colors.primaryLight} />}
+              onChangeText={text => setPinterest(text)}
+            />
+            <TextInput
+              label="Followers"
+              value={pinterestFollowers}
+              keyboardType='number-pad'
+              mode='outlined'
+              activeOutlineColor={colors.primary}
+              style={styles.input}
+              onChangeText={text => setPinterestFollowers(text)}
+            />
+          </View>
           <TextInput
             label="Website/Blog"
             value={website}
             mode='outlined'
             activeOutlineColor={colors.primary}
-            style={styles.input}
+            style={[styles.input, { width: "95%" }]}
             right={<TextInput.Icon icon={'web'} size={20} color={colors.primaryLight} />}
             onChangeText={text => setWebsite(text)}
           />
@@ -150,9 +244,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginVertical: 4,
-    marginHorizontal: 6,
+    justifyContent: 'space-evenly',
   },
   button: {
     width: '95%',
@@ -191,7 +283,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SEMIBOLD,
   },
   input: {
-    width: '95%',
+    width: '45%',
     marginVertical: 8,
     alignSelf: 'center',
     backgroundColor: colors.white,

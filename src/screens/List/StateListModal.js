@@ -24,11 +24,9 @@ const StateListModal = (props) => {
   const [loading, setLoading] = useState(true)
 
   const getStates = async () => {
-    console.log(props.countryId)
     const response = await functions.getStateByCountry({
       nationality_id: props.countryId
     })
-    console.log("state", response);
     if (response.status) {
       setLoading(false)
       setStates (response.data)

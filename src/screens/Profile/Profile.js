@@ -206,5 +206,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: colors.white
   },
+  
 })
 export default Profile

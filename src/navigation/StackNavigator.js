@@ -23,6 +23,7 @@ import Socials from '../screens/Profile/Socials'
 import PaymentHistory from '../screens/Profile/PaymentHistory'
 import PaymentDetails from '../screens/Profile/PaymentDetails'
 import Message from '../screens/Messages'
+import EditProfile from '../screens/Profile/EditProfile'
 
 const Stack = createNativeStackNavigator()
 
@@ -50,6 +51,8 @@ const StackNavigator = () => {
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Earnings" component={Earnings} />
 
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Profile" component={Profile} />
+                <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD,  } }} name="EditProfile" component={EditProfile} />
+
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="About" component={About} />
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Address" component={Address} />
                 <Stack.Screen options={{ headerShown: true, headerTitleStyle: { fontSize: 16, color: colors.secondary, fontFamily: fonts.BOLD } }} name="Socials" component={Socials} />
