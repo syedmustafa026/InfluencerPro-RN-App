@@ -71,7 +71,11 @@ const BrandSignup = ({ navigation, route }) => {
                 navigation.replace("Signin")
             }
         } catch (error) {
-            Toast(error.message)
+            if (error.message === "password format invalid") {
+                Toast("8 chars,1 capital 1 special char and 1 number is must")
+            }
+            else
+                Toast(error.message)
         }
         finally {
             setLoading(false)

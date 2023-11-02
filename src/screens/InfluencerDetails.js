@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { Alert, View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
@@ -9,11 +9,29 @@ import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 import Separator from '../components/Separator'
 import ChipComponent from "../components/ChipComponent";
+import Toast from "../components/Toast";
 
 const InfluencerDetails = ({ navigation, route }) => {
   const [makeOfferModal, setMakeOfferModal] = useState(false)
   const [confirmPhoneModal, setConfirmPhoneModal] = useState(false)
 
+  const handleApplyingInfluencer = () => {
+    try {
+      Alert.alert("Sure", "Are you sure you want to initiate chat?", [{
+        text: "Yes",
+        onPress: () => {
+          Toast("Chat request sent to influencer")
+          navigation.navigate("BottomNavigator")
+        }
+      }, {
+        text: "Cancel",
+      }], {
+        cancelable: true
+      })
+    } catch (error) {
+      Toast(error)
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -28,7 +46,7 @@ const InfluencerDetails = ({ navigation, route }) => {
               size={28}
               color={colors.black} />
           </TouchableOpacity>
-          <Image style={styles.mainImg} source={require('../assets/images/avatar.jpeg')} />
+          <Image style={styles.mainImg} source={{ uri: route.params.image_url }} />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={[styles.shareIcon, { right: 90, bottom: -20 }]}
@@ -55,7 +73,7 @@ const InfluencerDetails = ({ navigation, route }) => {
           paddingHorizontal: 20,
           backgroundColor: colors.white
         }}>
-          <Text style={{ color: colors.primary, fontFamily: fonts.SEMIBOLD, fontSize: 20 }} >Christopher Nolan <Icon name='check-decagram' size={22} color={colors.blue} /></Text>
+          <Text style={{ color: colors.primary, fontFamily: fonts.SEMIBOLD, fontSize: 20 }} >{route.params.name}<Icon name='check-decagram' size={22} color={colors.blue} /></Text>
           <Text style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 24, marginVertical: 8, marginBottom: 20 }} >Categories: <Text style={{ fontSize: 22 }}>Travel , Fashion , Blog.</Text></Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 18 }}>
             <Icon
@@ -115,11 +133,6 @@ const InfluencerDetails = ({ navigation, route }) => {
             </View>
             <Separator />
             <View style={styles.row}>
-              <Text style={styles.boldText}>Ethnicity</Text>
-              <Text style={styles.regularText}>Look Arab</Text>
-            </View>
-            <Separator />
-            <View style={styles.row}>
               <Text style={styles.boldText}>Hair Type</Text>
               <Text style={styles.regularText}>Short</Text>
             </View>
@@ -160,14 +173,6 @@ const InfluencerDetails = ({ navigation, route }) => {
               </View>
             </View>
           </View>
-          <Button
-            onPress={() => navigation.navigate("Message")}
-            icon={'message-outline'}
-            mode="contained"
-            color={colors.white}
-            style={[styles.button, { marginVertical: 18, }]}
-            labelStyle={styles.ButtonLabel}
-          >Start a Chat</Button>
         </View>
         {/* details finished */}
         {/* description start */}
@@ -190,11 +195,11 @@ const InfluencerDetails = ({ navigation, route }) => {
       {/* Chat now start */}
       <View style={styles.box}>
         <Button
-          onPress={() => navigation.navigate("Message")}
+          onPress={handleApplyingInfluencer}
           mode="contained"
           style={styles.button}
           labelStyle={styles.ButtonLabel}
-        >Click here to apply</Button>
+        >Click here to chat</Button>
       </View>
       {/* Chat now finish */}
     </SafeAreaView>

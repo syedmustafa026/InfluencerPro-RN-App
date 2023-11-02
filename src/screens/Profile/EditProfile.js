@@ -61,7 +61,6 @@ const EditProfile = ({ navigation, route }) => {
         name: name
       }
       const response = await functions.completeProfile(payload)
-      console.log(response);
       if (!response.status) throw new Error(response.message)
       if (response.status) {
         await functions.setItem('user', response.data)

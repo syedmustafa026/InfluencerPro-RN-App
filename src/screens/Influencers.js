@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native'
+import { ActivityIndicator, View, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -12,6 +12,7 @@ import { categories } from "../utilities/categories";
 
 const Influencers = ({ navigation, route }) => {
     const [influencers, setInfluencers] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         navigation.setOptions({
@@ -38,6 +39,7 @@ const Influencers = ({ navigation, route }) => {
             if (!response) throw new Error(response.message)
             if (response) {
                 setInfluencers(response.influences)
+                setLoading(false)
             }
         } catch (error) {
             Toast(error.message || "Server Error")
@@ -47,7 +49,13 @@ const Influencers = ({ navigation, route }) => {
     useEffect(() => {
         getInfluencers()
     }, [])
-
+    if (loading) {
+        return (
+            <View style={styles.errorContainer}>
+                <ActivityIndicator animating={true} size={"small"} color={colors.primary} />
+            </View>
+        )
+    }
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
@@ -57,7 +65,7 @@ const Influencers = ({ navigation, route }) => {
                         data={influencers}
                         renderItem={({ item }) => (<InfluencerCard item={item} />)}
                         keyExtractor={(item, index) => index.toString()}
-                        ListEmptyComponent={<Text style={{textAlign:'center',marginLeft:130}}>No Influencer Found</Text>}
+                        ListEmptyComponent={<Text style={{ textAlign: 'center', marginLeft: 130 }}>No Influencer Found</Text>}
                     />
                     {/* <InfluencerCard />
                     <InfluencerCard />
@@ -106,6 +114,11 @@ const styles = StyleSheet.create({
         paddingVertical: hp('2.5'),
         flexDirection: 'row',
         flexWrap: 'wrap'
-    }
+    },
+    errorContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+
 })
 export default Influencers
