@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as colors from "../../utilities/colors"
@@ -7,12 +7,13 @@ import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
 
 const Profile = ({ navigation }) => {
+  const [influencer, setInfluencer] = useState(null)
+  console.log(influencer);
   const logoutUser = async () => {
     try {
       const response = await functions.logout()
       if (!response.status) throw new Error(response.message)
       if (response.status) {
-        console.log(response)
         navigation.replace("Signin")
         await functions.removeItem("user")
         await functions.removeItem("token")
@@ -21,13 +22,27 @@ const Profile = ({ navigation }) => {
       Toast(error.message || "Server Error")
     }
   }
+  const getInfluencers = async () => {
+    try {
+      const response = await functions.getItem("user")
+      if (!response) throw new Error(response.message)
+      if (response) {
+        setInfluencer(response)
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  useEffect(() => {
+    getInfluencers()
+  }, [])
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Profile</Text>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About", influencer)} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>About you</Text>
@@ -37,7 +52,7 @@ const Profile = ({ navigation }) => {
               </View>
             </TouchableOpacity>
             <Separator />
-            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address", influencer)} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Address</Text>
@@ -47,7 +62,7 @@ const Profile = ({ navigation }) => {
               </View>
             </TouchableOpacity>
             <Separator />
-            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials")} style={styles.selectRow}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials", influencer)} style={styles.selectRow}>
               <View>
                 <View style={styles.row}>
                   <Text style={styles.selectText}>Social Channels</Text>
@@ -191,5 +206,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: colors.white
   },
+  
 })
 export default Profile

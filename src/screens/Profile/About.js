@@ -1,79 +1,134 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as functions from "../../utilities/functions"
 import Separator from "../../components/Separator"
 
-const About = ({ navigation }) => {
-  const [influencer, setInfluencer] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  const getInfluencers = async () => {
-    try {
-
-      const response = await functions.getItem("user")
-      if (!response) throw new Error(response.message)
-      if (response) {
-        setInfluencer(response)
-        setLoading(false)
-      }
-    } catch (error) {
-      Toast(error.message || "Server Error")
-    }
-  }
-  console.log(loading);
+const About = ({ navigation, route }) => {
+  const influencer = route.params
 
   useEffect(() => {
-    setLoading(true)
-    getInfluencers()
+    navigation.setOptions({
+      headerRight: (props) => {
+        return (
+          <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 16, margin: 4, color: colors.black, fontFamily: fonts.SEMIBOLD }}>Edit</Text>
+          </TouchableOpacity >)
+      }
+
+    })
   }, [])
-  if (loading) {
-    return (
-      <View style={styles.errorContainer}>
-        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
-      </View>
-    )
-  }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ backgroundColor: colors.white }}>
-        <View style={styles.gapRow}>
-        </View>
-        <Image style={styles.image} source={{ uri: influencer?.image_url } || require('../../assets/images/avatar.jpeg')} />
-        <Text style={styles.h1}>{influencer?.name} {influencer?.last_name} </Text>
-      </View>
-      <Text style={styles.topicHeading}>Bio</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
-        <View>
-          <Text style={styles.selectText}>Write something about yourself</Text>
-          <View style={{ flexDirection: 'row' }}>
+      <ScrollView>
+        <View style={{ backgroundColor: colors.white }}>
+          <View style={styles.gapRow}>
           </View>
+          <Image style={styles.image} source={{ uri: influencer?.image_url } || require('../../assets/images/avatar.jpeg')} />
+          <Text style={styles.h1}>{influencer?.name} {influencer?.last_name} </Text>
         </View>
-      </TouchableOpacity>
-      <Separator />
-      <Text style={styles.topicHeading}>Date of Birth</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
-        <View>
-          <Text style={styles.selectText}>19 March 1998</Text>
-          <View style={{ flexDirection: 'row' }}>
+        <Text style={styles.topicHeading}>Bio</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>Write something about yourself</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-      <Separator />
-      <Text style={styles.topicHeading}>Gender</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About")} style={styles.selectRow}>
-        <View>
-          <Text style={styles.selectText}>Male</Text>
-          <View style={{ flexDirection: 'row' }}>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Date of Birth</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>19 March 1998</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-      <Separator />
-
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Gender</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>Male</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Dialects</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Hair Type</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Hair color</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Age</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Valid License</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Tattoes</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Spoken Language</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Ethnicity</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>-</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+      </ScrollView>
     </SafeAreaView>
 
   )
@@ -122,7 +177,7 @@ const styles = StyleSheet.create({
   },
   selectText: {
     fontSize: 16,
-    color: colors.black,
+    color: colors.gray,
     marginLeft: 16,
     fontFamily: fonts.SEMIBOLD
   },

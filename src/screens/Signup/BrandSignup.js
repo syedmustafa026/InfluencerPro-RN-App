@@ -32,6 +32,7 @@ const BrandSignup = ({ navigation, route }) => {
     const [city, setCity] = useState('City')
     const [country, setCountry] = useState('Country')
     const [countryId, setCountryId] = useState(null)
+    const [cityId, setCityId] = useState('');
     const [countryListModal, setCountryListModal] = useState(false)
     const [cityListModal, setCityListModal] = useState(false)
     const [BrandName, setBrandName] = useState('')
@@ -70,7 +71,11 @@ const BrandSignup = ({ navigation, route }) => {
                 navigation.replace("Signin")
             }
         } catch (error) {
-            Toast(error.message)
+            if (error.message === "password format invalid") {
+                Toast("8 chars,1 capital 1 special char and 1 number is must")
+            }
+            else
+                Toast(error.message)
         }
         finally {
             setLoading(false)
@@ -79,7 +84,6 @@ const BrandSignup = ({ navigation, route }) => {
     const handleSignin = () => navigation.navigate('Signin')
     const handleTerms = () => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")
     const handlePrivacy = () => Linking.openURL("https://influencerspro.jdesigntechnologies.com/")
-
     return (
         <View style={styles.container}>
             <CountryListModal
@@ -91,8 +95,9 @@ const BrandSignup = ({ navigation, route }) => {
             <CityListModal
                 modalVisible={cityListModal}
                 setModalVisible={setCityListModal}
-                setCountry={setCity}
+                setCity={setCity}
                 countryId={countryId}
+                setCityId={setCityId}
             />
             <ScrollView keyboardShouldPersistTaps={'always'} style={styles.section}>
                 <TextInput

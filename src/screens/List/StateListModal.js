@@ -18,28 +18,27 @@ const Item = ({ item, handlePress }) => {
   )
 }
 
-const CityListModal = (props) => {
+const StateListModal = (props) => {
 
-  const [cities, setCities] = useState([])
+  const [states, setStates] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const getCities = async () => {
-    const response = await functions.getcitiesByCountry({
+  const getStates = async () => {
+    const response = await functions.getStateByCountry({
       nationality_id: props.countryId
     })
-    console.log("city", response);
     if (response.status) {
       setLoading(false)
-      setCities(response.data)
+      setStates (response.data)
     }
   }
   const selectItem = (item) => {
-    props.setCity(item.name)
-    props.setCityId(item.id)
+    props.setState(item.name)
+    props.setStateId(item.id)
     props.setModalVisible(false)
   }
   useEffect(() => {
-    getCities()
+    getStates()
   }, [props.countryId])
 
   return (
@@ -66,11 +65,11 @@ const CityListModal = (props) => {
                 size={26}
                 color={colors.black} />
               <View style={{ justifyContent: 'center', marginVertical: 8 }}>
-                <Text style={styles.h1}>{"Select your City"}</Text>
+                <Text style={styles.h1}>{"Select your State"}</Text>
                 <Text style={styles.h4}>{"In which you're currently living in."}</Text>
               </View>
               <FlatList
-                data={cities}
+                data={states}
                 renderItem={({ item }) => (<Item item={item} handlePress={() => selectItem(item)} />)}
                 keyExtractor={(item, index) => index.toString()}
               />
@@ -168,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CityListModal;
+export default StateListModal;

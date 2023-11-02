@@ -1,22 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View, SafeAreaView } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet, View, SafeAreaView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 import * as functions from "../utilities/functions"
 import ThinNameRow from '../components/ThinNameRow'
-import { categories } from '../utilities/categories'
 import Separator from '../components/Separator'
 
 const Categories = ({ route, navigation }) => {
   const [categories, setCategories] = useState(false)
+  const [loading, setLoading] = useState(true)
 
+  console.log(route.params);
+  const handlePress = (item) => {
+    if (route.params === "editProfile") {
+      navigation.navigate('EditProfile',
+        {
+          title: item.name,
+          id: item.id
+        })
+    }
+    else {
+      navigation.navigate('Influencers',
+        {
+          title: item.name,
+          id: item.id
+        })
+    }
+  }
   const getCategories = async () => {
     try {
       const response = await functions.getCategories()
       if (!response.status) throw new Error(response.message)
       if (response.status) {
         setCategories(response.categories)
+        setLoading(false)
       }
     } catch (error) {
       Toast(error.message || "Server Error")
@@ -25,6 +43,14 @@ const Categories = ({ route, navigation }) => {
   useEffect(() => {
     getCategories()
   }, [])
+  if (loading) {
+    return (
+      <View style={styles.errorContainer}>
+        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.centeredView}>
@@ -32,7 +58,7 @@ const Categories = ({ route, navigation }) => {
           <View style={{ justifyContent: 'center', marginBottom: 1 }}>
             <FlatList
               data={categories}
-              renderItem={({ item }) => (<ThinNameRow name={item.name} handlePress={() => navigation.navigate('Influencers', { title: item.name, id: item.id })} />)}
+              renderItem={({ item }) => (<ThinNameRow name={item.name} handlePress={() => handlePress(item)} />)}
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={<Separator />}
               ListFooterComponent={<Separator />}
@@ -79,6 +105,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.REGULAR,
     textAlign: 'center'
   },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+
 })
 
 export default Categories

@@ -16,7 +16,7 @@ const InfluencerCard = ({ item }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      onPress={() => navigation.navigate('InfluencerDetails')}
+      onPress={() => navigation.navigate('InfluencerDetails', item)}
       style={styles.card}>
       <View >
         <Image style={styles.cardImg} source={{ uri: item.image_url } || require('../assets/images/avatar.jpeg')} />

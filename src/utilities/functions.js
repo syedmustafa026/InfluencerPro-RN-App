@@ -87,7 +87,7 @@ export const getCategories = async () => {
 }
 export const getCountries = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-countries`, {
+    const { data: response } = await axios.get(`${apiUrl}/get-countries`,null, {
       headers: await getHeader()
     })
     const json = response
@@ -97,9 +97,9 @@ export const getCountries = async () => {
   }
 }
 
-export const getCitiesByState = async () => {
+export const getCitiesByState = async (payload) => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-state`, {
+    const { data: response } = await axios.post(`${apiUrl}/get-cities-by-state`, payload, {
       headers: await getHeader()
     })
     const json = response
@@ -109,11 +109,21 @@ export const getCitiesByState = async () => {
   }
 }
 
+export const getStateByCountry = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/get-states-by-nationality`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
 export const getcitiesByCountry = async (payload) => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-cities-by-country`, payload)
+    const { data: response } = await axios.post(`${apiUrl}/get-cities-by-country`, payload)
     const json = response
-    console.log("jsonn", json);
     return json
   } catch (error) {
     return error.message
@@ -175,7 +185,72 @@ export const updateInfluencerSocialMedia = async (payload) => {
     return error.message
   }
 }
-
+export const requestChat = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/app/chats/send-chat-request`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const checkingRequest = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/app/chats/accept-or-reject`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const getUserChats = async () => {
+  try {
+    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-users-for-chat`, null, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const sendMessage = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/app/chats/send-message`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const getNewMessages = async () => {
+  try {
+    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-new-messages`, null, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const markReadMessage = async (payload) => {
+  try {
+    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-new-messages`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
 export const logout = async () => {
   try {
     const { data: response } = await axios.post(`${apiUrl}/auth/logout`, null, {

@@ -15,20 +15,22 @@ const PaymentDetails = ({ navigation }) => {
   const [value, setValue] = useState('');
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.h4}>Set your paypal or UPI detials where you want to recieve your payments</Text>
+      <Text style={styles.h4}>Set your Stripe payment details where you want to recieve your payments</Text>
 
       <View>
-        <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
-          <RadioButton.Item label="PayPal" value="first" />
-          {value === 'first' && <TextInput
-            label={"Paypal email address"}
-            value={Flat}
-            mode='flat'
-            activeOutlineColor={colors.primary}
-            style={styles.input}
-            onChangeText={text => setFlat(text)}
-          />}
-          <RadioButton.Item label="UPI" value="second" />
+        {/* <RadioButton.Group onValueChange={value => setValue(value)} value={value}> */}
+        {/* <RadioButton.Item label="Stripe" value="first" /> */}
+        <TextInput
+          label={"Stripe account number"}
+          value={Flat}
+          mode='flat'
+          activeOutlineColor={colors.primary}
+          style={styles.input}
+          onChangeText={text => setFlat(text)}
+        />
+        {/* {value === 'first' && 
+          } */}
+        {/* <RadioButton.Item label="UPI" value="second" />
           {value === 'second' && <TextInput
             label={"UPL handle"}
             placeholder="eg: phone@okici.com"
@@ -38,7 +40,7 @@ const PaymentDetails = ({ navigation }) => {
             style={styles.input}
             onChangeText={text => setArea(text)}
           />}
-        </RadioButton.Group>
+        </RadioButton.Group> */}
 
       </View>
 

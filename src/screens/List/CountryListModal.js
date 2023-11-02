@@ -32,6 +32,7 @@ const CountryListModal = (props) => {
   }
   const selectItem = (item) => {
     props.setCountry(item.name)
+    props.clear
     props.setModalVisible(false)
     props.setCountryId(item.id)
   }

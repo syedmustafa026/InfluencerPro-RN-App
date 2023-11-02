@@ -1,66 +1,125 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, ActivityIndicator, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Button, Switch, TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import * as colors from "../../utilities/colors"
 import * as fonts from "../../utilities/fonts"
+import * as functions from "../../utilities/functions"
+import CountryListModal from "../List/CountryListModal";
+import CityListModal from "../List/CityListModal";
+import Toast from "../../components/Toast"
+import StateListModal from "../List/StateListModal";
 
-const Address = ({ navigation }) => {
+const Address = ({ navigation, route }) => {
 
-  const [Flat, setFlat] = useState('');
+  const influencer = route.params
+  const [Flat, setFlat] = useState(influencer.sector || '');
   const [Area, setArea] = useState('');
-  const [city, setcity] = useState('');
-  const [cityId, setcityId] = useState('');
-  const [country, setCountry] = useState('India');
-  const [countryId, setCountryId] = useState('');
-  const [state, setstate] = useState('');
-  const [postalCode, setpostalCode] = useState("")
-
+  const [city, setCity] = useState('Select City');
+  const [cityId, setCityId] = useState(influencer.city_id || null);
+  const [country, setCountry] = useState('Select Country');
+  const [countryId, setCountryId] = useState(influencer.country_id || null);
+  const [state, setstate] = useState('Select State');
+  const [stateId, setStateId] = useState(influencer.state_id || null);
+  const [postalCode, setpostalCode] = useState(influencer.post_code || '')
+  const [countryListModal, setCountryListModal] = useState(false)
+  const [cityListModal, setCityListModal] = useState(false)
+  const [stateModal, setStateModal] = useState(false)
+  console.log(influencer);
+  const saveAddress = async () => {
+    try {
+      const payload = {
+        country_id: countryId,
+        city_id: cityId,
+        state_id: stateId,
+        sector: Flat,
+        post_code: postalCode
+      }
+      const response = await functions.updateInfluencerAddress(payload)
+      if (!response.status) throw new Error(response.message)
+      if (response.status) {
+        Toast(response.message)
+        navigation.goBack()
+      }
+    } catch (error) {
+      Toast(error.message)
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
+      <CountryListModal
+        modalVisible={countryListModal}
+        setModalVisible={setCountryListModal}
+        setCountry={setCountry}
+        setCountryId={setCountryId}
+      />
+      <CityListModal
+        modalVisible={cityListModal}
+        setModalVisible={setCityListModal}
+        setCity={setCity}
+        countryId={countryId}
+        setCityId={setCityId}
+      />
+      <StateListModal
+        modalVisible={stateModal}
+        setModalVisible={setStateModal}
+        setState={setstate}
+        countryId={countryId}
+        setStateId={setStateId}
+      />
       <ScrollView>
-        <TouchableOpacity activeOpacity={0.7} onPress={() => console.log("sss")} >
+        <TouchableOpacity activeOpacity={0.7} onPress={() => setCountryListModal(true)} >
           <View style={styles.row}>
             <Text style={styles.h1}>Country</Text>
-            <Text style={styles.h1}>{country}</Text>
+            <Text style={styles.h2}>{country}</Text>
           </View>
         </TouchableOpacity>
         <View>
           <TextInput
-            label="Flat. House No. Building"
+            label="House number/Sector/Area/Street"
             value={Flat}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
             onChangeText={text => setFlat(text)}
           />
-          <TextInput
+          {/* <TextInput
             label="Area, Sector,Street"
             value={Area}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
             onChangeText={text => setArea(text)}
-          />
-          <TextInput
+          /> */}
+          {/* <TextInput
             label="City"
             value={city}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
             onChangeText={text => setcity(text)}
-          />
-          <TextInput
+          /> */}
+          <TouchableOpacity
+            onPress={() => { countryId != null ? setStateModal(true) : Toast("Please Select Country first") }}
+            activeOpacity={0.6}
+            style={styles.selectButton}>
+            <Text style={styles.selectLabel}>{state}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { countryId != null ? setCityListModal(true) : Toast("Please Select Country first") }}
+            activeOpacity={0.6}
+            style={styles.selectButton}>
+            <Text style={styles.selectLabel}>{city}</Text>
+          </TouchableOpacity>
+          {/* <TextInput
             label="State/Province/Region"
             value={state}
             mode='outlined'
             activeOutlineColor={colors.primary}
             style={styles.input}
             onChangeText={text => setstate(text)}
-          />
+          /> */}
           <TextInput
             label="Postal Code"
             value={postalCode}
@@ -72,7 +131,7 @@ const Address = ({ navigation }) => {
         </View>
 
         <Button
-          onPress={() => { navigation.goBack() }}
+          onPress={saveAddress}
           mode="contained"
           color={colors.white}
           style={[styles.button, { marginTop: 16, backgroundColor: colors.primary }]}
@@ -96,12 +155,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SEMIBOLD,
   },
   h2: {
-    fontSize: 14,
+    fontSize: 16,
     color: colors.black,
-    fontFamily: fonts.BOLD,
-    marginBottom: 14,
+    fontFamily: fonts.MEDIUM,
     textAlign: 'center',
-    marginHorizontal: 20
+    marginHorizontal: 8
   },
   h4: {
     fontSize: 14,
@@ -132,25 +190,25 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SEMIBOLD,
   },
   selectButton: {
-    width: '100%',
-    borderRadius: 5,
+    width: '95%',
+    borderRadius: 4,
     height: 45,
     paddingHorizontal: 4,
-    justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: colors.white,
     borderColor: colors.gray,
     borderWidth: 1,
-    marginTop: 8
+    marginVertical: 8,
+    alignSelf: 'center',
   },
   selectLabel: {
-    fontSize: hp("2"),
-    color: colors.gray,
+    fontSize: hp("2.2"),
+    color: colors.black,
     textAlign: 'justify',
-    paddingHorizontal: 15,
+    alignSelf: 'center',
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    fontFamily: fonts.SEMIBOLD,
   },
   input: {
     width: '95%',
@@ -161,5 +219,10 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontFamily: fonts.SEMIBOLD
   },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
 })
+
 export default Address
