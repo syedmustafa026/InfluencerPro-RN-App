@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -10,18 +10,25 @@ import * as fonts from "../utilities/fonts"
 import Separator from '../components/Separator'
 import ChipComponent from "../components/ChipComponent";
 import Toast from "../components/Toast";
+import * as functions from "../utilities/functions"
 
 const InfluencerDetails = ({ navigation, route }) => {
-  const [makeOfferModal, setMakeOfferModal] = useState(false)
-  const [confirmPhoneModal, setConfirmPhoneModal] = useState(false)
+  const [influencer, setInfluencer] = useState(null)
 
-  const handleApplyingInfluencer = () => {
+  const handleApplyingInfluencer = async () => {
     try {
       Alert.alert("Sure", "Are you sure you want to initiate chat?", [{
         text: "Yes",
-        onPress: () => {
-          Toast("Chat request sent to influencer")
-          navigation.navigate("BottomNavigator")
+        onPress: async () => {
+          const response = await functions.requestChat({
+            user_id: route.params.id
+          })
+          if (!response.status) throw new Error(response.message)
+          if (response.status) {
+            console.log(response);
+            Toast("Chat request sent to influencer")
+            navigation.navigate("BottomNavigator")
+          }
         }
       }, {
         text: "Cancel",
@@ -32,6 +39,23 @@ const InfluencerDetails = ({ navigation, route }) => {
       Toast(error)
     }
   }
+  const getInfluencer = async () => {
+    try {
+      const response = await functions.getInfluencerDetail({
+        influencer_id: route.params.id
+      })
+      if (!response) throw new Error(response.message)
+      if (response) {
+        setInfluencer(response.data)
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  useEffect(() => {
+    getInfluencer()
+  }, [])
+  console.log(influencer);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -46,7 +70,7 @@ const InfluencerDetails = ({ navigation, route }) => {
               size={28}
               color={colors.black} />
           </TouchableOpacity>
-          <Image style={styles.mainImg} source={{ uri: route.params.image_url }} />
+          <Image style={styles.mainImg} source={{ uri: influencer?.image_url }} />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={[styles.shareIcon, { right: 90, bottom: -20 }]}
@@ -73,19 +97,19 @@ const InfluencerDetails = ({ navigation, route }) => {
           paddingHorizontal: 20,
           backgroundColor: colors.white
         }}>
-          <Text style={{ color: colors.primary, fontFamily: fonts.SEMIBOLD, fontSize: 20 }} >{route.params.name}<Icon name='check-decagram' size={22} color={colors.blue} /></Text>
+          <Text style={{ color: colors.primary, fontFamily: fonts.SEMIBOLD, fontSize: 20 }} >{influencer?.name}<Icon name='check-decagram' size={22} color={colors.blue} /></Text>
           <Text style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 24, marginVertical: 8, marginBottom: 20 }} >Categories: <Text style={{ fontSize: 22 }}>Travel , Fashion , Blog.</Text></Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 18 }}>
             <Icon
               name='map-marker-outline'
               size={18}
               color={colors.orange} />
-            <Text style={styles.h4}>Based in: Georgia</Text>
+            <Text style={styles.h4}>Based in: {influencer?.city.name || "  -  "}</Text>
             <Icon
               name='map-marker-outline'
               size={18}
               color={colors.orange} />
-            <Text style={styles.h4}>Nationality: Yogunda</Text>
+            <Text style={styles.h4}>Nationality: {influencer?.country?.name || "  -  "}</Text>
           </View>
           <Separator />
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 18 }}>
@@ -93,17 +117,17 @@ const InfluencerDetails = ({ navigation, route }) => {
               name='facebook'
               size={22}
               color={colors.blue} />
-            <Text style={styles.h4}>3M  </Text>
+            <Text style={styles.h4}>{influencer?.social_media_profiles[0]?.followers} </Text>
             <Icon
               name='instagram'
               size={22}
               color={colors.pink} />
-            <Text style={styles.h4}>1.2M  </Text>
+            <Text style={styles.h4}>{influencer?.social_media_profiles[1]?.followers || "  -  "}</Text>
             <FontAwesome5
               name='tiktok'
               size={22}
               color={colors.pink} />
-            <Text style={styles.h4}> 102k likes</Text>
+            <Text style={styles.h4}>{influencer?.social_media_profiles[3]?.followers || "  -  "}</Text>
           </View>
         </View>
         {/* header finished */}
@@ -114,40 +138,45 @@ const InfluencerDetails = ({ navigation, route }) => {
           <View>
             <View style={styles.row}>
               <Text style={styles.boldText}>Citizenship</Text>
-              <Text style={styles.regularText}>United Arab Emirates</Text>
+              <Text style={styles.regularText}>{influencer?.country?.name || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Age</Text>
-              <Text style={styles.regularText}>23 year</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.age || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Spoken Languages</Text>
-              <Text style={styles.regularText}>English</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.spoken_language.name || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>English dialects</Text>
-              <Text style={styles.regularText}>American/canadian</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.dialects || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Hair Type</Text>
-              <Text style={styles.regularText}>Short</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.hair_type || "  -  "}</Text>
+            </View>
+            <Separator />
+            <View style={styles.row}>
+              <Text style={styles.boldText}>Gender</Text>
+              <Text style={[styles.regularText, { textTransform: 'capitalize' }]}>{influencer?.personal_information?.gender || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Hair color</Text>
-              <Text style={styles.regularText}>Brown</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.hair_color || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Ethnicity</Text>
-              <Text style={styles.regularText}>Look Arab</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.ethnicity.name || "  -  "}</Text>
             </View>
             <Separator />
-            <View style={styles.row}>
+            {/* <View style={styles.row}>
               <Text style={styles.boldText}>Reviews</Text>
               <View style={{ flexDirection: 'row' }}>
                 <MaterialIcon
@@ -171,24 +200,24 @@ const InfluencerDetails = ({ navigation, route }) => {
                   size={18}
                   color={colors.yellow} />
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
         {/* details finished */}
         {/* description start */}
         <View style={styles.box}>
-          <Text style={styles.h2}>Art</Text>
-          <Text style={[styles.h4, { marginTop: 4 }]}>club/freestyle/contemporary, desco, modern</Text>
+          <Text style={styles.h2}>Professional category</Text>
+          <Text style={[styles.h4, { marginTop: 4 }]}>{influencer?.user_professional_detail.professional_category || "  -  "}</Text>
         </View>
         {/* description finished */}
         <View style={styles.box}>
           <Text style={styles.h2}>I have the following</Text>
           <Text style={styles.h4}>Features</Text>
-          <ChipComponent name={"Foot, Model,Saloon"} />
+          <ChipComponent name={`${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})`} />
           <Text style={styles.h4}>Valid License:</Text>
-          <ChipComponent name={" Car"} />
+          <ChipComponent name={influencer?.personal_information?.valid_license} />
           <Text style={styles.h4}>Tattoes</Text>
-          <ChipComponent name={" none"} />
+          <ChipComponent name={influencer?.personal_information?.tattoes} />
 
         </View>
       </ScrollView>

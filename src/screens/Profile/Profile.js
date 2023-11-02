@@ -40,39 +40,40 @@ const Profile = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
-          <View style={styles.box}>
-            <Text style={styles.topicHeading}>Profile</Text>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About", influencer)} style={styles.selectRow}>
-              <View>
-                <View style={styles.row}>
-                  <Text style={styles.selectText}>About you</Text>
+          {influencer?.role.code === "influencer" &&
+            <View style={styles.box}>
+              <Text style={styles.topicHeading}>Profile</Text>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About", influencer)} style={styles.selectRow}>
+                <View>
+                  <View style={styles.row}>
+                    <Text style={styles.selectText}>About you</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                  </View>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+              </TouchableOpacity>
+              <Separator />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address", influencer)} style={styles.selectRow}>
+                <View>
+                  <View style={styles.row}>
+                    <Text style={styles.selectText}>Address</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-            <Separator />
-            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address", influencer)} style={styles.selectRow}>
-              <View>
-                <View style={styles.row}>
-                  <Text style={styles.selectText}>Address</Text>
+              </TouchableOpacity>
+              <Separator />
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials", influencer)} style={styles.selectRow}>
+                <View>
+                  <View style={styles.row}>
+                    <Text style={styles.selectText}>Social Channels</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                  </View>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <Separator />
-            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials", influencer)} style={styles.selectRow}>
-              <View>
-                <View style={styles.row}>
-                  <Text style={styles.selectText}>Social Channels</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                </View>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
 
-          </View>
+            </View>}
           <View style={styles.box}>
             <Text style={styles.topicHeading}>Payout Settings</Text>
             <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("PaymentDetails")} style={styles.selectRow}>
@@ -206,6 +207,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: colors.white
   },
-  
+
 })
 export default Profile
