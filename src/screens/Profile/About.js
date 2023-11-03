@@ -8,7 +8,7 @@ import Separator from "../../components/Separator"
 
 const About = ({ navigation, route }) => {
   const influencer = route.params
-
+  console.log(influencer);
   useEffect(() => {
     navigation.setOptions({
       headerRight: (props) => {
@@ -20,6 +20,7 @@ const About = ({ navigation, route }) => {
 
     })
   }, [])
+  { `${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})` }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -29,19 +30,28 @@ const About = ({ navigation, route }) => {
           <Image style={styles.image} source={{ uri: influencer?.image_url } || require('../../assets/images/avatar.jpeg')} />
           <Text style={styles.h1}>{influencer?.name} {influencer?.last_name} </Text>
         </View>
-        <Text style={styles.topicHeading}>Bio</Text>
+        <Text style={styles.topicHeading}>Categories</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>Write something about yourself</Text>
+            <Text style={styles.selectText}>{influencer?.user_professional_detail.professional_category || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
         </TouchableOpacity>
         <Separator />
-        <Text style={styles.topicHeading}>Date of Birth</Text>
+        <Text style={styles.topicHeading}>Features</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>19 March 1998</Text>
+            <Text style={styles.selectText}>{`${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})`}</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Nationality</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>{influencer?.country?.name || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -50,7 +60,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Gender</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>Male</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.gender || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -59,7 +69,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Dialects</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>-</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.dialects || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -68,7 +78,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Hair Type</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>-</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.hair_type || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -77,43 +87,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Hair color</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>-</Text>
-            <View style={{ flexDirection: 'row' }}>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <Separator />
-        <Text style={styles.topicHeading}>Age</Text>
-        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
-          <View>
-            <Text style={styles.selectText}>-</Text>
-            <View style={{ flexDirection: 'row' }}>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <Separator />
-        <Text style={styles.topicHeading}>Valid License</Text>
-        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
-          <View>
-            <Text style={styles.selectText}>-</Text>
-            <View style={{ flexDirection: 'row' }}>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <Separator />
-        <Text style={styles.topicHeading}>Tattoes</Text>
-        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
-          <View>
-            <Text style={styles.selectText}>-</Text>
-            <View style={{ flexDirection: 'row' }}>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <Separator />
-        <Text style={styles.topicHeading}>Spoken Language</Text>
-        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
-          <View>
-            <Text style={styles.selectText}>-</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.hair_color || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -122,12 +96,47 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Ethnicity</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>-</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.ethnicity.name || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
         </TouchableOpacity>
         <Separator />
+        <Text style={styles.topicHeading}>Age</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>{influencer?.personal_information?.age || "  -  "}</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Valid License</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>{influencer?.personal_information?.valid_license}</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Tattoes</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>{influencer?.personal_information?.tattoes}</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Separator />
+        <Text style={styles.topicHeading}>Spoken Language</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
+          <View>
+            <Text style={styles.selectText}>{influencer?.personal_information?.spoken_language.name || "  -  "}</Text>
+            <View style={{ flexDirection: 'row' }}>
+            </View>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
 
@@ -179,7 +188,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.gray,
     marginLeft: 16,
-    fontFamily: fonts.SEMIBOLD
+    fontFamily: fonts.SEMIBOLD,
+    textTransform: 'capitalize'
   },
   h1: {
     fontSize: 20,

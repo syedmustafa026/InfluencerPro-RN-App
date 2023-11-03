@@ -3,23 +3,24 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import { View, Text } from 'react-native'
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
+import * as functions from '../utilities/functions'
+import Toast from '../components/Toast'
 
 const Message = () => {
   const [messages, setMessages] = useState([])
 
+  const getMessages = async (type) => {
+    try {
+      const response = await functions.getNewMessages()
+      if (!response.status) throw new Error(response.message)
+      setMessages(response.data)
+    }
+    catch (error) {
+      Toast(error.message || "server error")
+    }
+  }
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://loremflickr.com/140/140/any',
-        },
-      },
-    ])
+    getMessages()
   }, [])
 
   const onSend = useCallback((messages = []) => {

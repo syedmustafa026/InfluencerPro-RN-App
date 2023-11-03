@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as colors from "../../utilities/colors"
+import { useIsFocused } from "@react-navigation/native";
 import * as functions from "../../utilities/functions"
 import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
+import Toast from '../../components/Toast'
 
 const Profile = ({ navigation }) => {
   const [influencer, setInfluencer] = useState(null)
-  console.log(influencer);
+  const [influencerDetail, setInfluencerDetail] = useState(null)
+  const focused = useIsFocused()
+
   const logoutUser = async () => {
     try {
       const response = await functions.logout()
@@ -22,20 +26,33 @@ const Profile = ({ navigation }) => {
       Toast(error.message || "Server Error")
     }
   }
-  const getInfluencers = async () => {
+  const getInfluencer = async () => {
     try {
       const response = await functions.getItem("user")
-      if (!response) throw new Error(response.message)
-      if (response) {
-        setInfluencer(response)
-      }
+      setInfluencer(response)
+      getInfluencerDetails(response.id)
+      if (!influencer) throw new Error(influencer.message)
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  const getInfluencerDetails = async (id) => {
+    try {
+      const influencer = await functions.getInfluencerDetail({
+        influencer_id: id
+      })
+      setInfluencerDetail(influencer.data)
+      if (!influencer) throw new Error(influencer.message)
     } catch (error) {
       Toast(error.message || "Server Error")
     }
   }
   useEffect(() => {
-    getInfluencers()
-  }, [])
+    if (focused) {
+      getInfluencer()
+    }
+  }, [focused])
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -43,7 +60,7 @@ const Profile = ({ navigation }) => {
           {influencer?.role.code === "influencer" &&
             <View style={styles.box}>
               <Text style={styles.topicHeading}>Profile</Text>
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About", influencer)} style={styles.selectRow}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("About", influencerDetail)} style={styles.selectRow}>
                 <View>
                   <View style={styles.row}>
                     <Text style={styles.selectText}>About you</Text>
@@ -53,7 +70,7 @@ const Profile = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Separator />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address", influencer)} style={styles.selectRow}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Address", influencerDetail)} style={styles.selectRow}>
                 <View>
                   <View style={styles.row}>
                     <Text style={styles.selectText}>Address</Text>
@@ -63,7 +80,7 @@ const Profile = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Separator />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials", influencer)} style={styles.selectRow}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Socials", influencerDetail)} style={styles.selectRow}>
                 <View>
                   <View style={styles.row}>
                     <Text style={styles.selectText}>Social Channels</Text>

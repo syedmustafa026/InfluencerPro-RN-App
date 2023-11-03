@@ -5,14 +5,24 @@ import * as fonts from "../utilities/fonts"
 import MessageComponent from '../components/MessageComponent'
 import MessageRequest from '../components/MessageRequest'
 import Toast from '../components/Toast'
+import * as functions from '../utilities/functions'
 
 const Chats = ({ navigation }) => {
 
-  const handleRequest = (type) => {
+  const handleRequest = async (type) => {
     try {
-      console.log("happened ", type);
-    } catch (error) {
-      Toast(error)
+      const payload = {
+        chat_id: 1,
+        status: type
+      }
+      const response = await functions.checkingRequest(payload)
+      if (!response.status) throw new Error(response.message)
+      if (response.message === "Chat has been accepted") {
+        navigation.navigate("Message")
+      }
+    }
+    catch (error) {
+      Toast(error.message || "server error")
     }
   }
 

@@ -1,23 +1,43 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { Button } from 'react-native-paper'
-
+import Toast from '../components/Toast'
 import * as fonts from '../utilities/fonts'
+import * as functions from "../utilities/functions"
 import * as colors from "../utilities/colors"
 import { getHeader } from '../utilities/functions'
 
 const Home = ({ navigation }) => {
+  const [influencer, setInfluencer] = useState(null)
+  const getInfluencers = async () => {
+    try {
+      const response = await functions.getItem("user")
+      if (!response) throw new Error(response.message)
+      if (response) {
+        setInfluencer(response)
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  useEffect(() => {
+    getInfluencers()
+  }, [])
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Text style={styles.h3}>You have not partnered up with any Influencer</Text>
-        <Button
-          onPress={() => { navigation.navigate("Categories") }}
-          mode="contained"
-          color={colors.white}
-          style={styles.button}
-          labelStyle={styles.ButtonLabel}
-        >Explore Influencers</Button>
+        {influencer?.role.code === "vendor" &&
+          <>
+            <Text style={styles.h3}>You have not partnered up with any Influencer</Text>
+            <Button
+              onPress={() => { navigation.navigate("Categories") }}
+              mode="contained"
+              color={colors.white}
+              style={styles.button}
+              labelStyle={styles.ButtonLabel}
+            >Explore Influencers</Button>
+          </>
+        }
         <View>
           <Text style={styles.h1}>Influencer Marketing Brief</Text>
           <Text style={styles.h2}>Influencers Market</Text>

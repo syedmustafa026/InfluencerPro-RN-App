@@ -36,7 +36,7 @@ const InfluencerDetails = ({ navigation, route }) => {
         cancelable: true
       })
     } catch (error) {
-      Toast(error)
+      Toast(error.message)
     }
   }
   const getInfluencer = async () => {
@@ -55,7 +55,6 @@ const InfluencerDetails = ({ navigation, route }) => {
   useEffect(() => {
     getInfluencer()
   }, [])
-  console.log(influencer);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>

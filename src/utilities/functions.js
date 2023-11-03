@@ -231,7 +231,7 @@ export const sendMessage = async (payload) => {
 }
 export const getNewMessages = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-new-messages`, null, {
+    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-new-messages`, {
       headers: await getHeader()
     })
     const json = response
