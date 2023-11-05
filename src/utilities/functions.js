@@ -209,7 +209,7 @@ export const checkingRequest = async (payload) => {
 }
 export const getUserChats = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-users-for-chat`, null, {
+    const { data: response } = await axios.post(`${apiUrl}/app/chats/get-users-for-chat`, null, {
       headers: await getHeader()
     })
     const json = response

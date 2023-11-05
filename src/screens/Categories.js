@@ -11,7 +11,6 @@ const Categories = ({ route, navigation }) => {
   const [categories, setCategories] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  console.log(route.params);
   const handlePress = (item) => {
     if (route.params === "editProfile") {
       navigation.navigate('EditProfile',

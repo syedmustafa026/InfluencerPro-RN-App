@@ -11,10 +11,11 @@ const MessageRequest = (props) => {
     <>
       <TouchableOpacity activeOpacity={1} style={[{ padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, props.opened && { padding: 15, flexDirection: 'row', backgroundColor: colors.gray300 }]}>
         <View style={[{ padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, props.opened && { padding: 15, flexDirection: 'row', backgroundColor: colors.gray300 }]}>
-          <Image style={styles.cardImg} source={require('../assets/images/avatar.jpeg')} />
+          <Image style={styles.cardImg} source={{ uri: props.image }} />
           <View style={{ paddingHorizontal: 15, }}>
-            <Text style={styles.h1}>John Doe</Text>
-            <Text style={styles.h2}>Has sent you a message{'\n'}request.</Text>
+            <Text style={styles.h1}>{props.name}</Text>
+            <Text style={styles.h2}>{props.latest_message}</Text>
+            <Text style={styles.h4}>{props.time}</Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row', }}>

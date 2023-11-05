@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, View, Text, SafeAreaView, StyleSheet, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as colors from "../../utilities/colors"
 import { useIsFocused } from "@react-navigation/native";
@@ -12,6 +12,7 @@ const Profile = ({ navigation }) => {
   const [influencer, setInfluencer] = useState(null)
   const [influencerDetail, setInfluencerDetail] = useState(null)
   const focused = useIsFocused()
+  const [loading, setLoading] = useState(true)
 
   const logoutUser = async () => {
     try {
@@ -31,7 +32,7 @@ const Profile = ({ navigation }) => {
       const response = await functions.getItem("user")
       setInfluencer(response)
       getInfluencerDetails(response.id)
-      if (!influencer) throw new Error(influencer.message)
+      if (!response.status) throw new Error(influencer.message)
     } catch (error) {
       Toast(error.message || "Server Error")
     }
@@ -42,7 +43,8 @@ const Profile = ({ navigation }) => {
         influencer_id: id
       })
       setInfluencerDetail(influencer.data)
-      if (!influencer) throw new Error(influencer.message)
+      setLoading(false)
+      if (!influencer.status) throw new Error(influencer.message)
     } catch (error) {
       Toast(error.message || "Server Error")
     }
@@ -53,6 +55,13 @@ const Profile = ({ navigation }) => {
     }
   }, [focused])
 
+  if (loading) {
+    return (
+      <View style={styles.errorContainer}>
+        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -224,6 +233,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: colors.white
   },
-
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
 })
 export default Profile

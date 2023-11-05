@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, StyleSheet,TouchableOpacity } from 'react-native'
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 import Separator from "./Separator";
@@ -9,11 +9,11 @@ const MessageComponent = (props) => {
     <>
       <TouchableOpacity activeOpacity={0.7} onPress={props.handlePress} style={[{ padding: 15, flexDirection: 'row' }, props.opened && { padding: 15, flexDirection: 'row', backgroundColor: colors.gray300 }]}>
         <>
-          <Image style={styles.cardImg} source={require('../assets/images/avatar.jpeg')} />
+          <Image style={styles.cardImg} source={{ uri: props.image }} />
           <View style={{ paddingHorizontal: 15, }}>
-            <Text style={styles.h1}>John Doe</Text>
-            <Text style={styles.h2}>Hello Developer!</Text>
-            <Text style={styles.h4}>3 mins ago</Text>
+            <Text style={styles.h1}>{props.name}</Text>
+            <Text style={styles.h2}>{props.latest_message}</Text>
+            <Text style={styles.h4}>{props.time}</Text>
           </View>
         </>
       </TouchableOpacity>
