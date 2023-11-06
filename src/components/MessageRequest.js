@@ -19,8 +19,8 @@ const MessageRequest = (props) => {
           </View>
         </View>
         <View style={{ flexDirection: 'row', }}>
-          <Icon onPress={() => props.handleRequest('accepted')} name='checkbox-marked-circle' color={colors.success} size={36} />
-          <Entypo onPress={() => props.handleRequest('rejected')} name='circle-with-cross' color={colors.red} size={36} />
+          <Icon onPress={() => props.handleRequest(props.chat_id, 'accepted')} name='checkbox-marked-circle' color={colors.success} size={36} />
+          <Entypo onPress={() => props.handleRequest(props.chat_id, 'rejected')} name='circle-with-cross' color={colors.red} size={36} />
         </View>
       </TouchableOpacity>
       <Separator />

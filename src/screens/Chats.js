@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, ActivityIndicator, Text, FlatList, StyleSheet } from 'react-native'
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
 import MessageComponent from '../components/MessageComponent'
@@ -10,14 +10,17 @@ import Separator from '../components/Separator'
 
 const Chats = ({ navigation }) => {
   const [chats, setChats] = useState(false)
+  const [influencer, setInfluencer] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const handleRequest = async (type) => {
+  const handleRequest = async (id, type) => {
     try {
       const payload = {
-        chat_id: 1,
+        chat_id: id,
         status: type
       }
       const response = await functions.checkingRequest(payload)
+      console.log(response);
       if (!response.status) throw new Error(response.message)
       if (response.message === "Chat has been accepted") {
         navigation.navigate("Message")
@@ -27,26 +30,48 @@ const Chats = ({ navigation }) => {
       Toast(error.message || "server error")
     }
   }
-
   const getChats = async () => {
     try {
       const response = await functions.getUserChats()
       if (!response.status) throw new Error(response.message)
-      setChats(response.data)
+      if (response.status) {
+        setChats(response.data)
+        setLoading(false)
+      }
     }
     catch (error) {
       Toast(error.message || "server error")
     }
+    finally {
+      setLoading(false)
+    }
   }
-  useEffect(() => {
-    getChats()
-  }, [])
 
+  const getInfluencer = async () => {
+    try {
+      const response = await functions.getItem("user")
+      if (!response.status) throw new Error(influencer.message)
+      setInfluencer(response)
+      if (response) getChats()
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
   const Item = ({ item }) => {
     return (
-      item.latest_message === "Sent you a message request!" ?
-        <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handleRequest={handleRequest} /> :
-        <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handlePress={() => navigation.navigate("Message")} />
+      influencer.role.code === "influencer" && item.latest_message === "Sent you a message request!" ?
+        <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handleRequest={handleRequest} chat_id={item.messages[0]?.chat_id} /> :
+        <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.name} latest_message={item.latest_message} handlePress={() => navigation.navigate("Message", item)} />
+    )
+  }
+  useEffect(() => {
+    getInfluencer()
+  }, [])
+  if (loading) {
+    return (
+      <View style={styles.errorContainer}>
+        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
+      </View>
     )
   }
   return (
@@ -62,4 +87,11 @@ const Chats = ({ navigation }) => {
     // </View>
   )
 }
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+})
 export default Chats

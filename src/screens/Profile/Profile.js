@@ -32,7 +32,7 @@ const Profile = ({ navigation }) => {
       const response = await functions.getItem("user")
       setInfluencer(response)
       getInfluencerDetails(response.id)
-      if (!response.status) throw new Error(influencer.message)
+      if (!response.status) throw new Error(response.message)
     } catch (error) {
       Toast(error.message || "Server Error")
     }

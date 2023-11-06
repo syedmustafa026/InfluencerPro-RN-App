@@ -11,6 +11,7 @@ const About = ({ navigation, route }) => {
   console.log(influencer);
   useEffect(() => {
     navigation.setOptions({
+      title: 'Edit Profile',
       headerRight: (props) => {
         return (
           <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center' }}>
