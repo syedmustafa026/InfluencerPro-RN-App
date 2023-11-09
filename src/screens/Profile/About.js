@@ -43,7 +43,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Features</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>{`${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})`}</Text>
+            <Text style={styles.selectText}>{influencer?.features[0].feature.name != undefined ? `${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})` : "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>

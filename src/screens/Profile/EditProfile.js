@@ -13,21 +13,19 @@ import Dropdown from "../../components/Dropdown"
 import Toast from "../../components/Toast"
 
 const EditProfile = ({ navigation, route }) => {
-  console.log(route.params);
   const [dialects, setDialects] = useState('')
   const [hairtype, setHairtype] = useState('')
   const [haircolor, setHaircolor] = useState('')
   const [age, setAge] = useState('')
   const [language, setLanguage] = useState('')
   const [tattoes, setTattoes] = useState('')
+  const [valid_license, set_valid_license] = useState('')
   const [skils, setSkills] = useState('')
   const [gender, setGender] = useState('Select Gender')
   const [categories, setCategories] = useState('Select your Category')
   const [genderModal, setGenderModal] = useState(false)
 
   const [img, setImg] = useState(null)
-  const [image, setImage] = useState(null)
-
 
   const OpenGallery = () => {
     const options = {
@@ -45,20 +43,20 @@ const EditProfile = ({ navigation, route }) => {
       else {
         console.log(response.assets[0].uri);
         setImg({ uri: 'data:image/jpg;base64,' + response.assets[0].base64 })
-        setImage(response.assets[0].uri)
       }
     })
   }
   const handlePress = async () => {
     try {
       const payload = {
-        dob: dob,
-        phone: phone,
-        gender: gender,
-        offers_and_bargains: offers,
-        weekly_newsletter: newsletter,
+        dialects: dialects,
+        hair_type: hairtype,
+        hair_color: haircolor,
+        age: age,
+        valid_license: valid_license,
+        tattoes: tattoes,
         image: img?.uri,
-        name: name
+        gender: gender
       }
       const response = await functions.completeProfile(payload)
       if (!response.status) throw new Error(response.message)
@@ -143,6 +141,17 @@ const EditProfile = ({ navigation, route }) => {
                 keyboardType='number-pad'
                 activeUnderlineColor={colors.primary}
                 onChangeText={(value) => setAge(value)}
+              />
+            </View>
+            <View style={styles.InputBox}>
+              <TextInput
+                theme={{ colors: { text: colors.white, placeholder: colors.primaryLight, } }}
+                style={styles.Input}
+                placeholder="Valid License"
+                value={valid_license}
+                keyboardType='number-pad'
+                activeUnderlineColor={colors.primary}
+                onChangeText={(value) => set_valid_license(value)}
               />
             </View>
             <View style={styles.InputBox}>

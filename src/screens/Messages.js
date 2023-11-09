@@ -11,7 +11,7 @@ const Message = ({ navigation, route }) => {
   console.log("wwwwwwww________", route.params);
   const [messages, setMessages] = useState(route.params.messages)
   const [influencer, setInfluencer] = useState(null)
-
+  console.log(influencer);
   const getInfluencer = async () => {
     try {
       const response = await functions.getItem("user")
@@ -65,7 +65,7 @@ const Message = ({ navigation, route }) => {
         messages={messages}
         onSend={messages => onSend(messages)}
         user={{
-          _id: influencer.id,
+          _id: influencer?.id,
         }}
       />
     </>
