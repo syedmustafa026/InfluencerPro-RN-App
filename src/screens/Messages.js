@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { Bubble, GiftedChat } from 'react-native-gifted-chat'
 import { View, Text } from 'react-native'
 import * as colors from "../utilities/colors"
 import * as fonts from "../utilities/fonts"
@@ -8,10 +8,9 @@ import Toast from '../components/Toast'
 
 const Message = ({ navigation, route }) => {
 
-  console.log("wwwwwwww________", route.params);
-  const [messages, setMessages] = useState(route.params.messages)
+  const [messages, setMessages] = useState([])
   const [influencer, setInfluencer] = useState(null)
-  console.log(influencer);
+
   const getInfluencer = async () => {
     try {
       const response = await functions.getItem("user")
@@ -21,12 +20,37 @@ const Message = ({ navigation, route }) => {
       Toast(error.message || "Server Error")
     }
   }
-  const getMessages = async (type) => {
+  const getMessages = async () => {
     try {
-      const response = await functions.getNewMessages()
-      if (!response.status) throw new Error(response.message)
-      setMessages(response.data)
-      console.log("www", response);
+      // const response = await functions.getNewMessages()
+      // if (!response.status) throw new Error(response.message)
+      // console.log("ress", route.params);
+      // setMessages(
+      //   response.data.map((chatMessage) => {
+      //     console.log("bisme", chatMessage);
+      //     return {
+      //       _id: chatMessage.id,
+      //       text: chatMessage.message,
+      //       createdAt: chatMessage.created_at,
+      //       user: {
+      //         _id: route.params.messages[0].receiver_id,
+      //       }
+      //     }
+      //   })
+      // )
+      const filteredArr = route.params.messages.sort((a, b) => a.id - b.id).reverse()
+      setMessages(
+        filteredArr.map((chatMessage) => {
+          return {
+            _id: chatMessage.id,
+            text: chatMessage.message,
+            createdAt: chatMessage.created_at,
+            user: {
+              _id: route.params.messages[0].receiver_id,
+            }
+          }
+        })
+      )
     }
     catch (error) {
       Toast(error.message || "server error")
@@ -39,47 +63,98 @@ const Message = ({ navigation, route }) => {
     getInfluencer()
 
   }, [])
+
   useEffect(() => {
     getMessages()
-    // setMessages({
-    //   _id: 1,
-    //   text: 'Hello developer',
-    //   createdAt: new Date(),
-    //   user: {
-    //     _id: 2,
-    //     name: 'React Native',
-    //     avatar: 'https://loremflickr.com/140/140/any',
-    //   },
-    // })
+    const filteredArr = route.params.messages.sort((a, b) => a.id - b.id).reverse()
+    setMessages(
+      filteredArr.map((chatMessage) => {
+        return {
+          _id: chatMessage.id,
+          text: chatMessage.message,
+          createdAt: chatMessage.created_at,
+          user: {
+            _id: route.params.messages[0].receiver_id,
+          }
+        }
+      })
+    )
+  }, [])
+
+  const sendMessage = async (text) => {
+    const response = await functions.sendMessage({
+      user_id: route.params.messages[0].receiver_id,
+      message: text,
+      chat_id: route.params.messages[0].chat_id
+    })
+    if (!response.status) throw new Error(response.message)
+  }
+  useEffect(() => {
+    const interval = setInterval(() => getMessages(), 2000);
+    return () => {
+      clearInterval(interval);
+    };
   }, [])
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, messages),
     )
-  }, [])
-
+    const { text } = messages[0];
+    sendMessage(text);
+  }, []);
   return (
     <>
       <GiftedChat
         messages={messages}
+        scrollToBottom={true}
+        placeholder='Send Message...'
+        keyboardShouldPersistTaps={'never'}
+        renderAvatar={null}
         onSend={messages => onSend(messages)}
         user={{
           _id: influencer?.id,
+        }}
+        renderBubble={props => {
+          return (
+            <Bubble
+              {...props}
+              position={route.params.messages[0]?.message_position}
+              textStyle={{
+                right: {
+                  color: colors.white,
+                },
+              }}
+              wrapperStyle={{
+                left: {
+                  marginBottom: 25,
+                  width: '70%',
+                  backgroundColor: colors.white,
+                  padding: 10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+
+                  },
+                },
+                right: {
+                  backgroundColor: colors.primary,
+                  marginBottom: 25,
+                  width: '70%',
+                  padding: 10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                },
+              }}
+            />
+          );
         }}
       />
     </>
   )
 }
 export default Message
-
-// {
-//   _id: 1,
-//   text: 'Hello developer',
-//   createdAt: new Date(),
-//   user: {
-//     _id: 2,
-//     name: 'React Native',
-//     avatar: 'https://loremflickr.com/140/140/any',
-//   },
-// }

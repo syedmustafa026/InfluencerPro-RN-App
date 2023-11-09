@@ -6,9 +6,10 @@ import MessageComponent from '../components/MessageComponent'
 import MessageRequest from '../components/MessageRequest'
 import Toast from '../components/Toast'
 import * as functions from '../utilities/functions'
-import Separator from '../components/Separator'
+import { useIsFocused } from '@react-navigation/native'
 
 const Chats = ({ navigation }) => {
+  const focused = useIsFocused()
   const [chats, setChats] = useState(false)
   const [influencer, setInfluencer] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -57,7 +58,6 @@ const Chats = ({ navigation }) => {
       Toast(error.message || "Server Error")
     }
   }
-  console.log(chats);
   const Item = ({ item }) => {
     return (
       influencer.role.code === "influencer" && item.latest_message === "Sent you a message request!" ?
@@ -66,7 +66,16 @@ const Chats = ({ navigation }) => {
     )
   }
   useEffect(() => {
-    getInfluencer()
+    if (focused) {
+      getInfluencer()
+    }
+  }, [focused])
+
+  useEffect(() => {
+    const interval = setInterval(() => getInfluencer(), 1000)
+    return () => {
+      clearInterval(interval)
+    }
   }, [])
   if (loading) {
     return (
