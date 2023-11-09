@@ -57,6 +57,7 @@ const Chats = ({ navigation }) => {
       Toast(error.message || "Server Error")
     }
   }
+  console.log(chats);
   const Item = ({ item }) => {
     return (
       influencer.role.code === "influencer" && item.latest_message === "Sent you a message request!" ?
@@ -76,15 +77,16 @@ const Chats = ({ navigation }) => {
   }
   return (
     <>
-      <FlatList
-        data={chats}
-        renderItem={({ item }) => (<Item item={item} />)}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      {chats.length > 0 ?
+        <FlatList
+          data={chats}
+          renderItem={({ item }) => (<Item item={item} />)}
+          keyExtractor={(item, index) => index.toString()}
+        /> :
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 18 }}>No Messages</Text>
+        </View>}
     </>
-    // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //   <Text style={{ color: colors.black, fontFamily:fonts.SEMIBOLD,fontSize:18 }}>No Chats to Influencers</Text>
-    // </View>
   )
 }
 
