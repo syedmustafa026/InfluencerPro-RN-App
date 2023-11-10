@@ -99,9 +99,9 @@ const InfluencerSignin = ({ navigation }) => {
                     onChangeText={(value) => setPassword(value)}
                 />
 
-                <View style={styles.forgotPassword}>
+                {/* <View style={styles.forgotPassword}>
                     <Text style={styles.forgotPasswordText} onPress={handleForgotPassword}>Forgot Password?</Text>
-                </View>
+                </View> */}
                 <Button
                     loading={laoding ? true : false}
                     mode="contained"

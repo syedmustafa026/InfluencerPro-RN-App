@@ -9,6 +9,7 @@ export const getHeader = async () => {
     const AuthStr = {
       Authorization: `Bearer ${USER_TOKEN}`
     }
+    console.log(AuthStr);
     return AuthStr
   }
   else return null
@@ -87,7 +88,7 @@ export const getCategories = async () => {
 }
 export const getCountries = async () => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/get-countries`,null, {
+    const { data: response } = await axios.get(`${apiUrl}/get-countries`, null, {
       headers: await getHeader()
     })
     const json = response
@@ -242,7 +243,7 @@ export const getNewMessages = async () => {
 }
 export const markReadMessage = async (payload) => {
   try {
-    const { data: response } = await axios.get(`${apiUrl}/app/chats/get-new-messages`, payload, {
+    const { data: response } = await axios.post(`${apiUrl}/app/chats/mark-as-read`, payload, {
       headers: await getHeader()
     })
     const json = response

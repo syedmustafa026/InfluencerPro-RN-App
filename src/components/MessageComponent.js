@@ -7,7 +7,10 @@ import Separator from "./Separator";
 const MessageComponent = (props) => {
   return (
     <>
-      <TouchableOpacity activeOpacity={0.7} onPress={props.handlePress} style={[{ padding: 15, flexDirection: 'row' }, props.opened && { padding: 15, flexDirection: 'row', backgroundColor: colors.gray300 }]}>
+      <TouchableOpacity 
+      activeOpacity={0.7}
+      onPress={props.handlePress}
+       style={[{ padding: 15, flexDirection: 'row' }, props.opened && { padding: 15, flexDirection: 'row', backgroundColor: colors.gray300 }]}>
         <>
           <Image style={styles.cardImg} source={{ uri: props.image }} />
           <View style={{ paddingHorizontal: 15, }}>

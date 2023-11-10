@@ -13,6 +13,7 @@ import Dropdown from "../../components/Dropdown"
 import Toast from "../../components/Toast"
 
 const EditProfile = ({ navigation, route }) => {
+  const influencer = route.params
   const [dialects, setDialects] = useState('')
   const [hairtype, setHairtype] = useState('')
   const [haircolor, setHaircolor] = useState('')
@@ -55,20 +56,24 @@ const EditProfile = ({ navigation, route }) => {
         age: age,
         valid_license: valid_license,
         tattoes: tattoes,
-        image: img?.uri,
-        gender: gender
+        gender: gender,
+        professional_category: null,
+        category_id: 1,
+        skills: "[Music]",
+        features: "[drawing]",
+        ethnicty_id: 1,
+        spoken_language_id: 1,
+        logo: img?.uri
       }
       const response = await functions.completeProfile(payload)
-      console.log(response);
+      Toast("Updated successfully")
+      navigation.replace("BottomNavigator")
       if (!response.status) throw new Error(response.message)
       if (response.status) {
-        await functions.setItem('user', response.data)
-        Toast("Updated successfully")
-        navigation.replace("BottomNavigator")
       }
     }
     catch (error) {
-      Toast(error.message || "server error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   console.log(route.params);
@@ -85,7 +90,7 @@ const EditProfile = ({ navigation, route }) => {
             <TouchableOpacity
               onPress={() => OpenGallery()}
               activeOpacity={0.8}>
-              <Image style={styles.image} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWje_gjVcmi-wks5nTRnW_xv5W2l3MVnk7W1QDcZuhNg&s" }} />
+              <Image style={styles.image} source={{ uri: img == null ? influencer?.image_url : img?.uri }} />
               <Icon style={{ position: 'absolute', bottom: 0, left: 70 }} name='pencil-circle' color={colors.gray} size={28} />
             </TouchableOpacity>
           </View>
@@ -150,7 +155,6 @@ const EditProfile = ({ navigation, route }) => {
                 style={styles.Input}
                 placeholder="Valid License"
                 value={valid_license}
-                keyboardType='number-pad'
                 activeUnderlineColor={colors.primary}
                 onChangeText={(value) => set_valid_license(value)}
               />

@@ -65,7 +65,7 @@ const BottomNavigator = () => {
             color={focused ? colors.black : colors.gray} />
         ),
       }}
-        name="Favorite"
+        name="Chats"
         component={Favorites} />
 
       <Tab.Screen options={{
@@ -88,7 +88,7 @@ const BottomNavigator = () => {
             color={focused ? colors.black : colors.gray} />
         ),
       }}
-        name="Messages"
+        name="Earnings"
         component={Messages} />
       <Tab.Screen
         options={{

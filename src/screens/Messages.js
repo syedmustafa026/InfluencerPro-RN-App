@@ -17,7 +17,7 @@ const Message = ({ navigation, route }) => {
       setInfluencer(response)
       if (!response.status) throw new Error(response.message)
     } catch (error) {
-      Toast(error.message || "Server Error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   const getMessages = async () => {
@@ -53,7 +53,7 @@ const Message = ({ navigation, route }) => {
       )
     }
     catch (error) {
-      Toast(error.message || "server error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   useEffect(() => {
@@ -89,12 +89,12 @@ const Message = ({ navigation, route }) => {
     })
     if (!response.status) throw new Error(response.message)
   }
-  useEffect(() => {
-    const interval = setInterval(() => getMessages(), 2000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [])
+  // useEffect(() => {
+  //   const interval = setInterval(() => getMessages(), 2000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [])
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages =>

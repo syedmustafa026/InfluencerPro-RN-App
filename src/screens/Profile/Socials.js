@@ -10,24 +10,26 @@ import * as functions from "../../utilities/functions"
 
 import Toast from "../../components/Toast"
 
-const Socials = ({ navigation }) => {
+const Socials = ({ navigation, route }) => {
+  const socials = route.params.social_media_profiles
 
-  const [instagram, setInstagram] = useState('');
-  const [tiktok, setTiktok] = useState('');
-  const [facebook, setFacebook] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [linkedIn, setLinkedIn] = useState("")
-  const [pinterest, setPinterest] = useState("")
-  const [website, setWebsite] = useState("")
-  const [youtube, setYoutube] = useState("")
+  const [facebook, setFacebook] = useState(socials[0]?.username || "");
+  const [instagram, setInstagram] = useState(socials[1]?.username || "");
+  const [twitter, setTwitter] = useState(socials[2]?.username || "");
+  const [tiktok, setTiktok] = useState(socials[3]?.username || "");
+  const [youtube, setYoutube] = useState(socials[4]?.username || "")
+  const [linkedIn, setLinkedIn] = useState(socials[5]?.username || "")
+  const [pinterest, setPinterest] = useState(socials[6]?.username || "")
+  const [website, setWebsite] = useState(socials[7]?.username || "")
 
-  const [instagramFollowers, setInstagramFollowers] = useState('')
-  const [tiktokFollowers, setTiktokFollowers] = useState('')
-  const [facebookFollowers, setFacebookFollowers] = useState('')
-  const [twitterFollowers, setTwitterFollowers] = useState('')
-  const [linkedInFollowers, setLinkedInFollowers] = useState('')
-  const [pinterestFollowers, setPinterestFollowers] = useState('')
-  const [youtubeFollowers, setYoutubeFollowers] = useState('')
+  const [facebookFollowers, setFacebookFollowers] = useState(socials[0]?.followers || "")
+  const [instagramFollowers, setInstagramFollowers] = useState(socials[1]?.followers || "")
+  const [twitterFollowers, setTwitterFollowers] = useState(socials[2]?.followers || "")
+  const [tiktokFollowers, setTiktokFollowers] = useState(socials[3]?.followers || "")
+  const [youtubeFollowers, setYoutubeFollowers] = useState(socials[4]?.followers || "")
+  const [pinterestFollowers, setPinterestFollowers] = useState(socials[5]?.followers || "")
+  const [linkedInFollowers, setLinkedInFollowers] = useState(socials[6]?.followers || "")
+
   const saveSocials = async () => {
     try {
       const payload = {
@@ -37,16 +39,16 @@ const Socials = ({ navigation }) => {
         facebook: facebook,
         linkedin: linkedIn,
         pinterest: pinterest,
-        blog: websitex
+        blog: website
       }
       const response = await functions.updateInfluencerSocialMedia(payload)
-      console.log(response);
       if (!response.status) throw new Error(response.message)
-      Toast(response);
-      console.log(response);
-      // navigation.goBack()    
+      if (response.status) {
+        navigation.goBack()
+        Toast(response.message)
+      }
     } catch (error) {
-      Toast(error.message)
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   return (

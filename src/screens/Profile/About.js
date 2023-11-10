@@ -8,7 +8,6 @@ import Separator from "../../components/Separator"
 
 const About = ({ navigation, route }) => {
   const influencer = route.params
-  console.log(influencer);
   useEffect(() => {
     navigation.setOptions({
       title: 'Edit Profile',
@@ -21,7 +20,6 @@ const About = ({ navigation, route }) => {
 
     })
   }, [])
-  { `${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})` }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -34,7 +32,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Categories</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>{influencer?.user_professional_detail.professional_category || "  -  "}</Text>
+            <Text style={styles.selectText}>{influencer?.user_professional_detail?.professional_category || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -43,7 +41,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Features</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>{influencer?.features[0].feature.name != undefined ? `${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})` : "  -  "}</Text>
+            <Text style={styles.selectText}>{influencer?.features[0]?.feature?.name != undefined ? `${influencer?.features[0]?.feature?.name} (${influencer?.features[0]?.feature?.description})` : "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -97,7 +95,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Ethnicity</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>{influencer?.personal_information?.ethnicity.name || "  -  "}</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.ethnicity?.name || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>
@@ -133,7 +131,7 @@ const About = ({ navigation, route }) => {
         <Text style={styles.topicHeading}>Spoken Language</Text>
         <TouchableOpacity activeOpacity={0.7} style={styles.selectRow}>
           <View>
-            <Text style={styles.selectText}>{influencer?.personal_information?.spoken_language.name || "  -  "}</Text>
+            <Text style={styles.selectText}>{influencer?.personal_information?.spoken_language?.name || "  -  "}</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
           </View>

@@ -8,27 +8,44 @@ import Toast from '../components/Toast'
 import * as functions from '../utilities/functions'
 import { useIsFocused } from '@react-navigation/native'
 
-const Chats = ({ navigation }) => {
+const Chats = ({ navigation, route }) => {
   const focused = useIsFocused()
   const [chats, setChats] = useState(false)
   const [influencer, setInfluencer] = useState(null)
   const [loading, setLoading] = useState(true)
 
+
   const handleRequest = async (id, type) => {
+    console.log(id, type);
     try {
       const payload = {
         chat_id: id,
         status: type
       }
       const response = await functions.checkingRequest(payload)
-      console.log(response);
+      console.log("rrr", response);
       if (!response.status) throw new Error(response.message)
       if (response.message === "Chat has been accepted") {
         navigation.navigate("Message")
       }
     }
     catch (error) {
-      Toast(error.message || "server error")
+      Toast(error.message || `${route.name} Server Error`)
+    }
+  }
+  const handleMessageConponent = async (id, item) => {
+    try {
+      const payload = {
+        id: id,
+      }
+      const response = await functions.markReadMessage(payload)
+      if (!response.status) throw new Error(response.message)
+      if (response.status) {
+        navigation.navigate("Message", item)
+      }
+    }
+    catch (error) {
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   const getChats = async () => {
@@ -41,7 +58,7 @@ const Chats = ({ navigation }) => {
       }
     }
     catch (error) {
-      Toast(error.message || "server error")
+      Toast(error.message || `${route.name} Server Error`)
     }
     finally {
       setLoading(false)
@@ -55,14 +72,14 @@ const Chats = ({ navigation }) => {
       setInfluencer(response)
       if (response) getChats()
     } catch (error) {
-      Toast(error.message || "Server Error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   const Item = ({ item }) => {
     return (
       influencer.role.code === "influencer" && item.latest_message === "Sent you a message request!" ?
         <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handleRequest={handleRequest} chat_id={item.messages[0]?.chat_id} /> :
-        <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.name} latest_message={item.latest_message} handlePress={() => navigation.navigate("Message", item)} />
+        <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.name} latest_message={item.latest_message} handlePress={() => handleMessageConponent(item.messages[0]?.chat_id, item)} />
     )
   }
   useEffect(() => {
@@ -72,7 +89,7 @@ const Chats = ({ navigation }) => {
   }, [focused])
 
   useEffect(() => {
-    const interval = setInterval(() => getInfluencer(), 1000)
+    const interval = setInterval(() => getInfluencer(), 6000)
     return () => {
       clearInterval(interval)
     }

@@ -14,18 +14,17 @@ const Address = ({ navigation, route }) => {
 
   const influencer = route.params
   const [Flat, setFlat] = useState(influencer?.sector || '');
-  const [Area, setArea] = useState('');
-  const [city, setCity] = useState('Select City');
-  const [cityId, setCityId] = useState(influencer.city_id || null);
-  const [country, setCountry] = useState('Select Country');
-  const [countryId, setCountryId] = useState(influencer.country_id || null);
-  const [state, setstate] = useState('Select State');
-  const [stateId, setStateId] = useState(influencer.state_id || null);
-  const [postalCode, setpostalCode] = useState(influencer.post_code || '')
+  const [city, setCity] = useState(influencer.city?.name || 'Select City');
+  const [cityId, setCityId] = useState(influencer?.city_id || null);
+  const [country, setCountry] = useState(influencer?.country?.name || 'Select Country');
+  const [countryId, setCountryId] = useState(influencer?.country_id || null);
+  const [state, setstate] = useState(influencer?.state?.name || 'Select State');
+  const [stateId, setStateId] = useState(influencer?.state_id || null);
+  const [postalCode, setpostalCode] = useState(influencer?.post_code || '')
   const [countryListModal, setCountryListModal] = useState(false)
   const [cityListModal, setCityListModal] = useState(false)
   const [stateModal, setStateModal] = useState(false)
-  console.log(influencer);
+
   const saveAddress = async () => {
     try {
       const payload = {

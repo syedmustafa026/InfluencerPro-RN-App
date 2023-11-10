@@ -97,13 +97,13 @@ const InfluencerDetails = ({ navigation, route }) => {
           backgroundColor: colors.white
         }}>
           <Text style={{ color: colors.primary, fontFamily: fonts.SEMIBOLD, fontSize: 20 }} >{influencer?.name}<Icon name='check-decagram' size={22} color={colors.blue} /></Text>
-          <Text style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 24, marginVertical: 8, marginBottom: 20 }} >Categories: <Text style={{ fontSize: 22 }}>Travel , Fashion , Blog.</Text></Text>
+          <Text style={{ color: colors.black, fontFamily: fonts.SEMIBOLD, fontSize: 24, marginVertical: 8, marginBottom: 20 }} >Categories: <Text style={{ fontSize: 22 }}>{influencer?.user_professional_detail?.professional_category || " Travel , Fashion , Blog"}</Text></Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 18 }}>
             <Icon
               name='map-marker-outline'
               size={18}
               color={colors.orange} />
-            <Text style={styles.h4}>Based in: {influencer?.city.name || "  -  "}</Text>
+            <Text style={styles.h4}>Based in: {influencer?.city?.name || "  -  "}</Text>
             <Icon
               name='map-marker-outline'
               size={18}
@@ -147,7 +147,7 @@ const InfluencerDetails = ({ navigation, route }) => {
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Spoken Languages</Text>
-              <Text style={styles.regularText}>{influencer?.personal_information?.spoken_language.name || "  -  "}</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.spoken_language?.name || "  -  "}</Text>
             </View>
             <Separator />
             <View style={styles.row}>
@@ -172,7 +172,7 @@ const InfluencerDetails = ({ navigation, route }) => {
             <Separator />
             <View style={styles.row}>
               <Text style={styles.boldText}>Ethnicity</Text>
-              <Text style={styles.regularText}>{influencer?.personal_information?.ethnicity.name || "  -  "}</Text>
+              <Text style={styles.regularText}>{influencer?.personal_information?.ethnicity?.name || "  -  "}</Text>
             </View>
             <Separator />
             {/* <View style={styles.row}>
@@ -206,13 +206,13 @@ const InfluencerDetails = ({ navigation, route }) => {
         {/* description start */}
         <View style={styles.box}>
           <Text style={styles.h2}>Professional category</Text>
-          <Text style={[styles.h4, { marginTop: 4 }]}>{influencer?.user_professional_detail.professional_category || "  -  "}</Text>
+          <Text style={[styles.h4, { marginTop: 4 }]}>{influencer?.user_professional_detail?.professional_category || "  -  "}</Text>
         </View>
         {/* description finished */}
         <View style={styles.box}>
           <Text style={styles.h2}>I have the following</Text>
           <Text style={styles.h4}>Features</Text>
-          <ChipComponent name={`${influencer?.features[0].feature.name} (${influencer?.features[0].feature.description})`} />
+          <ChipComponent name={influencer?.features[0]?.feature?.name != undefined ? `${influencer?.features[0]?.feature?.name} (${influencer?.features[0]?.feature?.description})` : "  -  "} />
           <Text style={styles.h4}>Valid License:</Text>
           <ChipComponent name={influencer?.personal_information?.valid_license} />
           <Text style={styles.h4}>Tattoes</Text>

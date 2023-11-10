@@ -8,7 +8,7 @@ import * as fonts from "../../utilities/fonts"
 import Separator from "../../components/Separator";
 import Toast from '../../components/Toast'
 
-const Profile = ({ navigation }) => {
+const Profile = ({ navigation, route }) => {
   const [influencer, setInfluencer] = useState(null)
   const [influencerDetail, setInfluencerDetail] = useState(null)
   const focused = useIsFocused()
@@ -24,7 +24,7 @@ const Profile = ({ navigation }) => {
         await functions.removeItem("token")
       }
     } catch (error) {
-      Toast(error.message || "Server Error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   const getInfluencer = async () => {
@@ -34,7 +34,7 @@ const Profile = ({ navigation }) => {
       getInfluencerDetails(response.id)
       if (!response.status) throw new Error(response.message)
     } catch (error) {
-      Toast(error.message || "Server Error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   const getInfluencerDetails = async (id) => {
@@ -46,7 +46,7 @@ const Profile = ({ navigation }) => {
       setLoading(false)
       if (!influencer.status) throw new Error(influencer.message)
     } catch (error) {
-      Toast(error.message || "Server Error")
+      Toast(error.message || `${route.name} Server Error`)
     }
   }
   useEffect(() => {
