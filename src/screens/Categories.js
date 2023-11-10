@@ -15,6 +15,7 @@ const Categories = ({ route, navigation }) => {
     if (route.params === "editProfile") {
       navigation.navigate('EditProfile',
         {
+          type: 'category',
           title: item.name,
           id: item.id
         })

@@ -59,6 +59,7 @@ const EditProfile = ({ navigation, route }) => {
         gender: gender
       }
       const response = await functions.completeProfile(payload)
+      console.log(response);
       if (!response.status) throw new Error(response.message)
       if (response.status) {
         await functions.setItem('user', response.data)
@@ -70,9 +71,9 @@ const EditProfile = ({ navigation, route }) => {
       Toast(error.message || "server error")
     }
   }
-
+  console.log(route.params);
   useEffect(() => {
-    if (route.params != null) {
+    if (route.params.type === 'category') {
       setCategories(route?.params?.title)
     }
   }, [route.params])

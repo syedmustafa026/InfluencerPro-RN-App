@@ -14,7 +14,7 @@ const About = ({ navigation, route }) => {
       title: 'Edit Profile',
       headerRight: (props) => {
         return (
-          <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => navigation.navigate("EditProfile", influencer)} activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ fontSize: 16, margin: 4, color: colors.black, fontFamily: fonts.SEMIBOLD }}>Edit</Text>
           </TouchableOpacity >)
       }
