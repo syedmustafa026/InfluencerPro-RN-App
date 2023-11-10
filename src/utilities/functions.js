@@ -9,7 +9,6 @@ export const getHeader = async () => {
     const AuthStr = {
       Authorization: `Bearer ${USER_TOKEN}`
     }
-    console.log(AuthStr);
     return AuthStr
   }
   else return null
