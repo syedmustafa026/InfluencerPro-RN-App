@@ -15,7 +15,7 @@ const Chats = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true)
 
 
-  const handleRequest = async (id, type) => {
+  const handleRequest = async (id, type,item) => {
     console.log(id, type);
     try {
       const payload = {
@@ -26,7 +26,7 @@ const Chats = ({ navigation, route }) => {
       console.log("rrr", response);
       if (!response.status) throw new Error(response.message)
       if (response.message === "Chat has been accepted") {
-        navigation.navigate("Message")
+        navigation.navigate("Message",item)
       }
     }
     catch (error) {
@@ -34,6 +34,7 @@ const Chats = ({ navigation, route }) => {
     }
   }
   const handleMessageConponent = async (id, item) => {
+    console.log(id,item);
     try {
       const payload = {
         id: id,
@@ -78,7 +79,7 @@ const Chats = ({ navigation, route }) => {
   const Item = ({ item }) => {
     return (
       influencer.role.code === "influencer" && item.latest_message === "Sent you a message request!" ?
-        <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handleRequest={handleRequest} chat_id={item.messages[0]?.chat_id} /> :
+        <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handleRequest={handleRequest} chat_id={item.id} data={item} /> :
         <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.name} latest_message={item.latest_message} handlePress={() => handleMessageConponent(item.messages[0]?.chat_id, item)} />
     )
   }

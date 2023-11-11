@@ -33,7 +33,7 @@ const Message = ({ navigation, route }) => {
       //       text: chatMessage.message,
       //       createdAt: chatMessage.created_at,
       //       user: {
-      //         _id: route.params.messages[0].receiver_id,
+      //         _id: route.params.second_user_id,
       //       }
       //     }
       //   })
@@ -46,7 +46,7 @@ const Message = ({ navigation, route }) => {
             text: chatMessage.message,
             createdAt: chatMessage.created_at,
             user: {
-              _id: route.params.messages[0].receiver_id,
+              _id: route.params.second_user_id,
             }
           }
         })
@@ -74,18 +74,18 @@ const Message = ({ navigation, route }) => {
           text: chatMessage.message,
           createdAt: chatMessage.created_at,
           user: {
-            _id: route.params.messages[0].receiver_id,
+            _id: route.params.second_user_id,
           }
         }
       })
     )
   }, [])
-
+console.log(route.params.second_user_id);
   const sendMessage = async (text) => {
     const response = await functions.sendMessage({
-      user_id: route.params.messages[0].receiver_id,
+      user_id: route.params.second_user_id,
       message: text,
-      chat_id: route.params.messages[0].chat_id
+      chat_id: route.params.id
     })
     if (!response.status) throw new Error(response.message)
   }

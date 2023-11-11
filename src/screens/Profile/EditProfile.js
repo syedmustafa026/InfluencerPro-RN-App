@@ -13,19 +13,20 @@ import Dropdown from "../../components/Dropdown"
 import Toast from "../../components/Toast"
 
 const EditProfile = ({ navigation, route }) => {
+
   const influencer = route.params
   const [dialects, setDialects] = useState('')
   const [hairtype, setHairtype] = useState('')
   const [haircolor, setHaircolor] = useState('')
-  const [age, setAge] = useState('')
+  const [age, setAge] = useState(null)
   const [language, setLanguage] = useState('')
   const [tattoes, setTattoes] = useState('')
   const [valid_license, set_valid_license] = useState('')
-  const [skils, setSkills] = useState('')
-  const [gender, setGender] = useState('Select Gender')
+  const [skills, setSkills] = useState([])
+  const [gender, setGender] = useState('Male')
   const [categories, setCategories] = useState('Select your Category')
+  const [categoryId, setCategoryId] = useState(null)
   const [genderModal, setGenderModal] = useState(false)
-
   const [img, setImg] = useState(null)
 
   const OpenGallery = () => {
@@ -58,17 +59,19 @@ const EditProfile = ({ navigation, route }) => {
         tattoes: tattoes,
         gender: gender,
         professional_category: null,
-        category_id: 1,
-        skills: "[Music]",
-        features: "[drawing]",
+        category_id: categoryId,
+        skills: skills,
+        features: [],
         ethnicty_id: 1,
         spoken_language_id: 1,
         logo: img?.uri
       }
+      console.log(payload);
       const response = await functions.completeProfile(payload)
-      Toast("Updated successfully")
-      navigation.replace("BottomNavigator")
       if (!response.status) throw new Error(response.message)
+      console.log(response);
+      // Toast("Updated successfully")
+      // navigation.replace("BottomNavigator")
       if (response.status) {
       }
     }
@@ -76,10 +79,11 @@ const EditProfile = ({ navigation, route }) => {
       Toast(error.message || `${route.name} Server Error`)
     }
   }
-  console.log(route.params);
+
   useEffect(() => {
     if (route.params.type === 'category') {
       setCategories(route?.params?.title)
+      setCategoryId(route?.params?.id)
     }
   }, [route.params])
   return (
@@ -186,7 +190,7 @@ const EditProfile = ({ navigation, route }) => {
                 style={styles.Input}
                 placeholder="Set Skills"
                 activeUnderlineColor={colors.primary}
-                value={skils}
+                value={skills}
                 maxLength={11}
                 onChangeText={(value) => setSkills(value)}
               />
