@@ -34,7 +34,9 @@ export const register = async (payload) => {
 }
 export const completeProfile = async (payload) => {
   try {
-    const { data: response } = await axios.post(`${apiUrl}/auth/complete-profile`, payload)
+    const { data: response } = await axios.post(`${apiUrl}/auth/complete-profile`, payload, {
+      headers: await getHeader()
+    })
     const json = response
     return json
   } catch (error) {
@@ -199,6 +201,17 @@ export const requestChat = async (payload) => {
 export const checkingRequest = async (payload) => {
   try {
     const { data: response } = await axios.post(`${apiUrl}/app/chats/accept-or-reject`, payload, {
+      headers: await getHeader()
+    })
+    const json = response
+    return json
+  } catch (error) {
+    return error.message
+  }
+}
+export const getChatStatus = async (payload) => {
+  try {
+    const { data: response } = await axios.post(`${apiUrl}/influencers/chat-status`, payload, {
       headers: await getHeader()
     })
     const json = response

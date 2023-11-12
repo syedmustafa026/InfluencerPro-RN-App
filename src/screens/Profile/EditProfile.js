@@ -15,19 +15,21 @@ import Toast from "../../components/Toast"
 const EditProfile = ({ navigation, route }) => {
 
   const influencer = route.params
-  const [dialects, setDialects] = useState('')
-  const [hairtype, setHairtype] = useState('')
-  const [haircolor, setHaircolor] = useState('')
-  const [age, setAge] = useState(null)
-  const [language, setLanguage] = useState('')
-  const [tattoes, setTattoes] = useState('')
-  const [valid_license, set_valid_license] = useState('')
+  const [dialects, setDialects] = useState(influencer?.personal_information?.dialects || '')
+  const [hairtype, setHairtype] = useState(influencer?.personal_information?.hair_type || '')
+  const [haircolor, setHaircolor] = useState(influencer?.personal_information?.hair_color || '')
+  const [age, setAge] = useState(influencer?.personal_information?.age || '')
+  const [language, setLanguage] = useState(influencer?.personal_information?.spoken_language?.name || '')
+  const [tattoes, setTattoes] = useState(influencer?.personal_information?.tattoes || '')
+  const [valid_license, set_valid_license] = useState(influencer?.personal_information?.valid_license || '')
   const [skills, setSkills] = useState([])
-  const [gender, setGender] = useState('Male')
+  const [gender, setGender] = useState(influencer?.personal_information?.gender || 'Male')
   const [categories, setCategories] = useState('Select your Category')
-  const [categoryId, setCategoryId] = useState(null)
+  const [categoryId, setCategoryId] = useState(influencer?.user_professional_detail?.category_id || null)
+  const [features, setFeatures] = useState(influencer?.user_professional_detail?.professional_category || [])
   const [genderModal, setGenderModal] = useState(false)
   const [img, setImg] = useState(null)
+  const [image, setImage] = useState(null)
 
   const OpenGallery = () => {
     const options = {
@@ -40,11 +42,11 @@ const EditProfile = ({ navigation, route }) => {
     }
     launchImageLibrary(options, response => {
       if (response.didCancel) {
-        console.log("user Cancelled ")
       }
       else {
         console.log(response.assets[0].uri);
         setImg({ uri: 'data:image/jpg;base64,' + response.assets[0].base64 })
+        setImage(response.assets[0].uri)
       }
     })
   }
@@ -58,21 +60,19 @@ const EditProfile = ({ navigation, route }) => {
         valid_license: valid_license,
         tattoes: tattoes,
         gender: gender,
-        professional_category: null,
+        professional_category: features,
         category_id: categoryId,
-        skills: skills,
-        features: [],
+        skills: [skills],
+        features: [1, 2],
         ethnicty_id: 1,
         spoken_language_id: 1,
-        logo: img?.uri
+        logo: image
       }
-      console.log(payload);
       const response = await functions.completeProfile(payload)
       if (!response.status) throw new Error(response.message)
-      console.log(response);
-      // Toast("Updated successfully")
-      // navigation.replace("BottomNavigator")
       if (response.status) {
+        Toast(response.message)
+        navigation.replace("BottomNavigator")
       }
     }
     catch (error) {
@@ -115,6 +115,18 @@ const EditProfile = ({ navigation, route }) => {
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={1} onPress={() => setGenderModal(false)} style={styles.center}>
           <View style={styles.InputBoxes}>
+            <View
+              style={styles.InputBox}>
+              <TextInput
+                theme={{ colors: { text: colors.white, placeholder: colors.primaryLight, } }}
+                style={styles.Input}
+                placeholder="Proffesional Category"
+                activeUnderlineColor={colors.primary}
+                value={features}
+                maxLength={11}
+                onChangeText={(value) => setFeatures(value)}
+              />
+            </View>
             <View style={styles.InputBox}>
               <TextInput style={styles.Input}
                 theme={{ colors: { text: colors.white, placeholder: colors.primaryLight, } }}
@@ -188,13 +200,13 @@ const EditProfile = ({ navigation, route }) => {
               <TextInput
                 theme={{ colors: { text: colors.white, placeholder: colors.primaryLight, } }}
                 style={styles.Input}
-                placeholder="Set Skills"
+                placeholder="Set Skills (seperate it by coma)"
                 activeUnderlineColor={colors.primary}
                 value={skills}
-                maxLength={11}
                 onChangeText={(value) => setSkills(value)}
               />
             </View>
+
           </View>
         </TouchableOpacity>
         <View style={styles.btn}>

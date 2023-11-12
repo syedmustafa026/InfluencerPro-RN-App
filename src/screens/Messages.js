@@ -58,12 +58,12 @@ const Message = ({ navigation, route }) => {
   }
   useEffect(() => {
     navigation.setOptions({
-      title: route.params.other_user.name,
+      title: route.params.other_user?.brand_name || route.params.other_user?.ame,
     })
     getInfluencer()
 
   }, [])
-
+  console.log(route.params);
   useEffect(() => {
     getMessages()
     const filteredArr = route.params.messages.sort((a, b) => a.id - b.id).reverse()
@@ -80,7 +80,7 @@ const Message = ({ navigation, route }) => {
       })
     )
   }, [])
-console.log(route.params.second_user_id);
+  console.log(route.params.second_user_id);
   const sendMessage = async (text) => {
     const response = await functions.sendMessage({
       user_id: route.params.second_user_id,

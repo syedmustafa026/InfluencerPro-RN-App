@@ -79,8 +79,8 @@ const Chats = ({ navigation, route }) => {
   const Item = ({ item }) => {
     return (
       influencer.role.code === "influencer" && item.latest_message === "Sent you a message request!" ?
-        <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name} latest_message={item.latest_message} handleRequest={handleRequest} chat_id={item.id} data={item} /> :
-        <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.name} latest_message={item.latest_message} handlePress={() => handleMessageConponent(item.messages[0]?.chat_id, item)} />
+        <MessageRequest image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name || item.other_user.name} latest_message={item.latest_message} handleRequest={handleRequest} chat_id={item.id} data={item} /> :
+        <MessageComponent image={item.other_user.image_url} time={item.latest_message_recieved_time_diff} name={item.other_user.brand_name || item.other_user.name} latest_message={item.latest_message} handlePress={() => handleMessageConponent(item.messages[0]?.chat_id, item)} />
     )
   }
   useEffect(() => {

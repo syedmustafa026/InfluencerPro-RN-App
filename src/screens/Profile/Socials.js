@@ -11,7 +11,7 @@ import * as functions from "../../utilities/functions"
 import Toast from "../../components/Toast"
 
 const Socials = ({ navigation, route }) => {
-  const socials = route.params.social_media_profiles
+  const socials = route.params?.social_media_profiles || []
 
   const [facebook, setFacebook] = useState(socials[0]?.username || "");
   const [instagram, setInstagram] = useState(socials[1]?.username || "");
@@ -33,13 +33,30 @@ const Socials = ({ navigation, route }) => {
   const saveSocials = async () => {
     try {
       const payload = {
-        instagram: instagram,
-        twitter: twitter,
-        tiktok: tiktok,
-        facebook: facebook,
-        linkedin: linkedIn,
-        pinterest: pinterest,
-        blog: website
+        instagram: 'on',
+        instagram_username: instagram,
+        instagram_followers: instagramFollowers,
+        twitter: 'on',
+        twitter_username: twitter,
+        twitter_followers: twitterFollowers,
+        tiktok: 'on',
+        tiktok_username: tiktok,
+        tiktok_followers: tiktokFollowers,
+        facebook: 'on',
+        facebook_username: facebook,
+        facebook_followers: facebookFollowers,
+        linkedin: 'on',
+        linkedin_username: linkedIn,
+        linkedin_followers: linkedInFollowers,
+        pinterest: 'on',
+        pinterest_username: pinterest,
+        pinterest_followers: pinterestFollowers,
+        website: 'on',
+        website_username: website,
+        website_followers: 0,
+        youtube: 'on',
+        youtube_username: youtube,
+        youtube_followers: youtubeFollowers
       }
       const response = await functions.updateInfluencerSocialMedia(payload)
       if (!response.status) throw new Error(response.message)

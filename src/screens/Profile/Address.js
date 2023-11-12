@@ -14,7 +14,7 @@ const Address = ({ navigation, route }) => {
 
   const influencer = route.params
   const [Flat, setFlat] = useState(influencer?.sector || '');
-  const [city, setCity] = useState(influencer.city?.name || 'Select City');
+  const [city, setCity] = useState(influencer?.city?.name || 'Select City');
   const [cityId, setCityId] = useState(influencer?.city_id || null);
   const [country, setCountry] = useState(influencer?.country?.name || 'Select Country');
   const [countryId, setCountryId] = useState(influencer?.country_id || null);

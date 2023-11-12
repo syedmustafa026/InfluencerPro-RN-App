@@ -20,6 +20,7 @@ const About = ({ navigation, route }) => {
 
     })
   }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { ActivityIndicator, Alert, View, Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
@@ -14,20 +14,30 @@ import * as functions from "../utilities/functions"
 
 const InfluencerDetails = ({ navigation, route }) => {
   const [influencer, setInfluencer] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [chat_status, set_chat_status] = useState(null)
 
   const handleApplyingInfluencer = async () => {
     try {
       Alert.alert("Sure", "Are you sure you want to initiate chat?", [{
         text: "Yes",
         onPress: async () => {
-          const response = await functions.requestChat({
-            user_id: route.params.id
-          })
-          if (!response.status) throw new Error(response.message)
-          if (response.status) {
-            console.log(response);
-            Toast("Chat request sent to influencer")
-            navigation.navigate("BottomNavigator")
+          if (chat_status === "accepted") {
+            navigation.navigate("Chats")
+          }
+          else if (chat_status === "rejected") {
+            Toast("Influencer rejected your chat request")
+          }
+          else {
+            const response = await functions.requestChat({
+              user_id: route.params.id
+            })
+            if (!response.status) throw new Error(response.message)
+            if (response.status) {
+              console.log(response);
+              Toast("Chat request sent to influencer")
+              navigation.navigate("BottomNavigator")
+            }
           }
         }
       }, {
@@ -39,6 +49,7 @@ const InfluencerDetails = ({ navigation, route }) => {
       Toast(error.message)
     }
   }
+  console.log(chat_status);
   const getInfluencer = async () => {
     try {
       const response = await functions.getInfluencerDetail({
@@ -47,6 +58,20 @@ const InfluencerDetails = ({ navigation, route }) => {
       if (!response) throw new Error(response.message)
       if (response) {
         setInfluencer(response.data)
+        setLoading(false)
+      }
+    } catch (error) {
+      Toast(error.message || "Server Error")
+    }
+  }
+  const chatStatus = async () => {
+    try {
+      const response = await functions.getChatStatus({
+        id: route.params.id
+      })
+      if (!response) throw new Error(response.message)
+      if (response) {
+        set_chat_status(response.data)
       }
     } catch (error) {
       Toast(error.message || "Server Error")
@@ -54,7 +79,16 @@ const InfluencerDetails = ({ navigation, route }) => {
   }
   useEffect(() => {
     getInfluencer()
+    chatStatus()
   }, [])
+
+  if (loading) {
+    return (
+      <View style={styles.errorContainer}>
+        <ActivityIndicator animating={true} size={"medium"} color={colors.primary} />
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -116,7 +150,7 @@ const InfluencerDetails = ({ navigation, route }) => {
               name='facebook'
               size={22}
               color={colors.blue} />
-            <Text style={styles.h4}>{influencer?.social_media_profiles[0]?.followers} </Text>
+            <Text style={styles.h4}>{influencer?.social_media_profiles[0]?.followers || "  -  "} </Text>
             <Icon
               name='instagram'
               size={22}
@@ -205,8 +239,8 @@ const InfluencerDetails = ({ navigation, route }) => {
         {/* details finished */}
         {/* description start */}
         <View style={styles.box}>
-          <Text style={styles.h2}>Professional category</Text>
-          <Text style={[styles.h4, { marginTop: 4 }]}>{influencer?.user_professional_detail?.professional_category || "  -  "}</Text>
+          <Text style={styles.h2}>Skills</Text>
+          <Text style={[styles.h4, { marginTop: 4 }]}>{JSON.parse(influencer?.user_professional_detail?.skills) || "  -  "}</Text>
         </View>
         {/* description finished */}
         <View style={styles.box}>
@@ -339,7 +373,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
     marginVertical: 16
-  }
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
 })
 
 export default InfluencerDetails
