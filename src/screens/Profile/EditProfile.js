@@ -37,19 +37,19 @@ const EditProfile = ({ navigation, route }) => {
         path: 'images',
         mediaType: 'photo',
       },
-      includeBase64: true,
       saveToPhotos: true,
     }
     launchImageLibrary(options, response => {
       if (response.didCancel) {
       }
       else {
-        console.log(response.assets[0].uri);
-        setImg({ uri: 'data:image/jpg;base64,' + response.assets[0].base64 })
-        setImage(response.assets[0].uri)
+        setImg(response.assets[0])
+        setImage(response.assets[0])
       }
     })
   }
+
+  
   const handlePress = async () => {
     try {
       const payload = {
@@ -68,6 +68,7 @@ const EditProfile = ({ navigation, route }) => {
         spoken_language_id: 1,
         logo: image
       }
+      console.log(payload);
       const response = await functions.completeProfile(payload)
       if (!response.status) throw new Error(response.message)
       if (response.status) {
@@ -79,7 +80,7 @@ const EditProfile = ({ navigation, route }) => {
       Toast(error.message || `${route.name} Server Error`)
     }
   }
-
+console.log("sss",image);
   useEffect(() => {
     if (route.params.type === 'category') {
       setCategories(route?.params?.title)
@@ -94,7 +95,7 @@ const EditProfile = ({ navigation, route }) => {
             <TouchableOpacity
               onPress={() => OpenGallery()}
               activeOpacity={0.8}>
-              <Image style={styles.image} source={{ uri: img == null ? influencer?.image_url : img?.uri }} />
+              <Image style={styles.image} source={{ uri: image == null ? influencer?.image_url : image.uri }} />
               <Icon style={{ position: 'absolute', bottom: 0, left: 70 }} name='pencil-circle' color={colors.gray} size={28} />
             </TouchableOpacity>
           </View>
